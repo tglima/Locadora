@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="pt-br" 
+	xmlns="http://www.w3.org/1999/xhtml"
+ 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+ 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<nav id="navbar-topo" class="navbar navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<span class="navbar-brand">LOCADORA</span>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<h:outputLink value="/locadora/">
+						<span class="glyphicon glyphicon-home"></span>
+						<span>Home</span>
+					</h:outputLink>					
+				</li>
+				<li>
+					<a data-target="#" class="dropdown-toggle" data-toggle="dropdown" >
+						<span class="glyphicon glyphicon-usd"></span>
+						<span>Locação</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/locadora">Realizar locação</a></li>
+						<li><a href="/locadora">Finalizar locação</a></li>
+					</ul>					
+				</li>
+				<li>
+					<a data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-road"></span>
+						<span>Veículos</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/locadora">Buscar veículo</a></li>
+						<li><a href="/locadora">Liberar veículo</a></li>
+					</ul>
+				</li>
+				<li>
+					<a data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-off"></span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/locadora/login.xhtml">Encerrar sessão</a></li>
+					</ul>
+				</li>				
+			</ul>			
+		</div>
+	</nav> 	
+ 	
+ 	
+</html>

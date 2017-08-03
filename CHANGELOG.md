@@ -1,26 +1,52 @@
-# Change Log
-## Version 0.0.1
 
-Alterado o weld-servlet
-------------------------
+## Version 0.1.0 (Add Bootstrap e template)
 
-* **Alterado da versão 2.4.2.SP1 para 2.2.16.SP1**
+Adicionado arquivos referentes ao Bootstrap
+- src/main/webapp/resources/css/**bootstrap.min.css**
+- src/main/webapp/resources/js/**bootstrap.min.js**
+- src/main/webapp/resources/jquery/**jquery-2.2.4.js**
+- src/main/webapp/resources/fonts/**glyphicons-halflings-regular.eot**
+- src/main/webapp/resources/fonts/**glyphicons-halflings-regular.svg**
+- src/main/webapp/resources/fonts/**glyphicons-halflings-regular.ttf**
+- src/main/webapp/resources/fonts/**glyphicons-halflings-regular.woff**
+- src/main/webapp/resources/fonts/**glyphicons-halflings-regular.woff2**
 
-Commit Inicial
---------------
+Adicionado arquivos referentes ao template:
+- src/main/webapp/resources/layout/**base-layout.xhtml**
+- src/main/webapp/resources/layout/**navbar-top.xhtml**
+- src/main/webapp/resources/layout/**sidebar.xhtml**
+- src/main/webapp/resources/layout/**content-top.xhtml**
+- src/main/webapp/resources/css/**style.css**
 
-* **Configurado os arquivos básicos.**
-    * *faces-config*
-    * *web.xml*
-    * *.gitignore*
-    * *Criado o arquivo beans.xml*
+Criada página para testar layout:
+- src/main/webapp/**teste.xhtml**
+
+Adicionada imagem para simular foto do usuário.
+- src/main/webapp/resources/img/**photo-woman.jpg**
+
+Outras melhorias
+- O arquivo CHANGELOG.md está mais simples e claro de ser entendido.
+- Adicionada a configuração do arquivo src/main/resources/META-INF/**beans.xml**.
 
 
-* **Adicionadas as dependências básicas.**
-    * *Mojarra*
-    * *JSF API*
-    * *CDI*
-    * *Jandex*
+## Version 0.0.1 (Alterado o weld-servlet)
+
+- Alterado da versão 2.4.2.SP1 para 2.2.16.SP1
+
+## Version 0.0.1 (Commit Inicial)
+
+Configurado os arquivos básicos:
+- src/main/webapp/WEB-INF/**faces-config**
+- src/main/webapp/WEB-INF/**web.xml**
+- .gitignore
+- Criado o arquivo src/main/resources/META-INF/**beans.xml**
+
+
+Adicionadas as dependências básicas
+- Mojarra
+- JSF API
+- CDI
+- Jandex
 
 
 
