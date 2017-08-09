@@ -1,3 +1,27 @@
+## Version 0.2.0 (Add Model Veiculo e suporte ao PrimeFaces)
+
+Criada as seguintes classes e Enums referentes ao Model Veiculo
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpCategorias.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpCombustiveis.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpCores.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpMarcas.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpSituacao.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**Veiculo.java**
+
+Criada a classe controller responsável pelo cadastro do veículo.
+- src/main/java/br/edu/tglima/locadora/controllers/**CadVeic.java**
+
+Criada a classe **FacesUtil**, para facilitar o envio de mensagens ao usuário.
+- src/main/java/br/edu/tglima/locadora/util/**FacesUtil.java**
+
+Criada a página XHTML para realizar o cadastro do veículo.
+- src/main/webapp/cadastro/**veiculo.xhtml**
+
+Outras melhorias
+- Editado o arquivo **style.css** para uma melhor experiência com os inputs.
+- Editado o arquivo **pom.xml**. Adicionado o suporte ao **PrimeFaces**.
+- Editado o arquivo **content-top.xhtml**. Habilitado para integração com o PrimeFaces
+- Editado o arquivo **.gitignore** . Ignorado o arquivo /.tern-project
 
 ## Version 0.1.0 (Add Bootstrap e template)
 
