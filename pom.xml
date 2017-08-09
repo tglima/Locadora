@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>br.edu.tglima</groupId>
   <artifactId>locadora</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <packaging>war</packaging>
   
    	<properties>
@@ -40,6 +40,13 @@
 		    <version>1.2.4.Final</version>
 			<scope>compile</scope>			    
 		</dependency>
+		
+		<!-- Primefaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.1</version>
+		</dependency>		
 				
 	</dependencies>
 

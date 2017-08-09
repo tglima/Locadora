@@ -13,6 +13,15 @@
 	<h:outputScript name="jquery/jquery-2.2.4.js" />
 	<h:outputScript name="js/bootstrap.min.js" />
     <title><ui:insert name="titulo">Painel Administrativo</ui:insert></title>
+
+	<!-- Script adicionado para resolver o conflito entre o bootstrap e o primefaces -->
+    <script>
+        $a = jQuery.noConflict();
+        $a(document).ready(function() {        
+        });
+    </script>
+
+
 </h:head>
 
 <h:body>

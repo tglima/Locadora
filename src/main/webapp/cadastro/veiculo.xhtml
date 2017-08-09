@@ -1,0 +1,118 @@
+<ui:composition template="../resources/layout/base-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+ 
+ 
+<ui:define name="titulo">Cadastro de veículos</ui:define>
+<ui:define name="content-main">
+
+<h:form styleClass="form" id="CadVeic">
+
+	<div class="row">
+		<div class="form-group">
+			<h:outputLabel value="Placa" for="placa" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Marca" for="marcaVeic" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Modelo" for="modelo" styleClass="col-sm-2 col-lg-2 control-label" />
+
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group">
+			<div class="col-sm-3 col-lg-2">
+				<p:inputMask id="placa" mask="aaa-9999" value="#{cadVeic.nv.placa}"
+				 	styleClass="form-control" pt:placeholder="Placa:" required="true" label="Placa" />
+			</div>
+
+			<div class="col-sm-3 col-lg-2">
+				<h:selectOneMenu id="marcaVeic" value="#{cadVeic.nv.marca}" styleClass="form-control" 
+					required="true" label="Marca" >
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+					<f:selectItems var="marca" itemLabel="#{marca.label}" itemValue="#{marca}"
+						value="#{cadVeic.marcas}" />
+				</h:selectOneMenu>
+			</div>
+
+			<div class="col-sm-2 col-lg-2">
+				<h:inputText id="modelo" value="#{cadVeic.nv.modelo}" styleClass="form-control" 
+					pt:placeholder="Modelo" required="true" label="Modelo" />
+			</div>
+		
+		</div>
+	</div>
+	
+	<div class="row mt-15">
+		<div class="form-group">
+			<h:outputLabel value="Categoria" for="catVeic" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Cor" for="cor"  styleClass="col-sm-3 col-lg-2 control-label"/>
+			<h:outputLabel value="Ano de fab." for="ano" styleClass="col-sm-3 col-lg-2 control-label" />
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group">
+			
+			<div class="col-sm-3 col-lg-2">
+				<h:selectOneMenu id="catVeic" value="#{cadVeic.nv.categoria}" styleClass="form-control" 
+					required="true" label="Categoria">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{categoria}" value="#{cadVeic.categorias}" />
+				</h:selectOneMenu>
+			</div>
+
+			<div class="col-sm-3 col-lg-2">
+				<h:selectOneMenu id="cor" value="#{cadVeic.nv.cor}" styleClass="form-control" 
+					required="true" label="Cor">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+					<f:selectItems var="cor" itemLabel="#{cor.label}" itemValue="#{cor}" value="#{cadVeic.cores}" />
+				</h:selectOneMenu>
+			</div>
+
+			<div class="col-sm-2 col-lg-1">
+				<p:inputMask id="ano" mask="9999" value="#{cadVeic.nv.ano}" styleClass="form-control"  
+				pt:placeholder="Ano" required="true" label="Ano">
+				</p:inputMask>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="row mt-15">
+		<div class="form-group">
+			<h:outputLabel value="Combustível" for="combustivel" styleClass="col-sm-3 col-lg-2 control-label" />		
+			<h:outputLabel value="KM do veículo" for="kmAquisicao" styleClass="col-sm-2 col-lg-2 control-label" />				
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group">
+			<div class="col-sm-3 col-lg-2">
+				<h:selectOneMenu id="combustivel" value="#{cadVeic.nv.combustivel}" styleClass="form-control" 
+					required="true"  label="Combustível" >
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{combustivel}" value="#{cadVeic.combustiveis}" />
+				</h:selectOneMenu>
+			</div>	
+						
+			<div class="col-sm-2 col-lg-2">
+				<p:inputMask id="kmAquisicao" mask="9?99999" value="#{cadVeic.nv.kmAquisicao}" styleClass="form-control"
+				 pt:placeholder="KM inicial" required="true"  label="Km do veículo">
+			 	</p:inputMask>
+			</div>			
+		</div>
+	</div>
+
+	<div class="row mt-15">
+		<div class="col-sm-11 col-lg-11">
+			<h:commandButton value="Cadastrar" action="#{cadVeic.cadastrar}" styleClass="btn btn-primary" />			
+		</div>
+	</div>
+
+</h:form>
+
+</ui:define>
+ </ui:composition>

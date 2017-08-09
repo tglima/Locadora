@@ -7,3 +7,4 @@
 target/
 .settings/
 src/main/webapp/WEB-INF/classes/
+/.tern-project

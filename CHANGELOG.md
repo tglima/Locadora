@@ -1,3 +1,56 @@
+## Version 0.3.0 (Add Pagínas de cadastro)
+
+ Criadas as seguintes classes e enums para representar os Models
+ - **Superclasse Pessoa** src/main/java/br/edu/tglima/locadora/models/pessoa/**Pessoa.java**
+ - **Enum OpGeneros** src/main/java/br/edu/tglima/locadora/models/pessoa/**OpGeneros.java**
+ - **Subclasse Cliente** src/main/java/br/edu/tglima/locadora/models/pessoa/**TiposCargo.java**
+ - **Subclasse Funcionario** src/main/java/br/edu/tglima/locadora/models/pessoa/**Funcionario.java**
+ - **Enum TiposCargo** src/main/java/br/edu/tglima/locadora/models/pessoa/**TiposCargo.java**
+ 
+ Criada a classe controller responsável pelo cadastro de clientes.
+ - src/main/java/br/edu/tglima/locadora/controllers/**CadCliente.java**
+ 
+ Criada a classe controller responsável pelo cadastro de funcionários.
+ - src/main/java/br/edu/tglima/locadora/controllers/**CadFunc.java**
+
+ Criada a página XHTML para realizar o cadastro de clientes.
+ - src/main/webapp/cadastro/**cliente.xhtml**
+ 
+ Criada a página XHTML para realizar o cadastro de funcionários.
+ - src/main/webapp/cadastro/**funcionario.xhtml**
+
+Outras melhorias
+ - Editado o arquivo **base-layout.xhtml**. Adicionado javascript para impedir conflito entre versões diferentes do jquery.
+ - Editado o arquivo **sidebar.xhtml** para que ele aponte para as páginas já criadas.
+ - Editado o arquivo **veiculo.xhtml**. Removida a tabela com os veículos recém cadastrados.
+ - Editado o arquivo **CadVeic.java**. Removido a função que adiciona os veículos cadastrados em uma lista.
+ - Editado o arquivo **web.xml**. Adicionado parâmetro para que a aplicação utilize o mesmo fuso horário do sistema operacional do servidor na qual ela está hospedada.
+ 
+
+## Version 0.2.0 (Add Model Veiculo e suporte ao PrimeFaces)
+
+Criadas as seguintes classes e Enums referentes ao Model Veiculo
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpCategorias.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpCombustiveis.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpCores.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpMarcas.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpSituacao.java**
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**Veiculo.java**
+
+Criada a classe controller responsável pelo cadastro de veículos.
+- src/main/java/br/edu/tglima/locadora/controllers/**CadVeic.java**
+
+Criada a classe **FacesUtil**, para facilitar o envio de mensagens ao usuário.
+- src/main/java/br/edu/tglima/locadora/util/**FacesUtil.java**
+
+Criada a página XHTML para realizar o cadastro de veículos.
+- src/main/webapp/cadastro/**veiculo.xhtml**
+
+Outras melhorias
+- Editado o arquivo **style.css** para uma melhor experiência com os inputs.
+- Editado o arquivo **pom.xml**. Adicionado o suporte ao **PrimeFaces**.
+- Editado o arquivo **content-top.xhtml**. Habilitado para integração com o PrimeFaces
+- Editado o arquivo **.gitignore** . Ignorado o arquivo /.tern-project
 
 ## Version 0.1.0 (Add Bootstrap e template)
 
