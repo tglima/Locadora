@@ -3,7 +3,8 @@
  xmlns:h="http://xmlns.jcp.org/jsf/html"
  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
- xmlns:f="http://xmlns.jcp.org/jsf/core">
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
  
  
 <ui:define name="titulo">Cadastro de veículos</ui:define>
@@ -23,12 +24,12 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="placa" maxlength="8" value="#{cadVeic.novoVeic.placa}"
+				<p:inputMask id="placa" mask="aaa-9999" value="#{cadVeic.nv.placa}"
 				 	styleClass="form-control" pt:placeholder="Placa:" required="true" label="Placa" />
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="marcaVeic" value="#{cadVeic.novoVeic.marca}" styleClass="form-control" 
+				<h:selectOneMenu id="marcaVeic" value="#{cadVeic.nv.marca}" styleClass="form-control" 
 					required="true" label="Marca" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="marca" itemLabel="#{marca.label}" itemValue="#{marca}"
@@ -37,7 +38,7 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="modelo" value="#{cadVeic.novoVeic.modelo}" styleClass="form-control" 
+				<h:inputText id="modelo" value="#{cadVeic.nv.modelo}" styleClass="form-control" 
 					pt:placeholder="Modelo" required="true" label="Modelo" />
 			</div>
 		
@@ -56,7 +57,7 @@
 		<div class="form-group">
 			
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="catVeic" value="#{cadVeic.novoVeic.categoria}" styleClass="form-control" 
+				<h:selectOneMenu id="catVeic" value="#{cadVeic.nv.categoria}" styleClass="form-control" 
 					required="true" label="Categoria">
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{categoria}" value="#{cadVeic.categorias}" />
@@ -64,7 +65,7 @@
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="cor" value="#{cadVeic.novoVeic.cor}" styleClass="form-control" 
+				<h:selectOneMenu id="cor" value="#{cadVeic.nv.cor}" styleClass="form-control" 
 					required="true" label="Cor">
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cor" itemLabel="#{cor.label}" itemValue="#{cor}" value="#{cadVeic.cores}" />
@@ -72,9 +73,9 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-1">
-				<h:inputText id="ano" maxlength="4" value="#{cadVeic.novoVeic.ano}" styleClass="form-control"  
+				<p:inputMask id="ano" mask="9999" value="#{cadVeic.nv.ano}" styleClass="form-control"  
 				pt:placeholder="Ano" required="true" label="Ano">
-				</h:inputText>
+				</p:inputMask>
 			</div>
 			
 		</div>
@@ -90,7 +91,7 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="combustivel" value="#{cadVeic.novoVeic.combustivel}" styleClass="form-control" 
+				<h:selectOneMenu id="combustivel" value="#{cadVeic.nv.combustivel}" styleClass="form-control" 
 					required="true"  label="Combustível" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{combustivel}" value="#{cadVeic.combustiveis}" />
@@ -98,9 +99,9 @@
 			</div>	
 						
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmAquisicao" value="#{cadVeic.novoVeic.kmAquisicao}" styleClass="form-control" pt:placeholder="KM inicial"
-				 	required="true" maxlength="6"
-					 label="Km do veículo"/>
+				<p:inputMask id="kmAquisicao" mask="9?99999" value="#{cadVeic.nv.kmAquisicao}" styleClass="form-control"
+				 pt:placeholder="KM inicial" required="true"  label="Km do veículo">
+			 	</p:inputMask>
 			</div>			
 		</div>
 	</div>
@@ -112,52 +113,6 @@
 	</div>
 
 </h:form>
-
-		<div class="row" >
-			<h:dataTable id="tb_Veiculos" styleClass="table table-striped" value="#{cadVeic.veiCadastrados}"
-				var="veiculo" border="0" cellspacing="0" cellpadding="2"
-				  rendered="#{not empty cadVeic.veiCadastrados }" >
-				<f:facet name="header">Veículos recém-cadastrados</f:facet>
-				<h:column>
-					<f:facet name="header">Placa</f:facet>
-					<h:outputText value="#{veiculo.placa}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Marca</f:facet>
-					<h:outputText value="#{veiculo.marca}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Modelo</f:facet>
-					<h:outputText value="#{veiculo.modelo}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Ano</f:facet>
-					<h:outputText value="#{veiculo.ano}" >
-					</h:outputText>
-				</h:column>
-				<h:column>
-					<f:facet name="header">Categoria</f:facet>
-					<h:outputText value="#{veiculo.categoria}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Cor</f:facet>
-					<h:outputText value="#{veiculo.cor}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Combutível</f:facet>
-					<h:outputText value="#{veiculo.combustivel}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">KM inicial</f:facet>
-					<h:outputText value="#{veiculo.kmAquisicao}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Situacao</f:facet>
-					<h:outputText value="#{veiculo.situacao}"  />
-				</h:column>
-			 </h:dataTable>
-		</div><!-- Fim da ROW 3 -->
-
 
 </ui:define>
  </ui:composition>

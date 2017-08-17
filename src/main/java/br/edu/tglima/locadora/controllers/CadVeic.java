@@ -1,9 +1,6 @@
 package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,23 +20,32 @@ public class CadVeic implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private Veiculo novoVeic;
-	
-	//TODO Apagar isto, colocado apenas para teste
-	private List<Veiculo> veiCadastrados = new ArrayList<>();
-	
-	
+	private Veiculo nv;
 	
 	public void cadastrar(){
-		this.novoVeic.setKmInicial(getNovoVeic().getKmAquisicao());
-		this.novoVeic.setSituacao(OpSituacao.INOPERANTE);
+		this.nv.setKmInicial(getNv().getKmAquisicao());
+		this.nv.setSituacao(OpSituacao.INOPERANTE);
 		
 		FacesUtil.enviarMsgSucesso(null, "Veículo cadastrado com sucesso!");
-		
-		//TODO Apagar isto, colocado apenas para teste
-		this.veiCadastrados.add(novoVeic);
-		
-		this.novoVeic = new Veiculo();
+		exibirDadosInformados();
+		this.nv = new Veiculo();
+	}
+	
+	
+	
+	private void exibirDadosInformados(){
+		System.out.println("###########################################################");
+		System.out.println("                   Dados informados");
+		System.out.println("Placa: " + this.nv.getPlaca());
+		System.out.println("Marca: " + this.nv.getMarca());
+		System.out.println("Modelo: "+ this.nv.getModelo());
+		System.out.println("Categoria: "+ this.nv.getCategoria());
+		System.out.println("Cor: "+ this.nv.getCor());
+		System.out.println("Ano de fabricação: "+ this.nv.getAno());
+		System.out.println("Combustível: "+ this.nv.getCombustivel());
+		System.out.println("Km aquisição: "+ this.nv.getKmAquisicao());
+		System.out.println("Km inicial: "+ this.nv.getKmInicial());
+		System.out.println("###########################################################\n");
 	}
 
 	// Getters de acesso aos Enums
@@ -60,17 +66,9 @@ public class CadVeic implements Serializable {
 	}
 	
 //	Getters e Setters padrões
-	public Veiculo getNovoVeic() {
-		return novoVeic;
+	public Veiculo getNv() {
+		return nv;
 	}
-	
-	public List<Veiculo> getVeiCadastrados() {
-		return veiCadastrados;
-	}
-
-	public void setVeiCadastrados(List<Veiculo> veiCadastrados) {
-		this.veiCadastrados = veiCadastrados;
-	}
-	
+		
 
 }
