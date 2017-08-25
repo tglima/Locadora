@@ -1,4 +1,35 @@
-## Version 0.3.0 (Add Pagínas de cadastro)
+## Version 0.4.0 (Add Páginas de edição)
+
+Criada a classe controller responsável pela edição de clientes.
+- src/main/java/br/edu/tglima/locadora/controllers/**EditCliente.java**
+
+Criada a classe controller responsável pela edição de veículos.
+- src/main/java/br/edu/tglima/locadora/controllers/**EditVeic.java**
+
+Criada a classe controller responsável pela edição de funcionários.
+- src/main/java/br/edu/tglima/locadora/controllers/**EditFunc.java**
+
+Criada a página XHTML para realizar a edição de clientes.
+ - src/main/webapp/edicao/**cliente.xhtml**
+
+Criada a página XHTML para realizar a edição de veículos.
+ - src/main/webapp/edicao/**veiculo.xhtml**
+
+Criada a página XHTML para realizar a edição de funcionários.
+ - src/main/webapp/edicao/**funcionario.xhtml**
+
+Criadas as seguintes classes com métodos utilitários 
+- src/main/java/br/edu/tglima/locadora/util/**ClienteUtil.java**
+- src/main/java/br/edu/tglima/locadora/util/**FuncUtil.java**
+- src/main/java/br/edu/tglima/locadora/util/**TempoUtil.java**
+- src/main/java/br/edu/tglima/locadora/util/**VeiculoUtil.java**
+
+Outras melhorias
+- Melhorias nas seguintes classes controllers: **CadCliente.java**, **CadFunc.java** e **CadVeic.java**.
+- Melhorias nas seguintes páginas xhtml: cadastro/**cliente.xhtml**, cadastro/**veiculo.xhmtl** e **sidebar.xhtml** .
+
+
+## Version 0.3.0 (Add Páginas de cadastro)
 
  Criadas as seguintes classes e enums para representar os Models
  - **Superclasse Pessoa** src/main/java/br/edu/tglima/locadora/models/pessoa/**Pessoa.java**

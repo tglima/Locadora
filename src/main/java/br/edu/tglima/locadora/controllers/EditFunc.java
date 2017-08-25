@@ -2,10 +2,10 @@ package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.models.pessoa.TiposCargo;
@@ -14,26 +14,31 @@ import br.edu.tglima.locadora.util.FuncUtil;
 
 @Named
 @ViewScoped
-public class CadFunc implements Serializable {
+public class EditFunc implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Inject
-	private Funcionario nf;
-
+	private Funcionario sf;
 	private String confPassword;
 
-	public void cadastrar() {
-		if (this.nf.getPassword().equals(confPassword)) {
-			FacesUtil.enviarMsgSucesso(null, "Funcionário cadastrado com sucesso!");
-			System.out.println("::::::::::::::::::::::::::::::::::: FUNCIONÁRIO SALVO :::::::::::::::::::::::::::::::::::");
-			FuncUtil.exibirDadosNoConsole(nf);
+	@PostConstruct
+	public void init() {
+		sf = FuncUtil.criarFuncExemplo(sf);
+		System.out.println("::::::::::::::::::::::::::::::::: FUNCIONÁRIO CARREGADO :::::::::::::::::::::::::::::::::");
+		FuncUtil.exibirDadosNoConsole(sf);
+		confPassword = sf.getPassword();
+	}
+
+	public void salvarEdicao() {
+		if (this.sf.getPassword().equals(confPassword)) {
+			FacesUtil.enviarMsgSucesso(null, "Alterações no Funcionário salvas com sucesso!");
+			System.out.println(
+					"::::::::::::::::::::::::::::::::::: FUNCIONÁRIO SALVO :::::::::::::::::::::::::::::::::::");
+			FuncUtil.exibirDadosNoConsole(sf);
 		} else {
 			FacesUtil.enviarMsgErro(null, "As senhas informadas não são iguais!");
 		}
-		this.nf = new Funcionario();
 	}
-
 
 	// Getters de acesso aos Enums
 	public OpGeneros[] getGeneros() {
@@ -44,18 +49,20 @@ public class CadFunc implements Serializable {
 		return TiposCargo.values();
 	}
 
-	// Getter e Setters Padrões
-	public Funcionario getNf() {
-		return nf;
+	public Funcionario getSf() {
+		return sf;
+	}
+
+	public void setSf(Funcionario sf) {
+		this.sf = sf;
 	}
 
 	public String getConfPassword() {
 		return confPassword;
 	}
-	
+
 	public void setConfPassword(String confPassword) {
 		this.confPassword = confPassword;
 	}
-	
 
 }

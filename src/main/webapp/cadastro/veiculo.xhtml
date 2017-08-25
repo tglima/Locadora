@@ -73,9 +73,10 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-1">
-				<p:inputMask id="ano" mask="9999" value="#{cadVeic.nv.ano}" styleClass="form-control"  
-				pt:placeholder="Ano" required="true" label="Ano">
-				</p:inputMask>
+				<h:inputText id="ano" mask="9999" value="#{cadVeic.nv.ano}" styleClass="form-control"  
+				pt:placeholder="Ano" required="true" label="Ano" maxlength="4" validatorMessage="Informe um ano no intervalo entre 2010 e 2030">
+				<f:validateLongRange minimum="2010" maximum="2020"/>
+				</h:inputText>
 			</div>
 			
 		</div>
@@ -99,9 +100,10 @@
 			</div>	
 						
 			<div class="col-sm-2 col-lg-2">
-				<p:inputMask id="kmAquisicao" mask="9?99999" value="#{cadVeic.nv.kmAquisicao}" styleClass="form-control"
-				 pt:placeholder="KM inicial" required="true"  label="Km do veículo">
-			 	</p:inputMask>
+				<h:inputText id="kmAquisicao" value="#{cadVeic.nv.kmAquisicao}" styleClass="form-control"
+				 pt:placeholder="KM inicial" required="true"  label="Km do veículo" validatorMessage="Informe uma valor entre 0 e 999999">
+					<f:validateLongRange minimum="0" maximum="999999"/>
+			 	</h:inputText>
 			</div>			
 		</div>
 	</div>

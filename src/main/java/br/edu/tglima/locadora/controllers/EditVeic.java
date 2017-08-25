@@ -1,10 +1,10 @@
 package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
@@ -16,23 +16,26 @@ import br.edu.tglima.locadora.util.VeiculoUtil;
 
 @Named
 @ViewScoped
-public class CadVeic implements Serializable {
+public class EditVeic implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private Veiculo nv;
+	private Veiculo sv;
 	
-	public void cadastrar(){
-		this.nv.setKmInicial(getNv().getKmAquisicao());
-		this.nv.setSituacao(OpSituacao.INOPERANTE);
-		
-		FacesUtil.enviarMsgSucesso(null, "Veículo cadastrado com sucesso!");
-		System.out.println("::::::::::::::::::::::::::::::::::::: VEÍCULO SALVO :::::::::::::::::::::::::::::::::::::");
-		VeiculoUtil.exibirDadosNoConsole(this.nv);
-		this.nv = new Veiculo();
+	@PostConstruct
+	public void init(){
+		sv = VeiculoUtil.criarVeicExemplo(this.sv);
+		System.out.println("::::::::::::::::::::::::::::::::::: VEÍCULO CARREGADO :::::::::::::::::::::::::::::::::::");
+		VeiculoUtil.exibirDadosNoConsole(this.sv);
 	}
 	
+	public void salvarEdicao(){
+		FacesUtil.enviarMsgSucesso(null, "Alterações no Veículo salvas com sucesso!");
+		System.out.println("::::::::::::::::::::::::::::::::::::: VEÍCULO SALVO :::::::::::::::::::::::::::::::::::::");
+		VeiculoUtil.exibirDadosNoConsole(this.sv);
+	}
+		
 	// Getters de acesso aos Enums
 	public OpMarcas[] getMarcas() {
 		return OpMarcas.values();
@@ -50,10 +53,14 @@ public class CadVeic implements Serializable {
 		return OpCombustiveis.values();
 	}
 	
-//	Getters e Setters padrões
-	public Veiculo getNv() {
-		return nv;
+	public OpSituacao[] getSituacoes(){
+		OpSituacao[] opcoes = {OpSituacao.DISPONIVEL, OpSituacao.INOPERANTE, OpSituacao.MANUTENCAO};
+		return opcoes;
 	}
-		
+	
+//	Getters e Setters padrões
+	public Veiculo getSv() {
+		return sv;
+	}
 
 }

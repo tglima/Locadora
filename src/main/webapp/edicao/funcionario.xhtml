@@ -1,0 +1,142 @@
+<ui:composition template="../resources/layout/base-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+ 
+ 
+<ui:define name="titulo">Edição de funcionário</ui:define>
+<ui:define name="content-main">
+<h:form styleClass="form" id="editFunc">
+
+	<div class="row">
+		<div class="form-group">
+			<h:outputLabel value="Nº de Cadastro" for="id" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Data de Cadastro" for="DataCad" styleClass="col-sm-3 col-lg-2 control-label" />
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group">
+			<div class="col-sm-3 col-lg-2">
+				<h:inputText value="#{editFunc.sf.id}" id="id" styleClass="form-control" 
+						readonly="true" label="Nº de Cadastro" />
+			</div>
+			<div class="col-sm-3 col-lg-2">
+				<h:inputText value="#{editFunc.sf.dataCadastro}" id="DataCad" styleClass="form-control" 
+						readonly="true" label="Data de Cadastro">
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
+				</h:inputText>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-15">
+		<div class="form-group">
+			<h:outputLabel value="Nome" for="nome" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Sobrenome" for="sobrenome" styleClass="col-sm-6 col-lg-4 control-label" />
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group">
+			<div class="col-sm-3 col-lg-2">
+				<h:inputText id="nome" maxlength="20" value="#{editFunc.sf.nome}" 
+					styleClass="form-control" pt:placeholder="Luis" required="true" label="Nome" >
+					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+				</h:inputText>
+			</div>
+			
+			<div class="col-sm-6 col-lg-4">
+				<h:inputText id="sobrenome" maxlength="50" value="#{editFunc.sf.sobrenome}" 
+					styleClass="form-control" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
+					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+				</h:inputText>			
+			</div>
+		</div> 
+	</div>
+	
+	<div class="row mt-15">
+		<div class="form-group">
+			<h:outputLabel value="Gênero" for="Genero" styleClass="col-sm-3 col-lg-2 control-label" />		
+			<h:outputLabel value="Data de nascimento" for="Data-Nascimento" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Telefone principal" for="Telefone" styleClass="col-sm-5 col-lg-5 control-label" />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="form-group">
+			
+			<div class="col-sm-3 col-lg-2">
+				<h:selectOneMenu id="Genero" value="#{editFunc.sf.genero}" styleClass="form-control" 
+					required="true" label="Gênero" >
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+					<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
+						value="#{editFunc.generos}" />
+				</h:selectOneMenu>						
+			</div>
+
+			<div class="col-sm-3 col-lg-2">
+				<p:inputMask id="Data-Nascimento" value="#{editFunc.sf.dataNasc}"  mask="99/99/9999"
+					styleClass="form-control" placeholder="01/01/1990" required="true" label="Data de Nascimento">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</p:inputMask>			
+			</div>
+			
+			<div class="col-sm-3 col-lg-2">
+				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{editFunc.sf.telefone}" 
+					styleClass="form-control" maxlength="15" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" />
+			</div>		
+			
+		</div> 
+	</div>	
+
+	<div class="row mt-15">
+		<div class="form-group">
+			<h:outputLabel value="Cargo" for="Cargo" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Senha" for="Password" styleClass="col-sm-3 col-lg-2 control-label" />
+			<h:outputLabel value="Confirmar senha" for="ConfirmPassword" styleClass="col-sm-3 col-lg-2 control-label" />		
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="form-group">
+		
+			<div class="col-sm-3 col-lg-2">
+				<h:selectOneMenu id="Cargo" value="#{editFunc.sf.cargo}" styleClass="form-control" 
+					required="true" label="Cargo" >
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+					<f:selectItems var="cargo" itemLabel="#{cargo.label}" itemValue="#{cargo}"
+						value="#{editFunc.cargos}" />
+				</h:selectOneMenu>						
+			</div>		
+		
+			<div class="col-sm-3 col-lg-2">
+				<h:inputSecret  id="Password" value="#{editFunc.sf.password}" maxlength="8" redisplay="true"
+					styleClass="form-control" pt:placeholder="Informe uma senha" required="true" label="Senha"
+					validatorMessage="Informe uma senha entre 6 e 8 caracteres">
+				<f:validateLength minimum="6" maximum="8"/>
+				</h:inputSecret>
+			</div>
+			
+			<div class="col-sm-3 col-lg-2">
+				<h:inputSecret id="ConfirmPassword" value="#{editFunc.confPassword}" maxlength="8" redisplay="true"
+					styleClass="form-control" pt:placeholder="Repita a senha" required="true" label="Confirmação da senha"
+					validatorMessage="Repita a mesma senha digitada no campo senha. Lembre-se a senha deve ter entre 6 e 8 caracteres">
+					<f:validateLength minimum="6"/>
+				</h:inputSecret>			
+			</div>
+		</div> 
+	</div>
+	
+	<div class="row mt-15">
+		<div class="col-sm-11 col-lg-11">
+			<h:commandButton value="Salvar alterações" action="#{editFunc.salvarEdicao}" styleClass="btn btn-primary" />			
+		</div>
+	</div>
+	
+</h:form>
+
+</ui:define>
+ </ui:composition>
