@@ -8,6 +8,7 @@ public class Veiculo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	private Date dataCadastro;
 	private String placa;
 	private OpMarcas marca;
 	private String modelo;
@@ -15,11 +16,10 @@ public class Veiculo implements Serializable {
 	private OpCategorias categoria;
 	private OpCores cor;
 	private OpCombustiveis combustivel;
-	private Integer kmAquisicao;
 	private Integer kmInicial;
 	private Integer kmAtual;
-	private OpSituacao situacao;
-	private Date dataCadastro;
+	private OpStatus status;
+	private Double valorDiaria;
 
 	public Long getId() {
 		return id;
@@ -27,6 +27,14 @@ public class Veiculo implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	public String getPlaca() {
@@ -85,14 +93,6 @@ public class Veiculo implements Serializable {
 		this.combustivel = combustivel;
 	}
 
-	public Integer getKmAquisicao() {
-		return kmAquisicao;
-	}
-
-	public void setKmAquisicao(Integer kmAquisicao) {
-		this.kmAquisicao = kmAquisicao;
-	}
-
 	public Integer getKmInicial() {
 		return kmInicial;
 	}
@@ -109,20 +109,20 @@ public class Veiculo implements Serializable {
 		this.kmAtual = kmAtual;
 	}
 
-	public OpSituacao getSituacao() {
-		return situacao;
+	public OpStatus getStatus() {
+		return status;
 	}
 
-	public void setSituacao(OpSituacao situacao) {
-		this.situacao = situacao;
+	public void setStatus(OpStatus status) {
+		this.status = status;
 	}
 
-	public Date getDataCadastro() {
-		return dataCadastro;
+	public Double getValorDiaria() {
+		return valorDiaria;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setValorDiaria(Double valorDiaria) {
+		this.valorDiaria = valorDiaria;
 	}
 
 	@Override

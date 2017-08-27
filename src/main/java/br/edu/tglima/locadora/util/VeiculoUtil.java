@@ -4,7 +4,7 @@ import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpSituacao;
+import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 
 public class VeiculoUtil {
@@ -18,8 +18,7 @@ public class VeiculoUtil {
 		v.setCor(OpCores.PRETO);
 		v.setAno(2015);
 		v.setCombustivel(OpCombustiveis.FLEX);
-		v.setSituacao(OpSituacao.INOPERANTE);
-		v.setKmAquisicao(0);
+		v.setStatus(OpStatus.INOPERANTE);
 		v.setKmInicial(0);
 		v.setKmAtual(100);
 		v.setDataCadastro(TempoUtil.setDateLastMouth());
@@ -38,9 +37,8 @@ public class VeiculoUtil {
 		System.out.println("Cor: " + v.getCor());
 		System.out.println("Ano de fabricação: " + v.getAno());
 		System.out.println("Combustível: " + v.getCombustivel());
-		System.out.println("Situação atual do Veículo: " + v.getSituacao());
-		System.out.println("Km aquisição: " + v.getKmAquisicao());
-		System.out.println("Km Anterior: " + v.getKmInicial());
+		System.out.println("Situação atual do Veículo: " + v.getStatus());
+		System.out.println("Km Inicial: " + v.getKmInicial());
 		System.out.println("Km Atual: " + v.getKmAtual());
 		System.out
 				.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");

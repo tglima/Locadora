@@ -9,7 +9,7 @@ import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpSituacao;
+import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.util.FacesUtil;
 import br.edu.tglima.locadora.util.VeiculoUtil;
@@ -53,8 +53,8 @@ public class EditVeic implements Serializable {
 		return OpCombustiveis.values();
 	}
 	
-	public OpSituacao[] getSituacoes(){
-		OpSituacao[] opcoes = {OpSituacao.DISPONIVEL, OpSituacao.INOPERANTE, OpSituacao.MANUTENCAO};
+	public OpStatus[] getSituacoes(){
+		OpStatus[] opcoes = {OpStatus.DISPONIVEL, OpStatus.INOPERANTE, OpStatus.MANUTENCAO};
 		return opcoes;
 	}
 	

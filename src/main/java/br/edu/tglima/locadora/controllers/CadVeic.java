@@ -9,9 +9,10 @@ import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpSituacao;
+import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.util.FacesUtil;
+import br.edu.tglima.locadora.util.TempoUtil;
 import br.edu.tglima.locadora.util.VeiculoUtil;
 
 @Named
@@ -24,8 +25,10 @@ public class CadVeic implements Serializable {
 	private Veiculo nv;
 	
 	public void cadastrar(){
-		this.nv.setKmInicial(getNv().getKmAquisicao());
-		this.nv.setSituacao(OpSituacao.INOPERANTE);
+		this.nv.setId(2l);
+		this.nv.setDataCadastro(TempoUtil.setDateNow());
+		this.nv.setStatus(OpStatus.INOPERANTE);
+		this.nv.setKmAtual(this.nv.getKmInicial());
 		
 		FacesUtil.enviarMsgSucesso(null, "Veículo cadastrado com sucesso!");
 		System.out.println("::::::::::::::::::::::::::::::::::::: VEÍCULO SALVO :::::::::::::::::::::::::::::::::::::");

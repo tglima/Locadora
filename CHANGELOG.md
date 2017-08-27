@@ -1,3 +1,21 @@
+## Version 0.4.1 (Refatoração do Model Veiculo)
+
+Refatorada as seguintes classes:
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**Veiculo.java**
+- src/main/java/br/edu/tglima/locadora/util/**VeiculoUtil.java**
+- src/main/java/br/edu/tglima/locadora/controllers/**CadVeic.java**
+- src/main/java/br/edu/tglima/locadora/controllers/**EditVeic.java**
+
+Adicionado o seguinte enum:
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpStatus.java**
+
+Removido o seguinte enum:
+- src/main/java/br/edu/tglima/locadora/models/veiculo/**OpSituacao.java**
+
+Adaptadas as seguintes páginas XHTML:
+/cadastro/**veiculo.xhtml**
+/edicao/**veiculo.xhtml**
+
 ## Version 0.4.0 (Add Páginas de edição)
 
 Criada a classe controller responsável pela edição de clientes.

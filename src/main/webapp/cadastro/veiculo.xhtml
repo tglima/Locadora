@@ -85,7 +85,7 @@
 	<div class="row mt-15">
 		<div class="form-group">
 			<h:outputLabel value="Combustível" for="combustivel" styleClass="col-sm-3 col-lg-2 control-label" />		
-			<h:outputLabel value="KM do veículo" for="kmAquisicao" styleClass="col-sm-2 col-lg-2 control-label" />				
+			<h:outputLabel value="KM do veículo" for="kmInicial" styleClass="col-sm-2 col-lg-2 control-label" />				
 		</div>
 	</div>
 	
@@ -100,7 +100,7 @@
 			</div>	
 						
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmAquisicao" value="#{cadVeic.nv.kmAquisicao}" styleClass="form-control"
+				<h:inputText id="kmInicial" value="#{cadVeic.nv.kmInicial}" styleClass="form-control"
 				 pt:placeholder="KM inicial" required="true"  label="Km do veículo" validatorMessage="Informe uma valor entre 0 e 999999">
 					<f:validateLongRange minimum="0" maximum="999999"/>
 			 	</h:inputText>

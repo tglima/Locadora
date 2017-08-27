@@ -121,7 +121,7 @@
 				</h:selectOneMenu>
 			</div>	
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="situacao" value="#{editVeic.sv.situacao}" styleClass="form-control" 
+				<h:selectOneMenu id="situacao" value="#{editVeic.sv.status}" styleClass="form-control" 
 					required="true"  label="Situação do veículo" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{situacao}" value="#{editVeic.situacoes}" />
@@ -134,19 +134,13 @@
 	
 	<div class="row mt-15">
 		<div class="form-group">
-			<h:outputLabel value="Km Aquisição" for="kmAquisicao" styleClass="col-sm-2 col-lg-2 control-label" />				
-			<h:outputLabel value="Km Anterior" for="kmInicial" styleClass="col-sm-2 col-lg-2 control-label" />				
+			<h:outputLabel value="Km Inicial" for="kmInicial" styleClass="col-sm-2 col-lg-2 control-label" />				
 			<h:outputLabel value="Km Atual" for="kmAtual" styleClass="col-sm-2 col-lg-2 control-label" />		
 		</div>
 	</div>
 	
 	<div class="row">
 		<div class="form-group">
-			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmAquisicao" value="#{editVeic.sv.kmAquisicao}" styleClass="form-control"
-				 pt:placeholder="KM Aquisição" required="true"  label="Km Aquisição">
-			 	</h:inputText>
-			</div>			
 			
 			<div class="col-sm-2 col-lg-2">
 				<h:inputText id="kmInicial" mask="9?99999" value="#{editVeic.sv.kmInicial}" styleClass="form-control"
