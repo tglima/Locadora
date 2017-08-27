@@ -1,3 +1,6 @@
+## Version 0.4.2 (Refatoração do Model Funcionario)
+Removido o atributo booleano "online", da classe **Funcionario.java**
+
 ## Version 0.4.1 (Refatoração do Model Veiculo)
 
 Refatorada as seguintes classes:
