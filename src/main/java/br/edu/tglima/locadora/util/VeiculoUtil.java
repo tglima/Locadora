@@ -11,6 +11,7 @@ public class VeiculoUtil {
 
 	public final static Veiculo criarVeicExemplo(Veiculo v) {
 		v.setId(483237l);
+		v.setDataCadastro(TempoUtil.setDateLastMouth());
 		v.setPlaca("AAA-0000");
 		v.setMarca(OpMarcas.FORD);
 		v.setModelo("KA");
@@ -21,7 +22,7 @@ public class VeiculoUtil {
 		v.setStatus(OpStatus.INOPERANTE);
 		v.setKmInicial(0);
 		v.setKmAtual(100);
-		v.setDataCadastro(TempoUtil.setDateLastMouth());
+		v.setValorDiaria(18.30);
 		return v;
 	}
 
@@ -40,6 +41,7 @@ public class VeiculoUtil {
 		System.out.println("Situação atual do Veículo: " + v.getStatus());
 		System.out.println("Km Inicial: " + v.getKmInicial());
 		System.out.println("Km Atual: " + v.getKmAtual());
+		System.out.println("Valor da locação: R$ " + v.getValorDiaria());
 		System.out
 				.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
 	}

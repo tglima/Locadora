@@ -135,7 +135,8 @@
 	<div class="row mt-15">
 		<div class="form-group">
 			<h:outputLabel value="Km Inicial" for="kmInicial" styleClass="col-sm-2 col-lg-2 control-label" />				
-			<h:outputLabel value="Km Atual" for="kmAtual" styleClass="col-sm-2 col-lg-2 control-label" />		
+			<h:outputLabel value="Km Atual" for="kmAtual" styleClass="col-sm-2 col-lg-2 control-label" />
+			<h:outputLabel value="Valor da Diária" for="valorDiaria" styleClass="col-sm-3 col-lg-2 control-label" />				
 		</div>
 	</div>
 	
@@ -152,7 +153,20 @@
 				<h:inputText id="kmAtual" mask="9?99999" value="#{editVeic.sv.kmAtual}" styleClass="form-control"
 				 pt:placeholder="KM Atual" required="true"  label="Km atual do veículo">
 			 	</h:inputText>
-			</div>			
+			</div>
+			
+			<div class="col-sm-3 col-lg-2">
+				<div class="input-group">
+					<span class="input-group-addon">R$</span>
+					<h:inputText id="valorDiaria" value="#{editVeic.sv.valorDiaria}" styleClass="form-control"
+						pt:placeholder="40,25" title="Informe apenas o valor, exemplo: 15,00" required="true" 
+						label="Valor da Diária" converterMessage="Informe um valor númerico, por exemplo: 15,00" 
+						validatorMessage="Informe um valor entre 15,00 e 9.999,99">
+ 						<f:convertNumber pattern="#,##0.00"	minFractionDigits="2" locale="pt_BR" />
+						<f:validateDoubleRange minimum="15.00" maximum="9999.99" />
+				 	</h:inputText>
+				</div>
+			</div>
 		</div>
 	</div>
 

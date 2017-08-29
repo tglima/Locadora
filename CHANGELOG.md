@@ -1,3 +1,11 @@
+## 0.4.3 (Add input valorDiaria)
+Inclusão do campo input nas seguintes páginas xhtml:
+- /cadastro/**veiculo.xhtml**
+- /edicao/**veiculo.xhtml**
+
+Edição no método criarVeicExemplo da seguinte classe java:
+- /util/VeiculoUtil.java
+
 ## Version 0.4.2 (Refatoração do Model Funcionario)
 Removido o atributo booleano "online", da classe **Funcionario.java**
 
