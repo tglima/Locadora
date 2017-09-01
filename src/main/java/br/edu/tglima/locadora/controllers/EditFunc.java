@@ -15,8 +15,8 @@ import br.edu.tglima.locadora.util.FuncUtil;
 @Named
 @ViewScoped
 public class EditFunc implements Serializable {
-
 	private static final long serialVersionUID = 1L;
+	
 	@Inject
 	private Funcionario sf;
 	private String confPassword;
@@ -24,6 +24,7 @@ public class EditFunc implements Serializable {
 	@PostConstruct
 	public void init() {
 		sf = FuncUtil.criarFuncExemplo(sf);
+		sf = FuncUtil.fmtFuncToShow(sf);
 		System.out.println("::::::::::::::::::::::::::::::::: FUNCIONÁRIO CARREGADO :::::::::::::::::::::::::::::::::");
 		FuncUtil.exibirDadosNoConsole(sf);
 		confPassword = sf.getPassword();
@@ -34,6 +35,7 @@ public class EditFunc implements Serializable {
 			FacesUtil.enviarMsgSucesso(null, "Alterações no Funcionário salvas com sucesso!");
 			System.out.println(
 					"::::::::::::::::::::::::::::::::::: FUNCIONÁRIO SALVO :::::::::::::::::::::::::::::::::::");
+			FuncUtil.fmtFuncToSave(sf);
 			FuncUtil.exibirDadosNoConsole(sf);
 		} else {
 			FacesUtil.enviarMsgErro(null, "As senhas informadas não são iguais!");

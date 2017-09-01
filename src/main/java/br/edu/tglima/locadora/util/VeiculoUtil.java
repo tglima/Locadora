@@ -12,9 +12,9 @@ public class VeiculoUtil {
 	public final static Veiculo criarVeicExemplo(Veiculo v) {
 		v.setId(483237l);
 		v.setDataCadastro(TempoUtil.setDateLastMouth());
-		v.setPlaca("AAA-0000");
+		v.setPlaca("aaa-0000");
 		v.setMarca(OpMarcas.FORD);
-		v.setModelo("KA");
+		v.setModelo("ka");
 		v.setCategoria(OpCategorias.HATCH);
 		v.setCor(OpCores.PRETO);
 		v.setAno(2015);
@@ -45,5 +45,18 @@ public class VeiculoUtil {
 		System.out
 				.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
 	}
+	
+	public final static Veiculo fmtVeicToShow(Veiculo v){
+		v.setPlaca(v.getPlaca().toUpperCase());
+		v.setModelo(v.getModelo().toUpperCase());
+		return v;
+	}
+	
+	public final static Veiculo fmtVeicToSave(Veiculo v){
+		v.setPlaca(v.getPlaca().toLowerCase());
+		v.setModelo(v.getModelo().toLowerCase());
+		return v;
+	}
+	
 	
 }

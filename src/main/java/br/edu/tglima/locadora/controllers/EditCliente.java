@@ -23,12 +23,14 @@ public class EditCliente implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		sc = ClienteUtil.criarClienteExemplo(sc);
+		this.sc = ClienteUtil.criarClienteExemplo(this.sc);
+		this.sc = ClienteUtil.fmtClienteToShow(this.sc);
 		System.out.println("::::::::::::::::::::::::::::::::::: CLIENTE CARREGADO :::::::::::::::::::::::::::::::::::");
 		ClienteUtil.exibirDadosNoConsole(sc);
 	}
 
 	public void salvarEdicao() {
+		this.sc = ClienteUtil.fmtClienteToSave(this.sc);
 		FacesUtil.enviarMsgSucesso(null, "Alterações no Cliente salvas com sucesso!");
 		System.out.println("::::::::::::::::::::::::::::::::::::: CLIENTE SALVO :::::::::::::::::::::::::::::::::::::");
 		ClienteUtil.exibirDadosNoConsole(sc);

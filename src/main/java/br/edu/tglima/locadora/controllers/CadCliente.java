@@ -14,14 +14,13 @@ import br.edu.tglima.locadora.util.FacesUtil;
 @Named
 @ViewScoped
 public class CadCliente implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private Cliente nc;
 	
 	public void cadastrar(){
-		
+		this.nc = ClienteUtil.fmtClienteToSave(this.nc);
 		FacesUtil.enviarMsgSucesso(null, "Cliente cadastrado com sucesso!");
 		System.out.println("::::::::::::::::::::::::::::::::::::: CLIENTE SALVO :::::::::::::::::::::::::::::::::::::");
 		ClienteUtil.exibirDadosNoConsole(nc);

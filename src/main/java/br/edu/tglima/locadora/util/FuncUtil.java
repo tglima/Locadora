@@ -3,6 +3,7 @@ package br.edu.tglima.locadora.util;
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.models.pessoa.TiposCargo;
+import br.edu.tglima.util.StringUtil;
 
 public class FuncUtil {
 
@@ -35,4 +36,17 @@ public class FuncUtil {
 				.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
 	}
 
+	public final static Funcionario fmtFuncToShow(Funcionario f){
+		f.setNome(StringUtil.capitalizeFirstLetters(f.getNome()));
+		f.setSobrenome(StringUtil.capitalizeFirstLetters(f.getSobrenome()));
+		return f;
+	}
+	
+	public final static Funcionario fmtFuncToSave(Funcionario f){
+		f.setNome(f.getNome().toLowerCase());
+		f.setSobrenome(f.getSobrenome().toLowerCase());
+		return f;
+	}
+	
+	
 }

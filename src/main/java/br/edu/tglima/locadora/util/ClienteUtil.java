@@ -3,6 +3,7 @@ package br.edu.tglima.locadora.util;
 
 import br.edu.tglima.locadora.models.pessoa.Cliente;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
+import br.edu.tglima.util.StringUtil;
 
 public class ClienteUtil {
 	
@@ -32,7 +33,18 @@ public class ClienteUtil {
 		System.out.println("CNH: " + c.getHabilitacao());
 		System.out.println("Validade da CNH: " + c.getValidadeHab());
 		System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
-		
+	}
+	
+	public final static Cliente fmtClienteToShow(Cliente c){
+		c.setNome(StringUtil.capitalizeFirstLetters(c.getNome()));
+		c.setSobrenome(StringUtil.capitalizeFirstLetters(c.getSobrenome()));
+		return c;
+	}
+	
+	public final static Cliente fmtClienteToSave(Cliente c){
+		c.setNome(c.getNome().toLowerCase());
+		c.setSobrenome(c.getSobrenome().toLowerCase());
+		return c;
 	}
 
 }

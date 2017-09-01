@@ -29,7 +29,7 @@ public class CadVeic implements Serializable {
 		this.nv.setDataCadastro(TempoUtil.setDateNow());
 		this.nv.setStatus(OpStatus.INOPERANTE);
 		this.nv.setKmAtual(this.nv.getKmInicial());
-		
+		this.nv = VeiculoUtil.fmtVeicToSave(this.nv);
 		FacesUtil.enviarMsgSucesso(null, "Veículo cadastrado com sucesso!");
 		System.out.println("::::::::::::::::::::::::::::::::::::: VEÍCULO SALVO :::::::::::::::::::::::::::::::::::::");
 		VeiculoUtil.exibirDadosNoConsole(this.nv);

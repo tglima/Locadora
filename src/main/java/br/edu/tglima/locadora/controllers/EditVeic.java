@@ -26,6 +26,7 @@ public class EditVeic implements Serializable {
 	@PostConstruct
 	public void init(){
 		sv = VeiculoUtil.criarVeicExemplo(this.sv);
+		sv = VeiculoUtil.fmtVeicToShow(this.sv);
 		System.out.println("::::::::::::::::::::::::::::::::::: VEÍCULO CARREGADO :::::::::::::::::::::::::::::::::::");
 		VeiculoUtil.exibirDadosNoConsole(this.sv);
 	}
@@ -33,6 +34,7 @@ public class EditVeic implements Serializable {
 	public void salvarEdicao(){
 		FacesUtil.enviarMsgSucesso(null, "Alterações no Veículo salvas com sucesso!");
 		System.out.println("::::::::::::::::::::::::::::::::::::: VEÍCULO SALVO :::::::::::::::::::::::::::::::::::::");
+		sv = VeiculoUtil.fmtVeicToSave(this.sv);
 		VeiculoUtil.exibirDadosNoConsole(this.sv);
 	}
 		

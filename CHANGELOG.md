@@ -1,3 +1,20 @@
+## 0.4.4 (Add classe utilitária StringUtil)
+Criada a seguinte classe utilitária:
+- src/main/java/br/edu/tglima/util/**StringUtil.java**
+
+Adicionados métodos para facilitar a formatação dos atributos, padronizando a forma com que os dados serão salvos em BD, ou exibidos na tela. Classes alteradas:
+- /util/**VeiculoUtil.java**
+- /util/**FuncUtil.java**
+- /util/**ClienteUtil**
+
+Edição dos seguintes controllers para implementar os novos métodos desenvolvidos:
+- /controllers/**CadCliente.java**
+- /controllers/**CadFunc.java**
+- /controllers/**CadVeic.java**
+- /controllers/**EditCliente.java**
+- /controllers/**EditFunc.java**
+- /controllers/**EditVeic.java**
+
 ## 0.4.3 (Add input valorDiaria)
 Inclusão do campo input nas seguintes páginas xhtml:
 - /cadastro/**veiculo.xhtml**

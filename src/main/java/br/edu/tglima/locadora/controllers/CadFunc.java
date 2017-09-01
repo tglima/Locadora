@@ -15,7 +15,6 @@ import br.edu.tglima.locadora.util.FuncUtil;
 @Named
 @ViewScoped
 public class CadFunc implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -25,6 +24,7 @@ public class CadFunc implements Serializable {
 
 	public void cadastrar() {
 		if (this.nf.getPassword().equals(confPassword)) {
+			this.nf = FuncUtil.fmtFuncToSave(nf);
 			FacesUtil.enviarMsgSucesso(null, "Funcionário cadastrado com sucesso!");
 			System.out.println("::::::::::::::::::::::::::::::::::: FUNCIONÁRIO SALVO :::::::::::::::::::::::::::::::::::");
 			FuncUtil.exibirDadosNoConsole(nf);
