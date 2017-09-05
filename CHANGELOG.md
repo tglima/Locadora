@@ -1,3 +1,13 @@
+## 0.4.4.1 (Pequena melhoria nas classes Utilitárias)
+Melhorada as funções responsáveis pela formatação dos atributos antes deles serem salvos no BD.
+As seguintes classes foram alteradas:
+- /util/**VeiculoUtil.java**
+- /util/**FuncUtil.java**
+- /util/**ClienteUtil**
+
+Melhorias no código XHTML da seguinte página:
+- /cadastro/**veiculo.xhtml**
+
 ## 0.4.4 (Add classe utilitária StringUtil)
 Criada a seguinte classe utilitária:
 - src/main/java/br/edu/tglima/util/**StringUtil.java**

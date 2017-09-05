@@ -42,7 +42,9 @@ public class ClienteUtil {
 	}
 	
 	public final static Cliente fmtClienteToSave(Cliente c){
+		c.setNome(c.getNome().trim());
 		c.setNome(c.getNome().toLowerCase());
+		c.setSobrenome(c.getSobrenome().trim());
 		c.setSobrenome(c.getSobrenome().toLowerCase());
 		return c;
 	}

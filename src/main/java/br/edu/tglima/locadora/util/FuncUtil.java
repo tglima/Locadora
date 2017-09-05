@@ -43,7 +43,9 @@ public class FuncUtil {
 	}
 	
 	public final static Funcionario fmtFuncToSave(Funcionario f){
+		f.setNome(f.getNome().trim());
 		f.setNome(f.getNome().toLowerCase());
+		f.setSobrenome(f.getSobrenome().trim());
 		f.setSobrenome(f.getSobrenome().toLowerCase());
 		return f;
 	}

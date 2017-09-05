@@ -39,7 +39,8 @@
 
 			<div class="col-sm-2 col-lg-2">
 				<h:inputText id="modelo" value="#{cadVeic.nv.modelo}" styleClass="form-control" 
-					pt:placeholder="Modelo" required="true" label="Modelo" />
+					pt:placeholder="Modelo" required="true" label="Modelo" 
+					title="Informe o modelo do veículo conforme descrito no documento." />
 			</div>
 		
 		</div>
@@ -74,7 +75,9 @@
 
 			<div class="col-sm-2 col-lg-1">
 				<h:inputText id="ano" mask="9999" value="#{cadVeic.nv.ano}" styleClass="form-control"  
-				pt:placeholder="Ano" required="true" label="Ano" maxlength="4" validatorMessage="Informe um ano no intervalo entre 2010 e 2030">
+				pt:placeholder="Ano" required="true" label="Ano" maxlength="4" 
+				title="Informe o ano de fabricação do veículo. Exemplo: 2017"
+				validatorMessage="Informe um ano no intervalo entre 2010 e 2030">
 				<f:validateLongRange minimum="2010" maximum="2020"/>
 				</h:inputText>
 			</div>
@@ -102,7 +105,9 @@
 						
 			<div class="col-sm-2 col-lg-2">
 				<h:inputText id="kmInicial" value="#{cadVeic.nv.kmInicial}" styleClass="form-control"
-				 pt:placeholder="KM inicial" required="true"  label="Km do veículo" validatorMessage="Informe uma valor entre 0 e 999999">
+				 pt:placeholder="KM inicial" required="true"  label="Km do veículo" 
+				 title="Informe a KM do veículo no momento da compra."
+				 validatorMessage="KM inválida: Informe um valor entre 0 e 999999">
 					<f:validateLongRange minimum="0" maximum="999999"/>
 			 	</h:inputText>
 			</div>	
@@ -111,7 +116,7 @@
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
 					<h:inputText id="valorDiaria" value="#{cadVeic.nv.valorDiaria}" styleClass="form-control"
-						pt:placeholder="40,25" title="Informe apenas o valor, exemplo: 15,00" required="true" 
+						pt:placeholder="40,25" title="Informe apenas o valor. Exemplo: 15,00" required="true" 
 						label="Valor da Diária" converterMessage="Informe um valor númerico, por exemplo: 15,00" 
 						validatorMessage="Informe um valor entre 15,00 e 9.999,99">
 						<f:convertNumber pattern="#,##0.00"	minFractionDigits="2" locale="pt_BR" />

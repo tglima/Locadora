@@ -54,6 +54,7 @@ public class VeiculoUtil {
 	
 	public final static Veiculo fmtVeicToSave(Veiculo v){
 		v.setPlaca(v.getPlaca().toLowerCase());
+		v.setModelo(v.getModelo().trim());
 		v.setModelo(v.getModelo().toLowerCase());
 		return v;
 	}
