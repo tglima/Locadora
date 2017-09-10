@@ -1,3 +1,8 @@
+## 0.4.5 (Add Scripts MySQL)
+Dentro de **src/main/resources** foi criada uma pasta com scripts sql referentes a criação da base de dados e do usuário que iremos usar em nossa aplicação. Os scripts criados foram:
+- 01-criar-bd.sql
+- 02-criar-user-bd.sql
+
 ## 0.4.4.1 (Pequena melhoria nas classes Utilitárias)
 Melhorada as funções responsáveis pela formatação dos atributos antes deles serem salvos no BD.
 As seguintes classes foram alteradas:
