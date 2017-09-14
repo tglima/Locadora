@@ -1,3 +1,9 @@
+## 0.5.0 (Add suporte ao Hibernate e JPA)
+- Adicionadas as dependências do Hibernate e JPA ao arquivo **pom.xml**. 
+- Mapeada a classe **Veiculo.java**.
+- Criado o arquivo **persistence.xml**
+- Criada a classe **JPAUtil.java**.
+
 ## 0.4.5 (Add Scripts MySQL)
 Dentro de **src/main/resources** foi criada uma pasta com scripts sql referentes a criação da base de dados e do usuário que iremos usar em nossa aplicação. Os scripts criados foram:
 - 01-criar-bd.sql

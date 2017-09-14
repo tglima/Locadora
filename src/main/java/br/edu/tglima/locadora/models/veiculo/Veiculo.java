@@ -3,6 +3,24 @@ package br.edu.tglima.locadora.models.veiculo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+
+@Table(name = "tb_veiculo", 
+		uniqueConstraints=@UniqueConstraint(columnNames="PLACA", name = "plava_uk"))
+@Entity
+@SequenceGenerator(name = "VEIC_SEQ", sequenceName = "VEIC_SEQ", initialValue = 1000, allocationSize = 1)
 public class Veiculo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,6 +39,8 @@ public class Veiculo implements Serializable {
 	private OpStatus status;
 	private Double valorDiaria;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEIC_SEQ")
 	public Long getId() {
 		return id;
 	}
@@ -29,6 +49,8 @@ public class Veiculo implements Serializable {
 		this.id = id;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_cadastro", nullable=false)
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
@@ -37,6 +59,8 @@ public class Veiculo implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
+	
+	@Column(unique=true, nullable=false, length=8)
 	public String getPlaca() {
 		return placa;
 	}
@@ -45,6 +69,8 @@ public class Veiculo implements Serializable {
 		this.placa = placa;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	public OpMarcas getMarca() {
 		return marca;
 	}
@@ -53,6 +79,7 @@ public class Veiculo implements Serializable {
 		this.marca = marca;
 	}
 
+	@Column(nullable = false, length = 20)
 	public String getModelo() {
 		return modelo;
 	}
@@ -61,6 +88,7 @@ public class Veiculo implements Serializable {
 		this.modelo = modelo;
 	}
 
+	@Column(name= "ano_fabricacao", nullable = false, length = 4)
 	public Integer getAno() {
 		return ano;
 	}
@@ -69,6 +97,8 @@ public class Veiculo implements Serializable {
 		this.ano = ano;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	public OpCategorias getCategoria() {
 		return categoria;
 	}
@@ -77,6 +107,8 @@ public class Veiculo implements Serializable {
 		this.categoria = categoria;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	public OpCores getCor() {
 		return cor;
 	}
@@ -85,6 +117,8 @@ public class Veiculo implements Serializable {
 		this.cor = cor;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	public OpCombustiveis getCombustivel() {
 		return combustivel;
 	}
@@ -93,6 +127,7 @@ public class Veiculo implements Serializable {
 		this.combustivel = combustivel;
 	}
 
+	@Column(name="km_inicial", nullable = false, length = 6)
 	public Integer getKmInicial() {
 		return kmInicial;
 	}
@@ -101,6 +136,7 @@ public class Veiculo implements Serializable {
 		this.kmInicial = kmInicial;
 	}
 
+	@Column(name="km_atual", nullable = false, length = 6)
 	public Integer getKmAtual() {
 		return kmAtual;
 	}
@@ -109,6 +145,8 @@ public class Veiculo implements Serializable {
 		this.kmAtual = kmAtual;
 	}
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
 	public OpStatus getStatus() {
 		return status;
 	}
@@ -117,6 +155,7 @@ public class Veiculo implements Serializable {
 		this.status = status;
 	}
 
+	@Column(name="valor_diaria", nullable = false, precision = 10, scale = 2)
 	public Double getValorDiaria() {
 		return valorDiaria;
 	}
