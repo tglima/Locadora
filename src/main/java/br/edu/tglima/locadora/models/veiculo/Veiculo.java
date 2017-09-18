@@ -18,9 +18,8 @@ import javax.persistence.UniqueConstraint;
 
 
 @Table(name = "tb_veiculo", 
-		uniqueConstraints=@UniqueConstraint(columnNames="PLACA", name = "plava_uk"))
+		uniqueConstraints=@UniqueConstraint(columnNames = "placa", name = "placa_uk"))
 @Entity
-@SequenceGenerator(name = "VEIC_SEQ", sequenceName = "VEIC_SEQ", initialValue = 1000, allocationSize = 1)
 public class Veiculo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +39,7 @@ public class Veiculo implements Serializable {
 	private Double valorDiaria;
 
 	@Id
+	@SequenceGenerator(name = "VEIC_SEQ", sequenceName = "VEIC_SEQ", initialValue = 1000, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEIC_SEQ")
 	public Long getId() {
 		return id;

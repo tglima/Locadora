@@ -1,3 +1,15 @@
+## 0.5.1 (Add classe VeiculoRepository)
+- Editado o arquivo **pom.xml**. Trocada a versão do **weld-servlet** para resolver o problema de conflito entre o **jboss-logging** do Weld e do Hibernate 5.
+- Criado o método **setDefaultValues()** na classe **VeiculoUtil.java**. Método que defini atributos padrões a novos veículos que serão gravados no BD.
+- Removido o método **criarVeicExemplo()** da classe **VeiculoUtil.java** por não ser mais necessário.
+- Editada a classe **CadVeic.java**. Simplificação da classe e implementação do método responsável por fazer o registro no bd.
+- Editada a página **cadastro/veiculo.xhtml** para refletir as mudanças da classe **CadVeic.java**.
+- Editada a classe **EditVeic.java**. Foi removido o método que carregava um veículo fictício para ser "manipulado".
+- Renomeada a classe **JPAUtil.java** para  **JpaUtil.java**.
+- Editada a classe **Veiculo.java**. Feitas pequenas melhorias nas "annotations".
+- Editada o arquivo **persistence.xml**. Alterado o valor do **hibernate.hbm2ddl.auto** de **create** para **update**.
+- Criada a classe **VeiculoRepository.java**. Classe responsável por realizar as operações de CRUD da entidade **Veiculo**.
+
 ## 0.5.0 (Add suporte ao Hibernate e JPA)
 - Adicionadas as dependências do Hibernate e JPA ao arquivo **pom.xml**. 
 - Mapeada a classe **Veiculo.java**.
@@ -9,7 +21,7 @@ Dentro de **src/main/resources** foi criada uma pasta com scripts sql referentes
 - 01-criar-bd.sql
 - 02-criar-user-bd.sql
 
-## 0.4.4.1 (Pequena melhoria nas classes Utilitárias)
+## 0.4.4.1 (Pequenas melhorias nas classes Utilitárias)
 Melhorada as funções responsáveis pela formatação dos atributos antes deles serem salvos no BD.
 As seguintes classes foram alteradas:
 - /util/**VeiculoUtil.java**

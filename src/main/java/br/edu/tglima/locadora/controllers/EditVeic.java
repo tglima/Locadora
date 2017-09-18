@@ -5,12 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import br.edu.tglima.locadora.models.veiculo.OpCategorias;
-import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
-import br.edu.tglima.locadora.models.veiculo.OpCores;
-import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpStatus;
-import br.edu.tglima.locadora.models.veiculo.Veiculo;
+import br.edu.tglima.locadora.models.veiculo.*;
 import br.edu.tglima.locadora.util.FacesUtil;
 import br.edu.tglima.locadora.util.VeiculoUtil;
 
@@ -25,8 +20,6 @@ public class EditVeic implements Serializable {
 	
 	@PostConstruct
 	public void init(){
-		sv = VeiculoUtil.criarVeicExemplo(this.sv);
-		sv = VeiculoUtil.fmtVeicToShow(this.sv);
 		System.out.println("::::::::::::::::::::::::::::::::::: VEÍCULO CARREGADO :::::::::::::::::::::::::::::::::::");
 		VeiculoUtil.exibirDadosNoConsole(this.sv);
 	}
