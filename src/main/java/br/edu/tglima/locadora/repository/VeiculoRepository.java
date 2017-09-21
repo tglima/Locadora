@@ -12,72 +12,53 @@ import br.edu.tglima.locadora.util.VeiculoUtil;
 public class VeiculoRepository {
 
 	@Inject
-	Veiculo veiculo;
+	Veiculo veicJaCadastrado;
 
-	EntityManager entityManager = JpaUtil.getEntityManager();
+	EntityManager entityManager;
 
 	public void cadastrarNovo(Veiculo novoVeiculo) {
+		entityManager = JpaUtil.getEntityManagerRequest();
+		veicJaCadastrado = null;
+
 		novoVeiculo = VeiculoUtil.setDefaultValues(novoVeiculo);
+		
 		novoVeiculo = VeiculoUtil.fmtVeicToSave(novoVeiculo);
-		veiculo = null;
 
-		veiculo = buscarPorPlaca(novoVeiculo.getPlaca());
+		veicJaCadastrado = buscarPorPlaca(novoVeiculo.getPlaca());
 
-		if (veiculo != null) {
+		if (veicJaCadastrado != null) {
 
 			FacesUtil.enviarMsgErro(null, "Cadastro não realizado, já existe um veículo com a placa "
 					+ novoVeiculo.getPlaca() + " nos registros.");
 
 		} else {
 
-			if (!entityManager.isOpen()) {
-				entityManager = JpaUtil.getEntityManager();
-			}
-
 			try {
-				entityManager.getTransaction().begin();
 				entityManager.persist(novoVeiculo);
-				entityManager.getTransaction().commit();
 				FacesUtil.enviarMsgSucesso(null, "Veículo cadastrado com sucesso!");
 			} catch (Exception e) {
 				FacesUtil.enviarMsgErro(null,
 						"Erro ao realizar o cadastro, as informações fornecidas não foram salvas nos registros.");
 				e.printStackTrace();
-				if (entityManager.isOpen()) {
-					entityManager.getTransaction().rollback();
-				}
-			}
-
-			finally {
-				if (entityManager.isOpen()) {
-					entityManager.close();
-				}
 			}
 		}
 
 	}
 
 	public Veiculo buscarPorPlaca(String placa) {
+		entityManager = JpaUtil.getEntityManagerRequest();
 		Veiculo veicBuscado = null;
 
-		if (!entityManager.isOpen()) {
-			entityManager = JpaUtil.getEntityManager();
-		}
+		String sql = "SELECT v FROM Veiculo v WHERE v.placa = :placa";
 
 		try {
-			entityManager.getTransaction().begin();
-			String sql = "SELECT v FROM Veiculo v WHERE v.placa = :placa";
 			TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
 			query.setParameter("placa", placa);
 			veicBuscado = query.getSingleResult();
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 		}
 
-		if (entityManager.isOpen()) {
-			entityManager.close();
-		}
 		return veicBuscado;
 	}
 

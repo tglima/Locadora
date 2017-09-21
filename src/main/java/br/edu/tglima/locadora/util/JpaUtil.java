@@ -1,43 +1,39 @@
 package br.edu.tglima.locadora.util;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletRequest;
 
 public final class JpaUtil {
+
 	private static final String PERSISTENCE_UNIT_NAME = "LocadoraPU";
-	
-	private static ThreadLocal<EntityManager> threadEntityManager = 
-					new ThreadLocal<EntityManager>();
-	
-	private static EntityManagerFactory factory;
-	
-	
-	private JpaUtil(){}
-	
+
+	private static EntityManagerFactory entityManagerFactory;
+
+	public JpaUtil() {
+	}
+
 	public static EntityManagerFactory getEntityManagerFactory() {
-		if (factory == null) {
-			factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		if (entityManagerFactory == null) {
+			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		}
-		return factory;
+		return entityManagerFactory;
 	}
-	
-	public static EntityManager getEntityManager(){		
-		EntityManager entityManager = threadEntityManager.get();
-		
-		if (entityManager == null || !entityManager.isOpen()) {
-			entityManager = getEntityManagerFactory().createEntityManager();
-			threadEntityManager.set(entityManager);
-		}
-		
-		
-		return entityManager;
+
+	public static EntityManager getEntityManagerRequest() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+
+		return (EntityManager) request.getAttribute("entityManager");
 	}
-	
 
 	public static void shutdown() {
-		if (factory != null) {
-			factory.close();
+		if (entityManagerFactory != null) {
+			entityManagerFactory.close();
 		}
 	}
 

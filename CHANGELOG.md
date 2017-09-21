@@ -1,3 +1,8 @@
+## 0.5.2 (Add classe JpaFilter)
+- Criada a classe **JpaFilter** que será responsável por gerenciar as conexões com BD.
+- Editada a classe **JpaUtil.java**. Alteração nos métodos para funcionar com o "JpaFilter".	
+- Editada a classe **VeiculoRepository.java**. Adaptações para que os métodos peguem a "EntityManager" do "JpaFilter". Pequenas mudanças de nomeclatura nas variáveis para melhorar a leitura do código.
+
 ## 0.5.1 (Add classe VeiculoRepository)
 - Editado o arquivo **pom.xml**. Trocada a versão do **weld-servlet** para resolver o problema de conflito entre o **jboss-logging** do Weld e do Hibernate 5.
 - Criado o método **setDefaultValues()** na classe **VeiculoUtil.java**. Método que defini atributos padrões a novos veículos que serão gravados no BD.
