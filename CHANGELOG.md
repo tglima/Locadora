@@ -1,3 +1,10 @@
+## 0.5.3 (Refatorada a classe EditVeic para se integrar a classe VeiculoRepository)
+- A classe **EditVeic.java** foi refatorada deixando ficando muito mais simples e objetiva. Devido às mudanças na classe, a página **edicao/veiculo.xhtml** sofreu alterações para acompanhar o progresso do projeto.
+- Na classe **VeiculoRepository** foi implementado o método **buscarPorID**. Pequenas melhorias e correções também foram aplicadas.
+- As classes **JpaUtil.java** e **CadVeic.java** também receberam melhorias estruturais em seu código. 
+- A página **cadastro/veiculo.xhtml** também recebeu pequenas melhorias em seu código.
+
+
 ## 0.5.2 (Add classe JpaFilter)
 - Criada a classe **JpaFilter** que será responsável por gerenciar as conexões com BD.
 - Editada a classe **JpaUtil.java**. Alteração nos métodos para funcionar com o "JpaFilter".	

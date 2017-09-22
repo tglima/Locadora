@@ -13,9 +13,6 @@ public final class JpaUtil {
 
 	private static EntityManagerFactory entityManagerFactory;
 
-	public JpaUtil() {
-	}
-
 	public static EntityManagerFactory getEntityManagerFactory() {
 		if (entityManagerFactory == null) {
 			entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

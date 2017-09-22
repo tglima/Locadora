@@ -104,10 +104,10 @@
 			</div>	
 						
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmInicial" value="#{cadVeic.novoVeiculo.kmInicial}" styleClass="form-control"
+				<h:inputText id="kmInicial" maxlength="6" value="#{cadVeic.novoVeiculo.kmInicial}" styleClass="form-control"
 				 pt:placeholder="KM inicial" required="true"  label="Km do veículo" 
 				 title="Informe a KM do veículo no momento da compra."
-				 validatorMessage="KM inválida: Informe um valor entre 0 e 999999">
+				 validatorMessage="KM inicial inválida: Informe um valor entre 0 e 999999">
 					<f:validateLongRange minimum="0" maximum="999999"/>
 			 	</h:inputText>
 			</div>	

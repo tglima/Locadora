@@ -22,11 +22,11 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText value="#{editVeic.sv.id}" id="id" styleClass="form-control" 
+				<h:inputText value="#{editVeic.veicParaEdicao.id}" id="id" styleClass="form-control" 
 						readonly="true" label="Nº de Cadastro" />
 			</div>
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText value="#{editVeic.sv.dataCadastro}" id="DataCad" styleClass="form-control" 
+				<h:inputText value="#{editVeic.veicParaEdicao.dataCadastro}" id="DataCad" styleClass="form-control" 
 						readonly="true" label="Data de Cadastro">
 						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
 				</h:inputText>
@@ -46,12 +46,12 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="placa" mask="aaa-9999" value="#{editVeic.sv.placa}"
+				<p:inputMask id="placa" mask="aaa-9999" value="#{editVeic.veicParaEdicao.placa}"
 				 	styleClass="form-control" pt:placeholder="Placa:" required="true" label="Placa" />
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="marcaVeic" value="#{editVeic.sv.marca}" styleClass="form-control" 
+				<h:selectOneMenu id="marcaVeic" value="#{editVeic.veicParaEdicao.marca}" styleClass="form-control" 
 					required="true" label="Marca" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="marca" itemLabel="#{marca.label}" itemValue="#{marca}"
@@ -60,7 +60,7 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="modelo" value="#{editVeic.sv.modelo}" styleClass="form-control" 
+				<h:inputText id="modelo" value="#{editVeic.veicParaEdicao.modelo}" styleClass="form-control" 
 					pt:placeholder="Modelo" required="true" label="Modelo" />
 			</div>
 		
@@ -79,7 +79,7 @@
 		<div class="form-group">
 			
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="catVeic" value="#{editVeic.sv.categoria}" styleClass="form-control" 
+				<h:selectOneMenu id="catVeic" value="#{editVeic.veicParaEdicao.categoria}" styleClass="form-control" 
 					required="true" label="Categoria">
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{categoria}" value="#{editVeic.categorias}" />
@@ -87,7 +87,7 @@
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="cor" value="#{editVeic.sv.cor}" styleClass="form-control" 
+				<h:selectOneMenu id="cor" value="#{editVeic.veicParaEdicao.cor}" styleClass="form-control" 
 					required="true" label="Cor">
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cor" itemLabel="#{cor.label}" itemValue="#{cor}" value="#{editVeic.cores}" />
@@ -95,7 +95,7 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-1">
-				<h:inputText id="ano" mask="9999" value="#{editVeic.sv.ano}" styleClass="form-control"  
+				<h:inputText id="ano" mask="9999" value="#{editVeic.veicParaEdicao.ano}" styleClass="form-control"  
 				pt:placeholder="Ano" required="true" label="Ano" validatorMessage="Informe um ano no intervalo entre 2010 e 2030">
 				<f:validateLongRange minimum="2010" maximum="2020"/>
 				</h:inputText>
@@ -114,14 +114,14 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="combustivel" value="#{editVeic.sv.combustivel}" styleClass="form-control" 
+				<h:selectOneMenu id="combustivel" value="#{editVeic.veicParaEdicao.combustivel}" styleClass="form-control" 
 					required="true"  label="Combustível" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{combustivel}" value="#{editVeic.combustiveis}" />
 				</h:selectOneMenu>
 			</div>	
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="situacao" value="#{editVeic.sv.status}" styleClass="form-control" 
+				<h:selectOneMenu id="situacao" value="#{editVeic.veicParaEdicao.status}" styleClass="form-control" 
 					required="true"  label="Situação do veículo" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{situacao}" value="#{editVeic.situacoes}" />
@@ -144,13 +144,13 @@
 		<div class="form-group">
 			
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmInicial" mask="9?99999" value="#{editVeic.sv.kmInicial}" styleClass="form-control"
+				<h:inputText id="kmInicial" maxlength="6" value="#{editVeic.veicParaEdicao.kmInicial}" styleClass="form-control"
 				 pt:placeholder="KM Anterior" required="true"  label="Km Anterior do veículo">
 			 	</h:inputText>
 			</div>			
 			
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmAtual" mask="9?99999" value="#{editVeic.sv.kmAtual}" styleClass="form-control"
+				<h:inputText id="kmAtual" maxlength="6" value="#{editVeic.veicParaEdicao.kmAtual}" styleClass="form-control"
 				 pt:placeholder="KM Atual" required="true"  label="Km atual do veículo">
 			 	</h:inputText>
 			</div>
@@ -158,7 +158,7 @@
 			<div class="col-sm-3 col-lg-2">
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<h:inputText id="valorDiaria" value="#{editVeic.sv.valorDiaria}" styleClass="form-control"
+					<h:inputText id="valorDiaria" value="#{editVeic.veicParaEdicao.valorDiaria}" styleClass="form-control"
 						pt:placeholder="40,25" title="Informe apenas o valor, exemplo: 15,00" required="true" 
 						label="Valor da Diária" converterMessage="Informe um valor númerico, por exemplo: 15,00" 
 						validatorMessage="Informe um valor entre 15,00 e 9.999,99">

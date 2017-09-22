@@ -19,13 +19,13 @@ public class CadVeic implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	Veiculo novoVeiculo;
+	private Veiculo novoVeiculo;
 
 	@Inject
-	VeiculoRepository veiculoRepository;
+	private VeiculoRepository repository;
 
 	public void cadastrar() {
-		veiculoRepository.cadastrarNovo(this.novoVeiculo);
+		repository.cadastrarNovo(this.novoVeiculo);
 		this.novoVeiculo = null;
 	}
 
