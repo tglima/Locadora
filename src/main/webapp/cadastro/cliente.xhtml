@@ -12,7 +12,6 @@
 
 <h:form styleClass="form" id="CadCliente">
 
-
 	<div class="row">
 		<div class="form-group">
 			<h:outputLabel value="Nome" for="nome" styleClass="col-sm-3 col-lg-2 control-label" />
@@ -24,15 +23,13 @@
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
 				<h:inputText id="nome" maxlength="20" value="#{cadCliente.nc.nome}" 
-					styleClass="form-control" pt:placeholder="Luis" required="true" label="Nome">
-					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+					styleClass="form-control name" pt:placeholder="Luis" required="true" label="Nome">
 				</h:inputText>
 			</div>
 			
 			<div class="col-sm-6 col-lg-4">
 				<h:inputText id="sobrenome" maxlength="50" value="#{cadCliente.nc.sobrenome}" 
-					styleClass="form-control" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
-					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+					styleClass="form-control lastName" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
 				</h:inputText>			
 			</div>
 		</div> 
@@ -85,10 +82,10 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="Habilitacao" value="#{cadCliente.nc.habilitacao}" maxlength="11"
-					styleClass="form-control" placeholder="01010101010" required="true" label="Carteira de Habilitação"
+				<h:inputText id="Habilitacao" value="#{cadCliente.nc.habilitacao}"  maxlength="11"
+					styleClass="form-control soNumeros" pt:placeholder="01010101010" required="true" label="Carteira de Habilitação"
 					validatorMessage="Informe os 11 números correspondes a CNH do cliente">
-					<f:validateRegex pattern="^[0-9]+$"/>
+					<f:validateLength minimum="11"/>
 				</h:inputText>
 			</div>
 			

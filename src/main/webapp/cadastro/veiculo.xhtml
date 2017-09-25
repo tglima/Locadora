@@ -38,7 +38,7 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="modelo" value="#{cadVeic.novoVeiculo.modelo}" styleClass="form-control" 
+				<h:inputText id="modelo" value="#{cadVeic.novoVeiculo.modelo}" styleClass="form-control modelo" 
 					pt:placeholder="Modelo" required="true" label="Modelo" 
 					title="Informe o modelo do veículo conforme descrito no documento." />
 			</div>
@@ -74,11 +74,11 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-1">
-				<h:inputText id="ano" mask="9999" value="#{cadVeic.novoVeiculo.ano}" styleClass="form-control"  
+				<h:inputText id="ano" mask="9999" value="#{cadVeic.novoVeiculo.ano}" styleClass="form-control soNumeros"  
 				pt:placeholder="Ano" required="true" label="Ano" maxlength="4" 
 				title="Informe o ano de fabricação do veículo. Exemplo: 2017"
-				validatorMessage="Informe um ano no intervalo entre 2010 e 2030">
-				<f:validateLongRange minimum="2010" maximum="2020"/>
+				validatorMessage="Informe um ano no intervalo entre 2010 e 2018">
+				<f:validateLongRange minimum="2010" maximum="2018"/>
 				</h:inputText>
 			</div>
 			
@@ -104,7 +104,7 @@
 			</div>	
 						
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmInicial" maxlength="6" value="#{cadVeic.novoVeiculo.kmInicial}" styleClass="form-control"
+				<h:inputText id="kmInicial" maxlength="6" value="#{cadVeic.novoVeiculo.kmInicial}" styleClass="form-control soNumeros"
 				 pt:placeholder="KM inicial" required="true"  label="Km do veículo" 
 				 title="Informe a KM do veículo no momento da compra."
 				 validatorMessage="KM inicial inválida: Informe um valor entre 0 e 999999">
@@ -115,10 +115,10 @@
 			<div class="col-sm-3 col-lg-2">
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<h:inputText id="valorDiaria" value="#{cadVeic.novoVeiculo.valorDiaria}" styleClass="form-control"
-						pt:placeholder="40,25" title="Informe apenas o valor. Exemplo: 15,00" required="true" 
-						label="Valor da Diária" converterMessage="Informe um valor númerico, por exemplo: 15,00" 
-						validatorMessage="Informe um valor entre 15,00 e 9.999,99">
+					<h:inputText id="valorDiaria" value="#{cadVeic.novoVeiculo.valorDiaria}" styleClass="form-control moeda"
+						pt:placeholder="40,25" title="Informe apenas o valor. Exemplo: 15,00" maxlength="8" required="true" 
+						label="Valor da Diária"
+						validatorMessage="O valor da diária deve ser entre 15,00 e 9.999,99">
 						<f:convertNumber pattern="#,##0.00"	minFractionDigits="2" locale="pt_BR" />
 						<f:validateDoubleRange minimum="15.00" maximum="9999.99" />
 				 	</h:inputText>

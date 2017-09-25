@@ -6,7 +6,7 @@
  xmlns:f="http://xmlns.jcp.org/jsf/core"
  xmlns:p="http://primefaces.org/ui">
  
- 
+
 <ui:define name="titulo">Edição de funcionário</ui:define>
 <ui:define name="content-main">
 <h:form styleClass="form" id="editFunc">
@@ -43,15 +43,13 @@
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
 				<h:inputText id="nome" maxlength="20" value="#{editFunc.sf.nome}" 
-					styleClass="form-control" pt:placeholder="Luis" required="true" label="Nome" >
-					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+					styleClass="form-control name" pt:placeholder="Luis" required="true" label="Nome" >
 				</h:inputText>
 			</div>
 			
 			<div class="col-sm-6 col-lg-4">
 				<h:inputText id="sobrenome" maxlength="50" value="#{editFunc.sf.sobrenome}" 
-					styleClass="form-control" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
-					<f:validateRegex pattern="[A-Za-zÀ-ú ]*" />
+					styleClass="form-control lastName" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
 				</h:inputText>			
 			</div>
 		</div> 

@@ -10,16 +10,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<h:outputStylesheet name="css/bootstrap.min.css" />
 	<h:outputStylesheet name="css/style.css" />
-	<h:outputScript name="jquery/jquery-2.2.4.js" />
 	<h:outputScript name="js/bootstrap.min.js" />
+	<h:outputScript name="js/jquery.priceformat.js" />
     <title><ui:insert name="titulo">Painel Administrativo</ui:insert></title>
 
-	<!-- Script adicionado para resolver o conflito entre o bootstrap e o primefaces -->
-    <script>
-        $a = jQuery.noConflict();
-        $a(document).ready(function() {        
-        });
-    </script>
+
 
 
 </h:head>
@@ -40,10 +35,12 @@
 		
 		<!-- Responsável por carregar a área de conteúdo dinâmico da página -->
 		<ui:insert name="content-main" />
-
 	
 	</div><!-- FIM DO CONTENT-WRAPPER -->	
 	
+	<h:outputScript name="js/inputScript.js" />
+	<script>
+	</script>
 
 </h:body>
 </html>

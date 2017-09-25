@@ -10,7 +10,7 @@ import br.edu.tglima.locadora.util.VeiculoUtil;
 
 public class VeiculoRepository {
 
-	EntityManager entityManager;
+	private EntityManager entityManager;
 
 	public void cadastrarNovo(Veiculo novoVeiculo) {
 		entityManager = JpaUtil.getEntityManagerRequest();
@@ -82,4 +82,5 @@ public class VeiculoRepository {
 		return veicEditado;
 	}
 
+	
 }

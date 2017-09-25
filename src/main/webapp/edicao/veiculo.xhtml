@@ -60,7 +60,7 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="modelo" value="#{editVeic.veicParaEdicao.modelo}" styleClass="form-control" 
+				<h:inputText id="modelo" value="#{editVeic.veicParaEdicao.modelo}" styleClass="form-control modelo" 
 					pt:placeholder="Modelo" required="true" label="Modelo" />
 			</div>
 		
@@ -95,9 +95,9 @@
 			</div>
 
 			<div class="col-sm-2 col-lg-1">
-				<h:inputText id="ano" mask="9999" value="#{editVeic.veicParaEdicao.ano}" styleClass="form-control"  
-				pt:placeholder="Ano" required="true" label="Ano" validatorMessage="Informe um ano no intervalo entre 2010 e 2030">
-				<f:validateLongRange minimum="2010" maximum="2020"/>
+				<h:inputText id="ano" mask="9999" value="#{editVeic.veicParaEdicao.ano}" styleClass="form-control soNumeros"  
+				pt:placeholder="Ano" required="true" label="Ano" validatorMessage="Informe um ano no intervalo entre 2010 e 2018">
+				<f:validateLongRange minimum="2010" maximum="2018"/>
 				</h:inputText>
 			</div>
 			
@@ -144,13 +144,13 @@
 		<div class="form-group">
 			
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmInicial" maxlength="6" value="#{editVeic.veicParaEdicao.kmInicial}" styleClass="form-control"
+				<h:inputText id="kmInicial" maxlength="6" value="#{editVeic.veicParaEdicao.kmInicial}" styleClass="form-control soNumeros"
 				 pt:placeholder="KM Anterior" required="true"  label="Km Anterior do veículo">
 			 	</h:inputText>
 			</div>			
 			
 			<div class="col-sm-2 col-lg-2">
-				<h:inputText id="kmAtual" maxlength="6" value="#{editVeic.veicParaEdicao.kmAtual}" styleClass="form-control"
+				<h:inputText id="kmAtual" maxlength="6" value="#{editVeic.veicParaEdicao.kmAtual}" styleClass="form-control soNumeros"
 				 pt:placeholder="KM Atual" required="true"  label="Km atual do veículo">
 			 	</h:inputText>
 			</div>
@@ -158,10 +158,10 @@
 			<div class="col-sm-3 col-lg-2">
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<h:inputText id="valorDiaria" value="#{editVeic.veicParaEdicao.valorDiaria}" styleClass="form-control"
-						pt:placeholder="40,25" title="Informe apenas o valor, exemplo: 15,00" required="true" 
+					<h:inputText id="valorDiaria" value="#{editVeic.veicParaEdicao.valorDiaria}" styleClass="form-control moeda"
+						pt:placeholder="40,25" title="Informe apenas o valor, exemplo: 15,00" required="true" maxlength="8"
 						label="Valor da Diária" converterMessage="Informe um valor númerico, por exemplo: 15,00" 
-						validatorMessage="Informe um valor entre 15,00 e 9.999,99">
+						validatorMessage="O valor da diária deve ser entre 15,00 e 9.999,99">
  						<f:convertNumber pattern="#,##0.00"	minFractionDigits="2" locale="pt_BR" />
 						<f:validateDoubleRange minimum="15.00" maximum="9999.99" />
 				 	</h:inputText>
