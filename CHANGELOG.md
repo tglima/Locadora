@@ -1,25 +1,50 @@
+## 0.5.5 (Refatorada a classe Cliente para se integrar ao banco de dados)
+
+- Alteração na classe **Cliente.java**. Agora ela está mapeada se tornando uma entidade.
+
+- Criada a classe **ClienteRepository.java**. Classe responsável por realizar as operações de CRUD da entidade **Cliente**.
+
+- As classes: **CadCliente.java** e **EditCliente.java**, foram alteradas para realizar suas devidas operações no banco de dados.  
+
+- As páginas xhtml: **/cadastro/cliente.xhtml** e **/edicao/cliente.xhtml**, foram modificadas para atenderem as mudanças feitas CadCliente.java e EditCliente.java .
+
+- A classe **ClienteUtil.java** foi remodelada para melhor atender a aplicação.
+
+- Pequenas melhorias foram feitas nas seguintes classes:
+	- **CadVeic.java**
+	- **EditVeic.java**
+	- **VeiculoRepository.java**
+
 ## 0.5.4 (Adicionado javascripts para melhorar o controle dos inputs)
 - Editado o arquivo **pom.xml** para substituir a versão do Driver MySQL por uma versão mais recente.
+
 - Criado o arquivo **inputScript.js**. Arquivo responsável por controlar os campos Inputs da aplicação.
+
 - Adicionado o arquivo **jquery.priceformat.js**. Arquivo responsável por formatar corretamente inputs relacionados a dinheiro.
 - Editado o arquivo **base-layout.xhtml**:
 	- Removido o acesso ao script **jquery-2.2.4.js**.
 	- Adicionado o acesso ao script **inputScript.js**.
 - Editado o arquivo **VeiculoRepository.java**, alterado o modificador de acesso do atributo **entityManager** para *private*.
 - Alteradas as páginas XHTML para que os seus inputs sejam controlados pelos scripts js.
-	- Lista das páginas alteradas: **/cadastro/cliente.xhtml** - **/cadastro/funcionario.xhtml** - **/cadastro/veiculo.xhtml** - **/edicao/cliente.xhtml** - **/edicao/funcionario.xhtml** - **/edicao/veiculo.xhtml**.
-	
-	
+	- Lista das páginas alteradas:
+		- **/cadastro/cliente.xhtml**.
+		- **/cadastro/funcionario.xhtml**.
+		- **/cadastro/veiculo.xhtml**.
+		- **/edicao/cliente.xhtml**.
+		- **/edicao/funcionario.xhtml**.
+		- **/edicao/veiculo.xhtml**.
+
+
 ## 0.5.3 (Refatorada a classe EditVeic para se integrar a classe VeiculoRepository)
 - A classe **EditVeic.java** foi refatorada deixando ficando muito mais simples e objetiva. Devido às mudanças na classe, a página **edicao/veiculo.xhtml** sofreu alterações para acompanhar o progresso do projeto.
 - Na classe **VeiculoRepository** foi implementado o método **buscarPorID**. Pequenas melhorias e correções também foram aplicadas.
-- As classes **JpaUtil.java** e **CadVeic.java** também receberam melhorias estruturais em seu código. 
+- As classes **JpaUtil.java** e **CadVeic.java** também receberam melhorias estruturais em seu código.
 - A página **cadastro/veiculo.xhtml** também recebeu pequenas melhorias em seu código.
 
 
 ## 0.5.2 (Add classe JpaFilter)
 - Criada a classe **JpaFilter** que será responsável por gerenciar as conexões com BD.
-- Editada a classe **JpaUtil.java**. Alteração nos métodos para funcionar com o "JpaFilter".	
+- Editada a classe **JpaUtil.java**. Alteração nos métodos para funcionar com o "JpaFilter".
 - Editada a classe **VeiculoRepository.java**. Adaptações para que os métodos peguem a "EntityManager" do "JpaFilter". Pequenas mudanças de nomeclatura nas variáveis para melhorar a leitura do código.
 
 ## 0.5.1 (Add classe VeiculoRepository)
@@ -35,7 +60,7 @@
 - Criada a classe **VeiculoRepository.java**. Classe responsável por realizar as operações de CRUD da entidade **Veiculo**.
 
 ## 0.5.0 (Add suporte ao Hibernate e JPA)
-- Adicionadas as dependências do Hibernate e JPA ao arquivo **pom.xml**. 
+- Adicionadas as dependências do Hibernate e JPA ao arquivo **pom.xml**.
 - Mapeada a classe **Veiculo.java**.
 - Criado o arquivo **persistence.xml**
 - Criada a classe **JPAUtil.java**.
@@ -121,7 +146,7 @@ Criada a página XHTML para realizar a edição de veículos.
 Criada a página XHTML para realizar a edição de funcionários.
  - src/main/webapp/edicao/**funcionario.xhtml**
 
-Criadas as seguintes classes com métodos utilitários 
+Criadas as seguintes classes com métodos utilitários
 - src/main/java/br/edu/tglima/locadora/util/**ClienteUtil.java**
 - src/main/java/br/edu/tglima/locadora/util/**FuncUtil.java**
 - src/main/java/br/edu/tglima/locadora/util/**TempoUtil.java**
@@ -140,16 +165,16 @@ Outras melhorias
  - **Subclasse Cliente** src/main/java/br/edu/tglima/locadora/models/pessoa/**TiposCargo.java**
  - **Subclasse Funcionario** src/main/java/br/edu/tglima/locadora/models/pessoa/**Funcionario.java**
  - **Enum TiposCargo** src/main/java/br/edu/tglima/locadora/models/pessoa/**TiposCargo.java**
- 
+
  Criada a classe controller responsável pelo cadastro de clientes.
  - src/main/java/br/edu/tglima/locadora/controllers/**CadCliente.java**
- 
+
  Criada a classe controller responsável pelo cadastro de funcionários.
  - src/main/java/br/edu/tglima/locadora/controllers/**CadFunc.java**
 
  Criada a página XHTML para realizar o cadastro de clientes.
  - src/main/webapp/cadastro/**cliente.xhtml**
- 
+
  Criada a página XHTML para realizar o cadastro de funcionários.
  - src/main/webapp/cadastro/**funcionario.xhtml**
 
@@ -159,7 +184,7 @@ Outras melhorias
  - Editado o arquivo **veiculo.xhtml**. Removida a tabela com os veículos recém cadastrados.
  - Editado o arquivo **CadVeic.java**. Removido a função que adiciona os veículos cadastrados em uma lista.
  - Editado o arquivo **web.xml**. Adicionado parâmetro para que a aplicação utilize o mesmo fuso horário do sistema operacional do servidor na qual ela está hospedada.
- 
+
 
 ## Version 0.2.0 (Add Model Veiculo e suporte ao PrimeFaces)
 
@@ -234,7 +259,3 @@ Adicionadas as dependências básicas
 - JSF API
 - CDI
 - Jandex
-
-
-
-

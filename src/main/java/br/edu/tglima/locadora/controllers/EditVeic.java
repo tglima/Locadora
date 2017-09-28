@@ -1,7 +1,6 @@
 package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -28,9 +27,10 @@ public class EditVeic implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		// TODO O veículo a ser editado, deve ser passado por parâmetro.
-		// Nesta fase, irei carregar um veículo específico do BD.
-		// Futuramente isto será substituído.
+		/* TODO
+		 * O veículo a ser editado, será passado por parâmetro e carregado aqui.
+		 * Por enquanto será carregado um veículo específico do BD.
+		 */ 
 		veicParaEdicao = repository.buscarPorId((long) 1000);
 	}
 

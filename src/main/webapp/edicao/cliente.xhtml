@@ -22,11 +22,11 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText value="#{editCliente.sc.id}" id="id" styleClass="form-control" 
+				<h:inputText value="#{editCliente.clienteEmEdicao.id}" id="id" styleClass="form-control" 
 						readonly="true" label="Nº de Cadastro" />
 			</div>
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText value="#{editCliente.sc.dataCadastro}" id="DataCad" styleClass="form-control" 
+				<h:inputText value="#{editCliente.clienteEmEdicao.dataCadastro}" id="DataCad" styleClass="form-control" 
 						readonly="true" label="Data de Cadastro">
 						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
 				</h:inputText>
@@ -44,13 +44,13 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="nome" maxlength="20" value="#{editCliente.sc.nome}" 
+				<h:inputText id="nome" maxlength="20" value="#{editCliente.clienteEmEdicao.nome}" 
 					styleClass="form-control name" pt:placeholder="Luis" required="true" label="Nome">
 				</h:inputText>
 			</div>
 			
 			<div class="col-sm-6 col-lg-4">
-				<h:inputText id="sobrenome" maxlength="50" value="#{editCliente.sc.sobrenome}" 
+				<h:inputText id="sobrenome" maxlength="50" value="#{editCliente.clienteEmEdicao.sobrenome}" 
 					styleClass="form-control lastName" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
 				</h:inputText>			
 			</div>
@@ -69,7 +69,7 @@
 		<div class="form-group">
 			
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="Genero" value="#{editCliente.sc.genero}" styleClass="form-control" 
+				<h:selectOneMenu id="Genero" value="#{editCliente.clienteEmEdicao.genero}" styleClass="form-control" 
 					required="true" label="Gênero" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
@@ -78,14 +78,14 @@
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Data-Nascimento" mask="99/99/9999" value="#{editCliente.sc.dataNasc}" 
+				<p:inputMask id="Data-Nascimento" mask="99/99/9999" value="#{editCliente.clienteEmEdicao.dataNasc}" 
 					styleClass="form-control" pt:placeholder="01/01/1990" required="true" label="Data de Nascimento">
 				<f:convertDateTime pattern="dd/MM/yyyy"/>
 				</p:inputMask>
 			</div>
 			
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{editCliente.sc.telefone}" 
+				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{editCliente.clienteEmEdicao.telefone}" 
 					styleClass="form-control" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" >
 				</p:inputMask>
 			</div>		
@@ -103,7 +103,7 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="Habilitacao" value="#{editCliente.sc.habilitacao}" maxlength="11"
+				<h:inputText id="Habilitacao" value="#{editCliente.clienteEmEdicao.habilitacao}" maxlength="11"
 					styleClass="form-control soNumeros" placeholder="01010101010" required="true" label="Carteira de Habilitação"
 					validatorMessage="Preencha os 11 números correspondentes a CNH do cliente">
 					<f:validateLength minimum="11"/>
@@ -111,7 +111,7 @@
 			</div>
 			
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Validade-Habilitacao" mask="99/99/9999" value="#{editCliente.sc.validadeHab}" 
+				<p:inputMask id="Validade-Habilitacao" mask="99/99/9999" value="#{editCliente.clienteEmEdicao.validadeHab}" 
 					styleClass="form-control" placeholder="01/01/2030" required="true" label="Validade da Habilitação">
 				<f:convertDateTime pattern="dd/MM/yyyy" />
 				</p:inputMask>			

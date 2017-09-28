@@ -2,29 +2,28 @@ package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
 
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import br.edu.tglima.locadora.models.pessoa.Cliente;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
-import br.edu.tglima.locadora.util.ClienteUtil;
-import br.edu.tglima.locadora.util.FacesUtil;
+import br.edu.tglima.locadora.repository.ClienteRepository;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class CadCliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private Cliente nc;
+	private Cliente novoCliente;
+	
+	@Inject
+	private ClienteRepository repository;
 	
 	public void cadastrar(){
-		this.nc = ClienteUtil.fmtClienteToSave(this.nc);
-		FacesUtil.enviarMsgSucesso(null, "Cliente cadastrado com sucesso!");
-		System.out.println("::::::::::::::::::::::::::::::::::::: CLIENTE SALVO :::::::::::::::::::::::::::::::::::::");
-		ClienteUtil.exibirDadosNoConsole(nc);
-		this.nc = new Cliente();
+		if (repository.salvarNovo(this.novoCliente)) {
+			this.novoCliente = null;			
+		} 
 	}
 	
 	//Getters de acesso aos Enums
@@ -32,7 +31,7 @@ public class CadCliente implements Serializable {
 		return OpGeneros.values();
 	}
 	
-	public Cliente getNc() {
-		return nc;
+	public Cliente getNovoCliente() {
+		return novoCliente;
 	}
 }

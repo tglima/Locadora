@@ -1,11 +1,9 @@
 package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
@@ -25,8 +23,9 @@ public class CadVeic implements Serializable {
 	private VeiculoRepository repository;
 
 	public void cadastrar() {
-		repository.cadastrarNovo(this.novoVeiculo);
-		this.novoVeiculo = null;
+		if (repository.salvarNovo(this.novoVeiculo)) {
+			this.novoVeiculo = null;
+		}
 	}
 
 	// Getters de acesso aos Enums

@@ -6,7 +6,6 @@
  xmlns:f="http://xmlns.jcp.org/jsf/core"
  xmlns:p="http://primefaces.org/ui">
  
- 
 <ui:define name="titulo">Cadastro de cliente</ui:define>
 <ui:define name="content-main">
 
@@ -22,13 +21,13 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="nome" maxlength="20" value="#{cadCliente.nc.nome}" 
+				<h:inputText id="nome" maxlength="20" value="#{cadCliente.novoCliente.nome}" 
 					styleClass="form-control name" pt:placeholder="Luis" required="true" label="Nome">
 				</h:inputText>
 			</div>
 			
 			<div class="col-sm-6 col-lg-4">
-				<h:inputText id="sobrenome" maxlength="50" value="#{cadCliente.nc.sobrenome}" 
+				<h:inputText id="sobrenome" maxlength="50" value="#{cadCliente.novoCliente.sobrenome}" 
 					styleClass="form-control lastName" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
 				</h:inputText>			
 			</div>
@@ -45,10 +44,9 @@
 
 	<div class="row">
 		<div class="form-group">
-
 			
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="Genero" value="#{cadCliente.nc.genero}" styleClass="form-control" 
+				<h:selectOneMenu id="Genero" value="#{cadCliente.novoCliente.genero}" styleClass="form-control" 
 					required="true" label="Gênero" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
@@ -57,14 +55,14 @@
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Data-Nascimento" mask="99/99/9999" value="#{cadCliente.nc.dataNasc}" 
+				<p:inputMask id="Data-Nascimento" mask="99/99/9999" value="#{cadCliente.novoCliente.dataNasc}" 
 					styleClass="form-control" pt:placeholder="01/01/1990" required="true" label="Data de Nascimento">
 				<f:convertDateTime pattern="dd/MM/yyyy"/>
 				</p:inputMask>
 			</div>
 			
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadCliente.nc.telefone}" 
+				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadCliente.novoCliente.telefone}" 
 					styleClass="form-control" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" >
 				</p:inputMask>
 			</div>		
@@ -82,7 +80,7 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="Habilitacao" value="#{cadCliente.nc.habilitacao}"  maxlength="11"
+				<h:inputText id="Habilitacao" value="#{cadCliente.novoCliente.habilitacao}"  maxlength="11"
 					styleClass="form-control soNumeros" pt:placeholder="01010101010" required="true" label="Carteira de Habilitação"
 					validatorMessage="Informe os 11 números correspondes a CNH do cliente">
 					<f:validateLength minimum="11"/>
@@ -90,7 +88,7 @@
 			</div>
 			
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Validade-Habilitacao" mask="99/99/9999" value="#{cadCliente.nc.validadeHab}" 
+				<p:inputMask id="Validade-Habilitacao" mask="99/99/9999" value="#{cadCliente.novoCliente.validadeHab}" 
 					styleClass="form-control" placeholder="01/01/2030" required="true" label="Validade da Habilitação">
 				<f:convertDateTime pattern="dd/MM/yyyy" />
 				</p:inputMask>			
