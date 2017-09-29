@@ -1,45 +1,39 @@
 package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.models.pessoa.TiposCargo;
-import br.edu.tglima.locadora.util.FacesUtil;
+import br.edu.tglima.locadora.repository.FuncionarioRepository;
 import br.edu.tglima.locadora.util.FuncUtil;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class EditFunc implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
-	private Funcionario sf;
-	private String confPassword;
+	private Funcionario funcEmEdicao;
+
+	@Inject
+	private FuncionarioRepository repository;
 
 	@PostConstruct
 	public void init() {
-		sf = FuncUtil.criarFuncExemplo(sf);
-		sf = FuncUtil.fmtFuncToShow(sf);
-		System.out.println("::::::::::::::::::::::::::::::::: FUNCIONÁRIO CARREGADO :::::::::::::::::::::::::::::::::");
-		FuncUtil.exibirDadosNoConsole(sf);
-		confPassword = sf.getPassword();
+		/*
+		 * TODO O Funcionário a ser editado será passado por parâmetro e carregado aqui.
+		 * Por enquanto será carregado um funcionário específico do BD.
+		 */
+		funcEmEdicao = repository.buscarPorId(2017001l);
 	}
 
 	public void salvarEdicao() {
-		if (this.sf.getPassword().equals(confPassword)) {
-			FacesUtil.enviarMsgSucesso(null, "Alterações no Funcionário salvas com sucesso!");
-			System.out.println(
-					"::::::::::::::::::::::::::::::::::: FUNCIONÁRIO SALVO :::::::::::::::::::::::::::::::::::");
-			FuncUtil.fmtFuncToSave(sf);
-			FuncUtil.exibirDadosNoConsole(sf);
-		} else {
-			FacesUtil.enviarMsgErro(null, "As senhas informadas não são iguais!");
-		}
+		funcEmEdicao = FuncUtil.fmtFuncToSave(funcEmEdicao);
+		funcEmEdicao = repository.salvarEdicao(funcEmEdicao);
 	}
 
 	// Getters de acesso aos Enums
@@ -51,20 +45,8 @@ public class EditFunc implements Serializable {
 		return TiposCargo.values();
 	}
 
-	public Funcionario getSf() {
-		return sf;
-	}
-
-	public void setSf(Funcionario sf) {
-		this.sf = sf;
-	}
-
-	public String getConfPassword() {
-		return confPassword;
-	}
-
-	public void setConfPassword(String confPassword) {
-		this.confPassword = confPassword;
+	public Funcionario getFuncEmEdicao() {
+		return funcEmEdicao;
 	}
 
 }

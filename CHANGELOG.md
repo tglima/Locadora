@@ -1,12 +1,27 @@
+## 0.5.6 (Refatorada a classe Funcionario para se integrar ao banco de dados)
+
+- Removida a classe **Pessoa.java** por não ser mais necessária no projeto.
+
+- Alteração na classe **Funcionario.java**. Agora ela está mapeada para ser representada como um entidade.
+
+- Criada a classe **FuncionarioRepository**. Classe responsável por realizar as operações de CRUD da entindade **Funcionario**.
+
+- As classes: **CadFunc.java** e **EditFunc.java**, foram alteradas para realizar suas respectivas operações no banco de dados.
+
+- A classe **FuncUtil.java** foi remodelada para melhor atender a aplicação.
+
+- As páginas xhtml: **/cadastro/funcionario.xhtml** e **/edicao/funcionario.xhtml**, foram modificadas para atenderem as mudanças feitas CadFunc.java e EditFunc.java.
+
+
 ## 0.5.5 (Refatorada a classe Cliente para se integrar ao banco de dados)
 
-- Alteração na classe **Cliente.java**. Agora ela está mapeada se tornando uma entidade.
+- Alteração na classe **Cliente.java**. Agora ela está mapeada para ser representada como um entidade.
 
 - Criada a classe **ClienteRepository.java**. Classe responsável por realizar as operações de CRUD da entidade **Cliente**.
 
-- As classes: **CadCliente.java** e **EditCliente.java**, foram alteradas para realizar suas devidas operações no banco de dados.  
+- As classes: **CadCliente.java** e **EditCliente.java**, foram alteradas para realizar suas respectivas operações no banco de dados.  
 
-- As páginas xhtml: **/cadastro/cliente.xhtml** e **/edicao/cliente.xhtml**, foram modificadas para atenderem as mudanças feitas CadCliente.java e EditCliente.java .
+- As páginas xhtml: **/cadastro/cliente.xhtml** e **/edicao/cliente.xhtml**, foram modificadas para atenderem as mudanças feitas CadCliente.java e EditCliente.java.
 
 - A classe **ClienteUtil.java** foi remodelada para melhor atender a aplicação.
 

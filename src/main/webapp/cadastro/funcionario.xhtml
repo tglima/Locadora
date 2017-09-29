@@ -21,13 +21,13 @@
 	<div class="row">
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="nome" maxlength="20" value="#{cadFunc.nf.nome}" 
+				<h:inputText id="nome" maxlength="20" value="#{cadFunc.novoFunc.nome}" 
 					styleClass="form-control name" pt:placeholder="Luis" required="true" label="Nome" >
 				</h:inputText>
 			</div>
 			
 			<div class="col-sm-6 col-lg-4">
-				<h:inputText id="sobrenome" maxlength="50" value="#{cadFunc.nf.sobrenome}" 
+				<h:inputText id="sobrenome" maxlength="50" value="#{cadFunc.novoFunc.sobrenome}" 
 					styleClass="form-control lastName" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
 				</h:inputText>			
 			</div>
@@ -38,7 +38,7 @@
 		<div class="form-group">
 			<h:outputLabel value="Gênero" for="Genero" styleClass="col-sm-3 col-lg-2 control-label" />		
 			<h:outputLabel value="Data de nascimento" for="Data-Nascimento" styleClass="col-sm-3 col-lg-2 control-label" />
-			<h:outputLabel value="Telefone principal" for="Telefone" styleClass="col-sm-5 col-lg-5 control-label" />
+			<h:outputLabel value="CPF" for="CPF" styleClass="col-sm-3 col-lg-2 control-label" />				
 		</div>
 	</div>
 
@@ -46,7 +46,7 @@
 		<div class="form-group">
 			
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="Genero" value="#{cadFunc.nf.genero}" styleClass="form-control" 
+				<h:selectOneMenu id="Genero" value="#{cadFunc.novoFunc.genero}" styleClass="form-control" 
 					required="true" label="Gênero" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
@@ -55,33 +55,37 @@
 			</div>
 
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Data-Nascimento" value="#{cadFunc.nf.dataNasc}"  mask="99/99/9999"
+				<p:inputMask id="Data-Nascimento" value="#{cadFunc.novoFunc.dataNasc}"  mask="99/99/9999"
 					styleClass="form-control" placeholder="01/01/1990" required="true" label="Data de Nascimento">
 					<f:convertDateTime pattern="dd/MM/yyyy"/>
 					</p:inputMask>			
 			</div>
-			
+
 			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadFunc.nf.telefone}" 
-					styleClass="form-control" maxlength="15" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" />
-			</div>		
+				<p:inputMask id="CPF" mask="999.999.999-99" value="#{cadFunc.novoFunc.cpf}" 
+					styleClass="form-control" placeholder="000.000.000-00" required="true" label="CPF"/>
+			</div>
 			
 		</div> 
 	</div>	
 
 	<div class="row mt-15">
 		<div class="form-group">
+			<h:outputLabel value="Telefone principal" for="Telefone" styleClass="col-sm-3 col-lg-2 control-label" />		
 			<h:outputLabel value="Cargo" for="Cargo" styleClass="col-sm-3 col-lg-2 control-label" />
 			<h:outputLabel value="Senha" for="Password" styleClass="col-sm-3 col-lg-2 control-label" />
-			<h:outputLabel value="Confirmar senha" for="ConfirmPassword" styleClass="col-sm-3 col-lg-2 control-label" />		
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="form-group">
+			<div class="col-sm-3 col-lg-2">
+				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadFunc.novoFunc.telefone}" 
+					styleClass="form-control" maxlength="15" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" />
+			</div>		
 		
 			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="Cargo" value="#{cadFunc.nf.cargo}" styleClass="form-control" 
+				<h:selectOneMenu id="Cargo" value="#{cadFunc.novoFunc.cargo}" styleClass="form-control" 
 					required="true" label="Cargo" >
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
 					<f:selectItems var="cargo" itemLabel="#{cargo.label}" itemValue="#{cargo}"
@@ -90,18 +94,13 @@
 			</div>		
 		
 			<div class="col-sm-3 col-lg-2">
-				<h:inputSecret  id="Password" maxlength="8" value="#{cadFunc.nf.password}" 
+				<h:inputSecret  id="Password" maxlength="8" value="#{cadFunc.novoFunc.password}" 
 					styleClass="form-control" pt:placeholder="Informe uma senha" required="true" label="Senha">
 				<f:validateLength minimum="6" maximum="8"></f:validateLength>
 				</h:inputSecret>
 			</div>
 			
-			<div class="col-sm-3 col-lg-2">
-				<h:inputSecret id="ConfirmPassword" maxlength="8" value="#{cadFunc.confPassword}" 
-					styleClass="form-control" pt:placeholder="Repita a senha" required="true" label="Confirmação da senha">
-				<f:validateLength minimum="6" maximum="8"></f:validateLength>	
-				</h:inputSecret>			
-			</div>
+
 		</div> 
 	</div>
 	
