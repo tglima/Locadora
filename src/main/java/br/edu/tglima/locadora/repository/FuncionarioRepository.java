@@ -6,7 +6,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.util.FacesUtil;
-import br.edu.tglima.locadora.util.FuncUtil;
 import br.edu.tglima.locadora.util.JpaUtil;
 
 public class FuncionarioRepository {
@@ -40,7 +39,6 @@ public class FuncionarioRepository {
 	
 	public Funcionario salvarEdicao(Funcionario funcEditado){
 		entityManager = JpaUtil.getEntityManagerRequest();
-		funcEditado = FuncUtil.fmtFuncToSave(funcEditado);
 		
 		try {
 			entityManager.merge(funcEditado);

@@ -1,3 +1,17 @@
+## 0.5.6.1 (Remoção dos arquivos sql e Pequenas melhorias no código.)
+- Removida a pasta MySQL e todo seu conteúdo.
+
+- Pequenas Melhorias nas seguintes classes:
+	- **CadCliente.java**
+	- **EditCliente.java**
+	- **ClienteRepository.java**
+	- **FuncionarioRepository.java**
+	- **CadVeic.java**
+	- **EditVeic.java**
+	- **VeiculoRepository.java**
+	- **FuncionarioRepository.java**
+
+
 ## 0.5.6 (Refatorada a classe Funcionario para se integrar ao banco de dados)
 
 - Removida a classe **Pessoa.java** por não ser mais necessária no projeto.

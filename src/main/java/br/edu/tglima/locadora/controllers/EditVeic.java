@@ -12,6 +12,7 @@ import br.edu.tglima.locadora.models.veiculo.OpMarcas;
 import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.repository.VeiculoRepository;
+import br.edu.tglima.locadora.util.VeiculoUtil;
 
 @Named
 @RequestScoped
@@ -35,6 +36,7 @@ public class EditVeic implements Serializable {
 	}
 
 	public void salvarEdicao() {
+		veicParaEdicao = VeiculoUtil.fmtVeicToSave(veicParaEdicao);
 		veicParaEdicao = repository.salvarEdicao(veicParaEdicao);
 	}
 

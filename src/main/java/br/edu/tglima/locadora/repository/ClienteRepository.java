@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import br.edu.tglima.locadora.models.pessoa.Cliente;
-import br.edu.tglima.locadora.util.ClienteUtil;
 import br.edu.tglima.locadora.util.FacesUtil;
 import br.edu.tglima.locadora.util.JpaUtil;
 
@@ -14,31 +13,28 @@ public class ClienteRepository {
 	private EntityManager entityManager;
 
 	public boolean salvarNovo(Cliente novoCliente) {
-		novoCliente = ClienteUtil.fmtToSave(novoCliente);
-
 		entityManager = JpaUtil.getEntityManagerRequest();
-		Cliente clienteJaCadastrado = buscarPorHabilitacao(novoCliente.getHabilitacao());
+		boolean cadastroEfetuado = false;
 
+		Cliente clienteJaCadastrado = buscarPorHabilitacao(novoCliente.getHabilitacao());
+		
 		if (clienteJaCadastrado != null) {
 			FacesUtil.enviarMsgErro(null, "Cadastro não realizado, já existe um cliente com " + "este número de habilitação nos registros.");
-			return false;
 		} else {
 			try {
 				entityManager.persist(novoCliente);
 				FacesUtil.enviarMsgSucesso(null, "Cliente cadastrado com sucesso!");
-				return true;
+				cadastroEfetuado = true;
 			} catch (Exception e) {
 				FacesUtil.enviarMsgErro(null, "Cliente não cadastrado, erro durante a operação!");
 				e.printStackTrace();
-				return false;
 			}
 		}
-
+		return cadastroEfetuado;
 	}
 
 	public Cliente salvarEdicao(Cliente clienteEditado) {
 		entityManager = JpaUtil.getEntityManagerRequest();
-		clienteEditado = ClienteUtil.fmtToSave(clienteEditado);
 
 		try {
 			entityManager.merge(clienteEditado);
@@ -51,6 +47,20 @@ public class ClienteRepository {
 		return clienteEditado;
 	}
 
+	public Cliente buscarPorId(Long id) {
+		entityManager = JpaUtil.getEntityManagerRequest();
+		
+		try {
+			return entityManager.find(Cliente.class, id);
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
 	public Cliente buscarPorHabilitacao(Long habilitacao) {
 		entityManager = JpaUtil.getEntityManagerRequest();
 		String sql = "SELECT c FROM Cliente c WHERE c.habilitacao = :habilitacao";
@@ -68,21 +78,7 @@ public class ClienteRepository {
 			return null;
 		}
 
-	}
-
-	public Cliente buscarPorId(Long id) {
-		entityManager = JpaUtil.getEntityManagerRequest();
-		
-		try {
-			return entityManager.find(Cliente.class, id);
-		} catch (NoResultException e) {
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-	}
+	}	
 
 	public List<Cliente> buscaPorNome(String nome, String sobrenome) {
 		entityManager = JpaUtil.getEntityManagerRequest();

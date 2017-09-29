@@ -8,18 +8,18 @@ import javax.inject.Named;
 import br.edu.tglima.locadora.models.pessoa.Cliente;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.repository.ClienteRepository;
+import br.edu.tglima.locadora.util.ClienteUtil;
 
 @Named
 @RequestScoped
 public class EditCliente implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private ClienteRepository repository;
 
 	@Inject
-	Cliente clienteEmEdicao;
+	private Cliente clienteEmEdicao;
 	
 	@PostConstruct
 	public void init() {
@@ -31,6 +31,7 @@ public class EditCliente implements Serializable {
 	}
 
 	public void salvarEdicao() {
+		clienteEmEdicao = ClienteUtil.fmtToSave(clienteEmEdicao);
 		clienteEmEdicao = repository.salvarEdicao(clienteEmEdicao);
 	}
 
@@ -42,6 +43,5 @@ public class EditCliente implements Serializable {
 	public Cliente getClienteEmEdicao() {
 		return clienteEmEdicao;
 	}
-
 
 }
