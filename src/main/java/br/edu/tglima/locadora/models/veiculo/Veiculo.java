@@ -15,6 +15,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Table(name = "tb_veiculo", 
@@ -39,8 +44,8 @@ public class Veiculo implements Serializable {
 	private Double valorDiaria;
 
 	@Id
-	@SequenceGenerator(name = "VEIC_SEQ", sequenceName = "VEIC_SEQ", initialValue = 1000, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEIC_SEQ")
+	@SequenceGenerator(name = "seq_veic", sequenceName = "seq_veic", initialValue = 1000, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_veic")
 	public Long getId() {
 		return id;
 	}
@@ -61,6 +66,7 @@ public class Veiculo implements Serializable {
 
 	
 	@Column(unique=true, nullable=false, length=8)
+	@NotEmpty
 	public String getPlaca() {
 		return placa;
 	}
@@ -80,6 +86,8 @@ public class Veiculo implements Serializable {
 	}
 
 	@Column(nullable = false, length = 20)
+	@NotEmpty
+	@Size(min=2, max=20, message="O modelo do veículo deve conter entre 2 e 20 caracteres")
 	public String getModelo() {
 		return modelo;
 	}
@@ -89,6 +97,8 @@ public class Veiculo implements Serializable {
 	}
 
 	@Column(name= "ano_fabricacao", nullable = false, length = 4)
+	@Min(value=2010, message="O ano de fabricação do veículo deve ser igual ou superior ao ano de 2010")
+	@Max(value=2018, message="O ano de fabricação do veículo não pode ser superior ao ano de 2018")
 	public Integer getAno() {
 		return ano;
 	}
@@ -128,6 +138,8 @@ public class Veiculo implements Serializable {
 	}
 
 	@Column(name="km_inicial", nullable = false, length = 6)
+	@Min(value = 0, message = "A menor Km aceita é 0")
+	@Max(value = 999999, message = "A maior Km aceita é 999.999")
 	public Integer getKmInicial() {
 		return kmInicial;
 	}
@@ -137,6 +149,8 @@ public class Veiculo implements Serializable {
 	}
 
 	@Column(name="km_atual", nullable = false, length = 6)
+	@Max(value=999999, message = "A maior Km aceita é 999.999")
+	@Min(value=0, message="A menor Km aceita é 0")
 	public Integer getKmAtual() {
 		return kmAtual;
 	}
@@ -156,6 +170,8 @@ public class Veiculo implements Serializable {
 	}
 
 	@Column(name="valor_diaria", nullable = false, precision = 10, scale = 2)
+	@Min(value=15, message="O valor mínimo da diária não pode ser inferior a R$ 15,00")
+	@Max(value=9999, message="O valor máximo da diária deve ser inferior a R$ 9.999,00")
 	public Double getValorDiaria() {
 		return valorDiaria;
 	}

@@ -81,13 +81,13 @@
 				<p:inputMask id="Data-Nascimento" mask="99/99/9999" value="#{editCliente.clienteEmEdicao.dataNasc}" 
 					styleClass="form-control" pt:placeholder="01/01/1990" required="true" label="Data de Nascimento">
 				<f:convertDateTime pattern="dd/MM/yyyy"/>
+				<f:validator validatorId="idadeValidator"/>
 				</p:inputMask>
 			</div>
 			
 			<div class="col-sm-3 col-lg-2">
 				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{editCliente.clienteEmEdicao.telefone}" 
-					styleClass="form-control" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" >
-				</p:inputMask>
+					styleClass="form-control" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" />
 			</div>		
 			
 		</div>
@@ -104,9 +104,8 @@
 		<div class="form-group">
 			<div class="col-sm-3 col-lg-2">
 				<h:inputText id="Habilitacao" value="#{editCliente.clienteEmEdicao.habilitacao}" maxlength="11"
-					styleClass="form-control soNumeros" placeholder="01010101010" required="true" label="Carteira de Habilitação"
-					validatorMessage="Preencha os 11 números correspondentes a CNH do cliente">
-					<f:validateLength minimum="11"/>
+					styleClass="form-control soNumeros" placeholder="01010101010" required="true" label="Carteira de Habilitação">
+
 				</h:inputText>
 			</div>
 			

@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Table(name="tb_funcionario", 
 uniqueConstraints=@UniqueConstraint(columnNames="cpf", name ="cpf_uk"))
@@ -43,8 +46,10 @@ public class Funcionario implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+		
 	@Column(unique=true, nullable=false, length=14)
+	@NotEmpty
+	@Size(min=14, message="O CPF deve conter 11 digitos!")
 	public String getCpf() {
 		return cpf;
 	}
@@ -54,6 +59,7 @@ public class Funcionario implements Serializable{
 	}
 	
 	@Column(nullable=false, length=20)
+	@Size(min=2, max=20, message="O nome do funcionário, deve conter entre 2 e 20 caracteres.")
 	public String getNome() {
 		return nome;
 	}
@@ -63,6 +69,7 @@ public class Funcionario implements Serializable{
 	}
 	
 	@Column(nullable=false, length=50)
+	@Size(min=2, max=50, message="O sobrenome do funcionário, deve conter entre 2 e 50 caracteres.")
 	public String getSobrenome() {
 		return sobrenome;
 	}
@@ -73,6 +80,7 @@ public class Funcionario implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="data_nascimento", nullable=false)
+	@Past(message="Data de nascimento inválida!")
 	public Date getDataNasc() {
 		return dataNasc;
 	}
@@ -93,6 +101,7 @@ public class Funcionario implements Serializable{
 	}
 	
 	@Column(nullable=false, length=15)
+	@Size(min=14, max=15, message="O número de telefone deve conter entre 10 e 11 digitos.")
 	public String getTelefone() {
 		return telefone;
 	}
@@ -122,6 +131,7 @@ public class Funcionario implements Serializable{
 	}
 	
 	@Column(nullable=false, length=8)
+	@Size(min=6, max=8, message="A senha deve conter entre 6 e 8 caracteres")
 	public String getPassword() {
 		return password;
 	}

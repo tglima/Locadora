@@ -2,7 +2,6 @@ package br.edu.tglima.locadora.models.pessoa;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Table(name = "tb_cliente", 
 uniqueConstraints=@UniqueConstraint(columnNames="habilitacao", name ="habilitacao_uk"))					
@@ -44,7 +45,6 @@ public class Cliente implements Serializable {
 		this.id = id;
 	}
 	
-	@GeneratedValue
 	@Temporal(TemporalType.DATE)
 	@Column(name="data_cadastro", nullable=false)
 	public Date getDataCadastro() {
@@ -56,6 +56,7 @@ public class Cliente implements Serializable {
 	}
 	
 	@Column(nullable=false, length=20)
+	@Size(min=2, max=20, message="O nome do cliente deve conter entre 2 e 20 caracteres.")
 	public String getNome() {
 		return nome;
 	}
@@ -65,6 +66,7 @@ public class Cliente implements Serializable {
 	}
 	
 	@Column(nullable=false, length=50)
+	@Size(min=2, max=50, message="O sobrenome do cliente, deve conter entre 2 e 50 caracteres.")
 	public String getSobrenome() {
 		return sobrenome;
 	}
@@ -95,6 +97,7 @@ public class Cliente implements Serializable {
 	}
 	
 	@Column(nullable=false, length=15)
+	@Size(min=14, max=15, message="O número de telefone deve conter entre 10 e 11 digitos.")
 	public String getTelefone() {
 		return telefone;
 	}
@@ -104,6 +107,7 @@ public class Cliente implements Serializable {
 	}
 	
 	@Column(unique=true, nullable=false)
+	@Min(value=10000000000l, message="Preencha todos os 11 números correspondentes a CNH do cliente")
 	public Long getHabilitacao() {
 		return habilitacao;
 	}

@@ -1,3 +1,14 @@
+## 0.5.7 (Adicionado suporte ao Hibernate Validator e Refatorada as operações de CRUD)
+- Editado o arquivo **pom.xml** para incluir o Hibernate Validator ao projeto.
+- Editada as classes **Cliente.java**, **Funcionario.java** e **Veiculo.java** para adicionar as annotations de validação.
+- Refatorada todos as classes responsáveis pelas operações de CRUD. Agora as operações básicas são herdadas de uma classe abstrata (**AbstractRepository.java**). Para ajudar na padronização foi criada uma Interface(**IRepository**). As classes **JpaFilter.java** e **JpaUtil.java** também foram refatoradas.
+- Três classes foram criadas(**ClienteValidator.java**, **IdadeValidator.java** e **KmAtualValidator.java**) para complementar a validação das regras de negócio.
+- O Arquivo **faces-config.xml** foi editado para permitir que os validadores personalizados fossem usados nas páginas xhtml.
+- As páginas XHTML e os controllers tiveram pequenas mudanças para implementar todos os recursos descritos acima.
+- Pequenas melhorias nas classes **TempoUtil.java** e **VeiculoUtil.java**.
+- O arquivo **.gitignore** foi editado, agora os diretórios que guardam os testes unitários serão ignorados.
+
+
 ## 0.5.6.1 (Remoção dos arquivos sql e Pequenas melhorias no código.)
 - Removida a pasta MySQL e todo seu conteúdo.
 

@@ -1,5 +1,7 @@
 package br.edu.tglima.locadora.util;
 
+import java.util.Date;
+
 import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 
@@ -39,7 +41,7 @@ public class VeiculoUtil {
 	}
 	
 	public final static Veiculo setDefaultValues(Veiculo v){
-		v.setDataCadastro(TempoUtil.setDateNow());
+		v.setDataCadastro(new Date());
 		v.setStatus(OpStatus.INOPERANTE);
 		v.setKmAtual(v.getKmInicial());
 		return v;

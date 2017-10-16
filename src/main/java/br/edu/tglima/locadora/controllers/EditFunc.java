@@ -1,15 +1,20 @@
 package br.edu.tglima.locadora.controllers;
 
+import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
+import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.FuncUtil.fmtFuncToSave;
+
 import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.models.pessoa.TiposCargo;
 import br.edu.tglima.locadora.repository.FuncionarioRepository;
-import br.edu.tglima.locadora.util.FuncUtil;
 
 @Named
 @RequestScoped
@@ -28,12 +33,28 @@ public class EditFunc implements Serializable {
 		 * TODO O Funcionário a ser editado será passado por parâmetro e carregado aqui.
 		 * Por enquanto será carregado um funcionário específico do BD.
 		 */
-		funcEmEdicao = repository.buscarPorId(2017001l);
+		try {
+			funcEmEdicao = repository.buscarPorId(0l);
+
+		} catch (Exception e) {
+			System.out.println("Erro lançado: " + e.getCause());
+		}
 	}
 
 	public void salvarEdicao() {
-		funcEmEdicao = FuncUtil.fmtFuncToSave(funcEmEdicao);
-		funcEmEdicao = repository.salvarEdicao(funcEmEdicao);
+		try {
+			repository.salvarEdicao(fmtFuncToSave(this.funcEmEdicao));
+			enviarMsgSucesso(null, "Alterações salvas com sucesso!");
+			init();
+		} catch (Exception e) {
+			if (e.getMessage().contains("ConstraintViolationException")) {
+				enviarMsgErro(null, "As alterações não foram salvas!"
+						+ "O Nº do CPF informado já pertence a outra pessoa.");
+
+			} else {
+				enviarMsgErro(null, "Erro desconhecido ao salvar as alterações." + e.getMessage());
+			}
+		}
 	}
 
 	// Getters de acesso aos Enums
