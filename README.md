@@ -1,5 +1,7 @@
 # Locadora
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/051243f71b9048e393f52b53b7105fdf)](https://www.codacy.com/app/tglima/Locadora?utm_source=github.com&utm_medium=referral&utm_content=tglima/Locadora&utm_campaign=badger)
+
 Um simples projeto de aplicação web, voltado para estudo e prática de algumas tecnologias usadas em conjunto com o ecossistema Java.
 
 
