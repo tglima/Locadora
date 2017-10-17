@@ -1,3 +1,6 @@
+## 0.5.9 (Adicionadas novas funções javascript)
+- Adicionadas novas funções javascript, agora sempre que uma página for carregada ela formatará os textos nos campos Nome, Sobrenome, Placa e Modelo, caso eles existam na página.
+
 ## 0.5.8 (Melhorias nas classes FaceUtil e Adição da classe Util)
 - Removida as seguintes classes java: **ClienteUtil.java**, **FuncUtil.java** e **VeiculoUtil.java**. Os métodos destas classes foram refatorados e centralizados em uma única classe, a classe **Util.java** .
 - A classe **FaceUtil.java** foi refatorada, recebendo melhorias em sua documentação e adição de novos metódos.
