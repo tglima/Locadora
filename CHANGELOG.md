@@ -1,3 +1,8 @@
+## 0.5.8 (Melhorias nas classes FaceUtil e Adição da classe Util)
+- Removida as seguintes classes java: **ClienteUtil.java**, **FuncUtil.java** e **VeiculoUtil.java**. Os métodos destas classes foram refatorados e centralizados em uma única classe, a classe **Util.java** .
+- A classe **FaceUtil.java** foi refatorada, recebendo melhorias em sua documentação e adição de novos metódos.
+- As classes controllers foram refatoradas para reflitir as mudanças acima. As classes controllers também receberam pequenas melhorias.
+
 ## 0.5.7 (Adicionado suporte ao Hibernate Validator e Refatorada as operações de CRUD)
 - Editado o arquivo **pom.xml** para incluir o Hibernate Validator ao projeto.
 - Editada as classes **Cliente.java**, **Funcionario.java** e **Veiculo.java** para adicionar as annotations de validação.

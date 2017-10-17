@@ -1,8 +1,8 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.ClienteUtil.fmtToSave;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 
@@ -14,7 +14,6 @@ import javax.inject.Named;
 import br.edu.tglima.locadora.models.pessoa.Cliente;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.repository.ClienteRepository;
-import br.edu.tglima.locadora.util.FacesUtil;
 import br.edu.tglima.locadora.validators.ClienteValidator;
 
 @Named
@@ -50,16 +49,14 @@ public class EditCliente implements Serializable {
 		if (validarCadastro()) {
 			try {
 				repository.salvarEdicao(fmtToSave(this.clienteEmEdicao));
-				enviarMsgSucesso(null, "Alterações salvas com sucesso!");
-
+				enviarMsgSucesso("Alterações salvas com sucesso!");
 			} catch (Exception e) {
-
+				enviarMsgErro("As alterações não foram salvas!");
 				if (e.getMessage().contains("ConstraintViolationException")) {
 					init();
-					enviarMsgErro(null,
-							"As alterações não foram salvas! O Nº Registro da CNH informado já pertence a outra pessoa.");
+					enviarMsgErro("O Nº de Registro da CNH informada já pertence a outra pessoa.");
 				} else {
-					enviarMsgErro(null, "Erro desconhecido ao salvar as alterações." + e.getMessage());
+					enviarMsgErro(e.getMessage());
 				}
 
 			}
@@ -74,11 +71,10 @@ public class EditCliente implements Serializable {
 			if (validator.cnhNaValidade(this.clienteEmEdicao.getValidadeHab())) {
 				cadValido = true;
 			} else {
-				FacesUtil.enviarMsgErro(null, "Habilitação vencida!");
+				enviarMsgErro("Habilitação vencida!");
 			}
 		} else {
-			FacesUtil.enviarMsgErro(null,
-					"A idade do cliente é inválida! Só serão aceitas idades entre 23 e 70 anos.");
+			enviarMsgErro("A idade do cliente é inválida! Só serão aceitas idades entre 23 e 70 anos.");
 		}
 
 		return cadValido;

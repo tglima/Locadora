@@ -2,7 +2,7 @@ package br.edu.tglima.locadora.controllers;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.FuncUtil.fmtFuncToSave;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 
@@ -43,16 +43,15 @@ public class EditFunc implements Serializable {
 
 	public void salvarEdicao() {
 		try {
-			repository.salvarEdicao(fmtFuncToSave(this.funcEmEdicao));
-			enviarMsgSucesso(null, "Alterações salvas com sucesso!");
+			repository.salvarEdicao(fmtToSave(this.funcEmEdicao));
+			enviarMsgSucesso("Alterações salvas com sucesso!");
 			init();
 		} catch (Exception e) {
+			enviarMsgErro("Erro, as alterações não foram salvas!");
 			if (e.getMessage().contains("ConstraintViolationException")) {
-				enviarMsgErro(null, "As alterações não foram salvas!"
-						+ "O Nº do CPF informado já pertence a outra pessoa.");
-
+				enviarMsgErro("O Nº do CPF informado já pertence a outra pessoa.");
 			} else {
-				enviarMsgErro(null, "Erro desconhecido ao salvar as alterações." + e.getMessage());
+				enviarMsgErro(e.getMessage());
 			}
 		}
 	}

@@ -1,8 +1,8 @@
 package br.edu.tglima.locadora.controllers;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-//import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-import static br.edu.tglima.locadora.util.VeiculoUtil.fmtVeicToSave;
+import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 
@@ -20,7 +20,6 @@ import br.edu.tglima.locadora.models.veiculo.OpMarcas;
 import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.repository.VeiculoRepository;
-import br.edu.tglima.locadora.util.FacesUtil;
 
 @Named
 @RequestScoped
@@ -49,15 +48,15 @@ public class EditVeic implements Serializable {
 
 	public void salvarEdicao() {
 		try {
-			repository.salvarEdicao(fmtVeicToSave(veicEmEdicao));
-			FacesUtil.enviarMsgSucesso(null, "Alterações salvas com sucesso!");
+			repository.salvarEdicao(fmtToSave(veicEmEdicao));
+			enviarMsgSucesso("Alterações salvas com sucesso!");
 			init();
 		} catch (Exception e) {
+			enviarMsgErro("Erro, as alterações não foram salvas!");
 			if (e.getMessage().contains("ConstraintViolationException")) {
-				FacesUtil.enviarMsgErro(null,
-						"As alterações não foram salvas! A placa informada já pertence a outro veículo.");
+				enviarMsgErro("A placa informada já pertence a outro veículo.");
 			} else {
-				enviarMsgErro(null, "Erro desconhecido ao salvar as alterações." + e.getMessage());
+				enviarMsgErro(e.getMessage());
 			}
 		}
 	}

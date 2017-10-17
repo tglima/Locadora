@@ -1,5 +1,8 @@
 package br.edu.tglima.locadora.controllers;
 
+import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
+
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
@@ -9,7 +12,6 @@ import javax.inject.Named;
 import br.edu.tglima.locadora.models.pessoa.Cliente;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.repository.ClienteRepository;
-import br.edu.tglima.locadora.util.ClienteUtil;
 import br.edu.tglima.locadora.util.FacesUtil;
 import br.edu.tglima.locadora.validators.ClienteValidator;
 
@@ -30,15 +32,19 @@ public class CadCliente implements Serializable {
 	public void cadastrar() {
 
 		if (validarCadastro()) {
-			this.novoCliente = ClienteUtil.fmtToSave(novoCliente);
+			this.novoCliente = fmtToSave(novoCliente);
 			try {
 				repository.salvarNovo(this.novoCliente);
-				FacesUtil.enviarMsgSucesso(null, "Cliente cadastrado com sucesso!");
+				FacesUtil.enviarMsgSucesso("Cliente cadastrado com sucesso!");
 				this.novoCliente = null;
 			} catch (Exception e) {
-				System.out.println("Causa: " + e.getCause());
-				FacesUtil.enviarMsgErro(null, "Erro, cliente não cadastrado!");
-				FacesUtil.exibirAlerta(null, e.getMessage());
+				enviarMsgErro("Erro, cliente não cadastrado!");
+				if (e.getMessage().contains("ConstraintViolationException")) {
+					enviarMsgErro("O Nº de Registro da CNH informada já pertence a outra pessoa.");
+				} else {
+					enviarMsgErro(e.getMessage());
+				}
+
 			}
 
 		}
@@ -51,11 +57,10 @@ public class CadCliente implements Serializable {
 			if (validator.cnhNaValidade(this.novoCliente.getValidadeHab())) {
 				cadValido = true;
 			} else {
-				FacesUtil.enviarMsgErro(null, "Habilitação vencida!");
+				enviarMsgErro("Habilitação vencida!");
 			}
 		} else {
-			FacesUtil.enviarMsgErro(null,
-					"A idade do cliente é inválida! Só serão aceitas idades entre 23 e 70 anos.");
+			enviarMsgErro("A idade do cliente é inválida! Só serão aceitas idades entre 23 e 70 anos.");
 		}
 
 		return cadValido;

@@ -1,6 +1,8 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.FuncUtil.fmtFuncToSave;
+import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
+import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 
@@ -12,7 +14,6 @@ import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.models.pessoa.TiposCargo;
 import br.edu.tglima.locadora.repository.FuncionarioRepository;
-import br.edu.tglima.locadora.util.FacesUtil;
 
 @Named
 @RequestScoped
@@ -26,15 +27,19 @@ public class CadFunc implements Serializable {
 	private FuncionarioRepository repository;
 
 	public void cadastrar() {
-		this.novoFunc = fmtFuncToSave(this.novoFunc);
+		this.novoFunc = fmtToSave(this.novoFunc);
 		try {
 			repository.salvarNovo(this.novoFunc);
-			FacesUtil.enviarMsgSucesso(null, "Funcionário cadastrado com sucesso!");
+			enviarMsgSucesso("Funcionário cadastrado com sucesso!");
 			this.novoFunc = null;
 		} catch (Exception e) {
-			System.out.println("Causa: " + e.getCause());
-			FacesUtil.enviarMsgErro(null, "Erro, funcionário não cadastrado!");
-			FacesUtil.exibirAlerta(null, e.getMessage());
+			enviarMsgErro("Erro, funcionário não cadastrado!");
+			if (e.getMessage().contains("ConstraintViolationException")) {
+				enviarMsgErro("O Nº do CPF informado já pertence a outra pessoa.");
+			} else {
+				enviarMsgErro(e.getMessage());
+			}
+
 		}
 
 	}

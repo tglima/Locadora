@@ -2,7 +2,7 @@ package br.edu.tglima.locadora.controllers;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.VeiculoUtil.setDefaultValues;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 
@@ -16,7 +16,6 @@ import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.repository.VeiculoRepository;
-import br.edu.tglima.locadora.util.VeiculoUtil;
 
 @Named
 @RequestScoped
@@ -31,14 +30,17 @@ public class CadVeic implements Serializable {
 
 	public void cadastrar() {
 		try {
-			novoVeiculo = setDefaultValues(novoVeiculo);
-			repository.salvarNovo(VeiculoUtil.fmtVeicToSave(this.novoVeiculo));
-			enviarMsgSucesso(null, "Veículo cadastrado com sucesso!");
+			repository.salvarNovo(fmtToSave(this.novoVeiculo));
+			enviarMsgSucesso("Veículo cadastrado com sucesso!");
 			this.novoVeiculo = null;
 		} catch (Exception e) {
-			System.out.println("Causa: " + e.getCause());
-			enviarMsgErro(null, "Erro, veículo não cadastrado!");
-			enviarMsgErro(null, e.getMessage());
+			enviarMsgErro("Erro, veículo não cadastrado!");
+			if (e.getMessage().contains("ConstraintViolationException")) {
+				enviarMsgErro("A placa informada já pertence a outro veículo.");
+			} else {
+				enviarMsgErro(e.getMessage());
+			}
+
 		}
 
 	}
@@ -63,10 +65,6 @@ public class CadVeic implements Serializable {
 	// Getters e Setters padrões
 	public Veiculo getNovoVeiculo() {
 		return novoVeiculo;
-	}
-
-	public void setNovoVeiculo(Veiculo novoVeiculo) {
-		this.novoVeiculo = novoVeiculo;
 	}
 
 }
