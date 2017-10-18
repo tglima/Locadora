@@ -22,7 +22,7 @@ public class ClienteRepository extends AbstractRepository<Cliente> {
 		return query.getResultList();
 	}
 
-	public Cliente buscarPorHabilitacao(Long habilitacao) throws Exception {
+	public Cliente buscarPorHabilitacao(String habilitacao) throws Exception {
 		entityManager = JpaUtil.getEntityManager();
 		String sql = "SELECT c FROM Cliente c WHERE c.habilitacao = :habilitacao";
 		TypedQuery<Cliente> query = entityManager.createQuery(sql, Cliente.class);

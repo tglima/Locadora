@@ -2,6 +2,7 @@
 
 Um simples projeto de aplicação web, voltado para estudo e prática de algumas tecnologias usadas em conjunto com o ecossistema Java.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/051243f71b9048e393f52b53b7105fdf)](https://www.codacy.com/app/tglima/Locadora?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tglima/Locadora&amp;utm_campaign=Badge_Grade)
 
 ## Changelog
 Acompanhe as atualizações do projeto: [CHANGELOG](CHANGELOG.md)

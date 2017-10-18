@@ -1,3 +1,9 @@
+## 0.6.0 (Alterado o atributo Habilitação da classe Cliente)
+- Alteração no tipo de dado do atributo Habilitação, agora o atributo será do tipo String e não mais do tipo Long.
+- Adaptação na Classe **ClienteRepository.java** para refletir as mudanças citadas acima.
+- Pequenas melhorias nos códigos javascript.
+- Editado o arquivo README.md, adição do badge da Codancy.
+
 ## 0.5.9 (Adicionadas novas funções javascript)
 - Adicionadas novas funções javascript, agora sempre que uma página for carregada ela formatará os textos nos campos Nome, Sobrenome, Placa e Modelo, caso eles existam na página.
 

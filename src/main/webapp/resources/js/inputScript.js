@@ -10,7 +10,7 @@ function capitalizeFirstLetters(str){
 	str = str.toLowerCase();
 	
 	//Separamos as palavras em um array, usando como separador um espaço em branco.
-	var words = str.split(' ');
+	var words = str.split(" ");
 	
 	//Com a ajuda de um For percorremos o array mudando o a primeira letra de cada palavra.
 	for (var i = 0; i < words.length; i++) {
@@ -18,7 +18,7 @@ function capitalizeFirstLetters(str){
 	   }	
 	
 	//Agora devemos unir todas as palavras novamente com a ajuda do join.
-	str = words.join(' ');
+	str = words.join(" ");
 	
 	return str;
 	
@@ -27,7 +27,7 @@ function capitalizeFirstLetters(str){
 function removeLastSpace(str){
 	var lastChar = str.charAt(str.length -1);
 	
-	if (lastChar == " ") { 
+	if (lastChar === " ") { 
 		str = str.substring(0, (str.length -1));
 	}
 	
@@ -35,11 +35,11 @@ function removeLastSpace(str){
 }
 
 function setInputOnlyNumber() {
-	$(document).on('keypress', '.soNumeros', function(e) {
+	$(document).on("keypress", ".soNumeros", function(e) {
 		var $this = $(this);
 		var key = (window.event)?event.keyCode:e.which;
 
-		if((key > 47 && key < 58) || (key == 46 && key == 44)) {
+		if((key > 47 && key < 58) || (key === 46 && key === 44)) {
 			return true;
 		} else {
 			return (key == 8 || key == 0)?true:false;
@@ -57,7 +57,7 @@ function setInputMoeda() {
 
 function setInputName(){
 	$(".name").keyup(function () { 
-	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ. ]/g,'');
+	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ. ]/g,"");
 	});
 		
 	$(".name").keyup(function () { 
@@ -65,7 +65,7 @@ function setInputName(){
 	});
 		
 	$(".name").keyup(function (){
-		this.value = this.value.replace(/\s{2,}/g, ' ');
+		this.value = this.value.replace(/\s{2,}/g, " ");
 	});
 	
 	$(".name").blur( function(){
@@ -77,7 +77,7 @@ function setInputName(){
 
 function setInputLastName(){
 	$(".lastName").keyup(function () { 
-	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ. ]/g,'');
+	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ. ]/g,"");
 	});
 		
 	$(".lastName").keyup(function () { 
@@ -97,7 +97,7 @@ function setInputLastName(){
 
 function setInputModelo(){
 	$(".modelo").keyup(function () { 
-	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ0-9. ]/g,'');
+	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ0-9. ]/g,"");
 	});
 	
 	$(".modelo").keyup(function () { 
@@ -105,7 +105,7 @@ function setInputModelo(){
 	});
 	
 	$(".modelo").keyup(function (){
-		this.value = this.value.replace(/\s{2,}/g, ' ');
+		this.value = this.value.replace(/\s{2,}/g, " ");
 	});	
 	
 	$(".modelo").blur( function(){
@@ -123,7 +123,6 @@ function fmtTextToShow(){
 			$(".modelo").val(modelo);
 			
 			var placa = $(".placa").val();
-			console.log($(".placa").val());
 			placa = placa.toUpperCase();
 			$(".placa").val(placa);
 		}
