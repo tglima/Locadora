@@ -1,3 +1,7 @@
+## 0.6.1 (Implementada a busca e escolha do cliente que realizará a locação)
+- Adicionada página **XHTML** e classe **Java** correspondente.
+- Adaptação na classe **ClienteRepository.java** para refletir as mudanças.
+
 ## 0.6.0 (Alterado o atributo Habilitação da classe Cliente)
 - Alteração no tipo de dado do atributo Habilitação, agora o atributo será do tipo String e não mais do tipo Long.
 - Adaptação na Classe **ClienteRepository.java** para refletir as mudanças citadas acima.

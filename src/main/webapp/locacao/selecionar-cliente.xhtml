@@ -1,0 +1,138 @@
+<ui:composition template="../resources/layout/base-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<ui:define name="titulo">Selecionar cliente</ui:define>
+<ui:define name="content-main">
+
+<h:form id="form" styleClass="form">
+
+	<h:panelGroup layout="block" id="TipoDeBusca" styleClass="row">
+		<div class="col-md-3">
+			<h:selectOneMenu value="#{selectCli.tipoDeBusca}" onclick="#{selectCli.clearInput()}" styleClass="form-control" label="Tipo de busca" required="true">
+				<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+				<f:selectItem itemLabel="Buscar por CNH" itemValue='1' />
+				<f:selectItem itemLabel="Buscar por Nome" itemValue='2' />
+				<f:ajax render="form" /> 
+			</h:selectOneMenu>
+		</div>
+	</h:panelGroup>
+
+	<h:panelGroup layout="block" id="SearchCnh" styleClass="row mt-15" rendered="#{selectCli.tipoDeBusca == 1}">
+		<div class="col-md-5 col-lg-4">
+			<div class="input-group">
+				<h:inputText id="Habilitacao" maxlength="11" value="#{selectCli.searchParam}" styleClass="form-control soNumeros" pt:placeholder="Informe o nº Registro da CNH:" 
+				 required="true" label="Carteira de Habilitação" >
+					 <f:validateLength minimum="11" />
+				 </h:inputText>
+				<span class="input-group-btn">
+					<h:commandButton value="Buscar" action="#{selectCli.buscarPelaCNH}" styleClass="btn btn-default" >
+						<f:ajax execute="Habilitacao" render="Results" /> 
+					</h:commandButton>
+				</span>
+			</div>
+		</div>		
+	</h:panelGroup>
+	
+	<h:panelGroup layout="block" id="SearchName" styleClass="row mt-15" rendered="#{selectCli.tipoDeBusca == 2}">
+		<div class="col-md-5 col-lg-4">
+			<div class="input-group">
+				<h:inputText id="Nome" maxlength="50" value="#{selectCli.searchParam}" styleClass="form-control name" pt:placeholder="Informe o nome do cliente:" 
+				 required="true" label="Nome do cliente" onfocus="setInputName()" >
+					<f:validateLength minimum="3" />
+				 </h:inputText>
+				<span class="input-group-btn">
+					<h:commandButton value="Buscar" action="#{selectCli.buscarPorNome}" styleClass="btn btn-default" >
+						<f:ajax execute="Nome" render="Results" /> 
+					</h:commandButton>
+				</span>
+			</div>
+		</div>		
+	</h:panelGroup>
+
+	<h:panelGroup layout="block" id="Results" styleClass="row mt-15" >
+		<div class="col-md-12">
+			<h:panelGroup layout="block" id="NoResults" styleClass="row mt-15" rendered="#{selectCli.isResultIsEmpty()}" >
+				<div class="text-center">
+					<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" aria-hidden="true"/>
+					<br/>
+					<strong>A busca não encontrou resultados para os parâmetros digitados.</strong>
+					<p>Refaça sua pesquisa usando outros termos.</p>		
+				</div>
+			</h:panelGroup>
+	
+			<h:dataTable var="cli" value="#{selectCli.cliEncontrados}" styleClass="table table-striped table-bordered text-center" rendered="#{selectCli.cliEncontrados.size() gt 0 }">
+				<h:column headerClass="text-center">
+					<f:facet name="header"><h:outputText value="Nome" /></f:facet>
+					<h:outputText value="#{cli.nome}  #{cli.sobrenome}" styleClass="text-capitalize" />
+				</h:column>
+				<h:column headerClass="text-center">
+					<f:facet name="header"><h:outputText value="Data de nascimento" /></f:facet>
+					<h:outputText value="#{cli.dataNasc}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</h:column>
+				<h:column headerClass="text-center">
+					<f:facet name="header"><h:outputText value="Nº da Habilitação" /></f:facet>
+					<h:outputText value="#{cli.habilitacao}"/>
+				</h:column>
+				<h:column headerClass="text-center">
+					<f:facet name="header"><h:outputText value="Ação" /></f:facet>
+					
+					<p:commandLink update="clientDetail" title="Detalhar" oncomplete="PF('dlg').show()"  styleClass="btn btn-info btn-sm" >
+						 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"/> 
+						 <f:setPropertyActionListener target="#{selectCli.selectedClient}"  value="#{cli}"  for="clientDetail" />
+					</p:commandLink>					
+					
+					<span></span>
+					<h:commandLink title="Selecionar" styleClass="btn btn-success btn-sm" >
+					 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> 
+					</h:commandLink>
+				</h:column>
+			</h:dataTable>
+		</div>		
+	</h:panelGroup>
+
+</h:form>
+
+
+<p:dialog header="Dados do Cliente" widgetVar="dlg" modal="true" id="clientDetail" resizable="false" height="112" width="544">
+	<h:outputText style="font-weight:bold" value="Nome: " />
+	<h:outputText styleClass="text-capitalize" value="#{selectCli.selectedClient.nome} #{selectCli.selectedClient.sobrenome}" />
+	<br/>
+	
+	<h:outputText style="font-weight:bold" value="Gênero: " />
+	<h:outputText value="#{selectCli.selectedClient.genero.label}" />
+	<span style="margin-left: 10px;"></span>
+	<h:outputText style="font-weight:bold" value="Data de nascimento: " />
+	
+	<h:outputText value="#{selectCli.selectedClient.dataNasc}" >
+		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	</h:outputText>
+	<br/>
+	
+	
+	<h:outputText style="font-weight:bold" value="Telefone: " />
+	<h:outputText value=" #{selectCli.selectedClient.telefone} " />
+	<br/>
+	
+	<h:outputText style="font-weight:bold" value="Nº Registro da CNH:" />
+	<h:outputText value=" #{selectCli.selectedClient.habilitacao} " />
+	<span style="margin-left: 10px;"></span>			
+	<h:outputText value="Data de validade:" style="font-weight:bold" />
+	<span/>
+	<h:outputText value="#{selectCli.selectedClient.validadeHab}">
+	<f:convertDateTime pattern="dd/MM/yyyy"/>
+	</h:outputText>
+	<br/>
+</p:dialog>
+
+
+
+
+ 
+ </ui:define>
+ </ui:composition>
