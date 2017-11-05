@@ -46,7 +46,8 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 
 	@Override
 	public List<T> listarTodos() throws Exception {
-		TypedQuery<T> query = this.entityManager.createQuery("SELECT t from " + type.getSimpleName() + " t", type);
+		TypedQuery<T> query = this.entityManager.createQuery("SELECT t from " + type.getSimpleName() + " t",
+				type);
 		return query.getResultList();
 	}
 

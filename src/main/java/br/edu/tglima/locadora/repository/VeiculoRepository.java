@@ -1,7 +1,12 @@
 package br.edu.tglima.locadora.repository;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
+import br.edu.tglima.locadora.models.veiculo.OpCategorias;
+import br.edu.tglima.locadora.models.veiculo.OpMarcas;
+import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.util.JpaUtil;
 
@@ -13,10 +18,37 @@ public class VeiculoRepository extends AbstractRepository<Veiculo> {
 	}
 
 	public Veiculo buscarPorPlaca(String placa) throws Exception {
+		entityManager = JpaUtil.getEntityManager();
 		String sql = "SELECT v FROM Veiculo v WHERE v.placa = :placa";
 		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
 		query.setParameter("placa", placa);
 		return query.getSingleResult();
+	}
+
+	public List<Veiculo> buscaPorStatus(OpStatus status) throws Exception {
+		entityManager = JpaUtil.getEntityManager();
+		String sql = "SELECT v FROM Veiculo v WHERE v.status = :status";
+		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
+		query.setParameter("status", status);
+		return query.getResultList();
+	}
+
+	public List<Veiculo> buscaPorParametros(OpStatus status, OpMarcas marca) throws Exception {
+		entityManager = JpaUtil.getEntityManager();
+		String sql = "SELECT v FROM Veiculo	v WHERE v.status = :status AND v.marca = :marca";
+		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
+		query.setParameter("status", status);
+		query.setParameter("marca", marca);
+		return query.getResultList();
+	}
+
+	public List<Veiculo> buscaPorParametros(OpStatus status, OpCategorias cat) throws Exception {
+		entityManager = JpaUtil.getEntityManager();
+		String sql = "SELECT v FROM Veiculo v WHERE v.status = :status AND v.categoria = :categoria";
+		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
+		query.setParameter("status", status);
+		query.setParameter("categoria", cat);
+		return query.getResultList();
 	}
 
 }

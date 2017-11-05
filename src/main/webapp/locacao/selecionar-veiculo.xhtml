@@ -1,0 +1,132 @@
+<ui:composition template="../resources/layout/base-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+<ui:define name="titulo">Selecionar veículo</ui:define>
+<ui:define name="content-main">
+
+<h:form id="form" styleClass="form">
+
+	<h:panelGroup layout="block" id="TipoDeFiltro" styleClass="row">
+		<div class="col-md-3">
+			<h:selectOneMenu value="#{selectVeic.tipoDeFiltro}" styleClass="form-control" label="Tipo de busca" required="true">
+				<f:selectItem itemLabel="Selecionar" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+				<f:selectItem itemLabel="Todos" itemValue='1' />
+				<f:selectItem itemLabel="Por Marca" itemValue='2' />
+				<f:selectItem itemLabel="Por Categoria" itemValue='3' />
+				<f:ajax event="change" execute="@this" listener="#{selectVeic.aplicarFiltro()}" render="TipoDeFiltro Results" /> 
+			</h:selectOneMenu>
+		</div>
+		<h:panelGroup layout="block" id="FiltroMarca" styleClass="col-md-3" rendered="#{selectVeic.tipoDeFiltro == 2}">  
+			<h:selectOneMenu styleClass="form-control" label="Tipo de busca" value="#{selectVeic.marca}" required="true">
+				<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+				<f:selectItems var="marca" itemLabel="#{marca.label}" itemValue="#{marca}" value="#{selectVeic.marcas}" />
+				<f:ajax event="change" listener="#{selectVeic.filtrarPorMarca()}" render="Results" /> 
+			</h:selectOneMenu>
+		</h:panelGroup>
+		<h:panelGroup layout="block" id="FiltroCat" styleClass="col-md-3" rendered="#{selectVeic.tipoDeFiltro == 3}">  
+			<h:selectOneMenu styleClass="form-control" label="Tipo de busca" value="#{selectVeic.categoria}" required="true">
+				<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+				<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{categoria}" value="#{selectVeic.categorias}" />
+				<f:ajax event="change" listener="#{selectVeic.filtrarPorCategoria()}" render="Results"/> 
+			</h:selectOneMenu>
+		</h:panelGroup>
+	</h:panelGroup>
+
+	<h:panelGroup layout="block" id="Results" styleClass="row mt-15" >
+		<div class="col-md-12">
+			<h:panelGroup layout="block" id="NoResults" styleClass="row mt-15" rendered="#{selectVeic.resultEmpty and selectVeic.veicEncontrados.isEmpty()}" >
+				<div class="text-center">
+					<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" aria-hidden="true"/>
+					<br/>
+					<strong>Não foram encontrados veículos com os parâmetros informados.</strong>
+					<p>Refaça sua pesquisa usando outros termos.</p>		
+				</div>
+			</h:panelGroup>
+	
+			<p:dataTable var="veic" value="#{selectVeic.veicEncontrados}" sortBy="#{veic.placa}"  tableStyle="table table-condensed" styleClass="text-center" rendered="#{selectVeic.veicEncontrados.size() gt 0 }">
+				<p:column>
+					<f:facet name="header"><h:outputText value="Placa" /></f:facet>
+					<h:outputText value="#{veic.placa}" styleClass="text-uppercase" />
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="Marca" /></f:facet>
+					<h:outputText value="#{veic.marca.label}" styleClass="text-capitalize" />
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="Modelo" /></f:facet>
+					<h:outputText value="#{veic.modelo}" styleClass="text-uppercase" />
+				</p:column>
+				<p:column>
+					<f:facet name="header"><h:outputText value="Categoria" /></f:facet>
+					<h:outputText value="#{veic.categoria.label}" styleClass="text-capitalize" />
+				</p:column>
+				<p:column sortBy="#{veic.valorDiaria}" >
+					<f:facet name="header"><h:outputText value="Valor da Diária" /></f:facet>
+					<h:outputText value="#{veic.valorDiaria}" >
+					<f:convertNumber type="currency" currencySymbol="R$" />
+					</h:outputText>
+				</p:column>
+				
+
+				<p:column headerClass="text-center">
+					<f:facet name="header"><h:outputText value="Ação" /></f:facet>
+					
+					<p:commandLink update="veicDetail" title="Detalhar" oncomplete="PF('dlg').show()"  styleClass="btn btn-info btn-xs" >
+						 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"/> 
+						 <f:setPropertyActionListener target="#{selectVeic.selectedVeic}"  value="#{veic}"  for="veicDetail" />
+					</p:commandLink>					
+					
+					<span></span>
+					<p:commandLink title="Selecionar" styleClass="btn btn-success btn-xs" >
+					 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> 
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
+		</div>		
+	</h:panelGroup>
+</h:form>
+
+
+<p:dialog header="Dados do Veículo" widgetVar="dlg" modal="true" id="veicDetail" resizable="false">
+	<p:outputPanel>
+		<p:panelGrid columns="2" styleClass="table table-striped">
+			<h:outputText style="font-weight:bold" value="Placa: " />
+			<h:outputText value="#{selectVeic.selectedVeic.placa}" styleClass="text-uppercase" />
+			
+			<h:outputText style="font-weight:bold" value="Marca: " />
+			<h:outputText value="#{selectVeic.selectedVeic.marca.label}" />
+				
+			<h:outputText style="font-weight:bold" value="Modelo: " />
+			<h:outputText value="#{selectVeic.selectedVeic.modelo}" styleClass="text-uppercase" />
+		
+			<h:outputText style="font-weight:bold" value="Categoria: " />
+			<h:outputText value="#{selectVeic.selectedVeic.categoria.label}" styleClass="text-capitalize" />
+						
+			<h:outputText style="font-weight:bold" value="Cor: " />
+			<h:outputText value="#{selectVeic.selectedVeic.cor.label}" styleClass="text-capitalize" />
+			
+			<h:outputText style="font-weight:bold" value="Ano: " />
+			<h:outputText value="#{selectVeic.selectedVeic.ano}" />
+			
+			<h:outputText style="font-weight:bold" value="Combustível: " />
+			<h:outputText value="#{selectVeic.selectedVeic.combustivel.label}" />
+					
+			<h:outputText style="font-weight:bold" value="KM Atual: " />
+			<h:outputText value="#{selectVeic.selectedVeic.kmAtual}" />
+		
+			<h:outputText style="font-weight:bold" value="Valor da Diária: " />
+			<h:outputText value="#{selectVeic.selectedVeic.valorDiaria}" >
+				<f:convertNumber type="currency" currencySymbol="R$" />
+			</h:outputText>
+			
+		</p:panelGrid>
+	</p:outputPanel>	
+</p:dialog>
+
+ 
+ </ui:define>
+ </ui:composition>

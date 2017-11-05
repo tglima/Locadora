@@ -1,8 +1,12 @@
+## 0.6.2 (Implementada a busca e escolha do veículo para locação)
+- Adicionada a página **XHTML** e classe **Java** correspondente.
+- Adaptação nas classe **AbstractRepository.java** e **VeiculoRepository.java** para refletir as mudanças.
+
 ## 0.6.1.1 (Refatorada a classe SelectCli e pag selecionar-cliente.xhtml)
 Foram feitas pequenas melhorias nos arquivo citados.
 
 ## 0.6.1 (Implementada a busca e escolha do cliente que realizará a locação)
-- Adicionada página **XHTML** e classe **Java** correspondente.
+- Adicionada a página **XHTML** e classe **Java** correspondente.
 - Adaptação na classe **ClienteRepository.java** para refletir as mudanças.
 
 ## 0.6.0 (Alterado o atributo Habilitação da classe Cliente)
