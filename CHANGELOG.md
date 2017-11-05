@@ -1,3 +1,6 @@
+## 0.6.2.1 (Adicionado link para página de seleção do cliente)
+- Adicionado o link **selecionar-cliente.xhtml** no sidebar e no navbar.
+
 ## 0.6.2 (Implementada a busca e escolha do veículo para locação)
 - Adicionada a página **XHTML** e classe **Java** correspondente.
 - Adaptação nas classe **AbstractRepository.java** e **VeiculoRepository.java** para refletir as mudanças.
