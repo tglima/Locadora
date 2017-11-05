@@ -1,3 +1,6 @@
+## 0.6.1.1 (Refatorada a classe SelectCli e pag selecionar-cliente.xhtml)
+Foram feitas pequenas melhorias nos arquivo citados.
+
 ## 0.6.1 (Implementada a busca e escolha do cliente que realizará a locação)
 - Adicionada página **XHTML** e classe **Java** correspondente.
 - Adaptação na classe **ClienteRepository.java** para refletir as mudanças.

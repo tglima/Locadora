@@ -10,89 +10,94 @@
 
 <h:form id="form" styleClass="form">
 
-	<h:panelGroup layout="block" id="TipoDeBusca" styleClass="row">
+	<h:panelGroup layout="block" id="MenuTipoDeBusca" styleClass="row">
 		<div class="col-md-3">
-			<h:selectOneMenu value="#{selectCli.tipoDeBusca}" onclick="#{selectCli.clearInput()}" styleClass="form-control" label="Tipo de busca" required="true">
+			<h:selectOneMenu value="#{selectCli.tipoDeBusca}" styleClass="form-control" label="Tipo de busca" required="true">
 				<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
 				<f:selectItem itemLabel="Buscar por CNH" itemValue='1' />
 				<f:selectItem itemLabel="Buscar por Nome" itemValue='2' />
-				<f:ajax render="form" /> 
+				<f:ajax event="change" execute="@this" listener="#{selectCli.clearInput()}" render="TipoDeBusca" /> 
 			</h:selectOneMenu>
 		</div>
 	</h:panelGroup>
 
-	<h:panelGroup layout="block" id="SearchCnh" styleClass="row mt-15" rendered="#{selectCli.tipoDeBusca == 1}">
-		<div class="col-md-5 col-lg-4">
-			<div class="input-group">
-				<h:inputText id="Habilitacao" maxlength="11" value="#{selectCli.searchParam}" styleClass="form-control soNumeros" pt:placeholder="Informe o nº Registro da CNH:" 
-				 required="true" label="Carteira de Habilitação" >
-					 <f:validateLength minimum="11" />
-				 </h:inputText>
-				<span class="input-group-btn">
-					<h:commandButton value="Buscar" action="#{selectCli.buscarPelaCNH}" styleClass="btn btn-default" >
-						<f:ajax execute="Habilitacao" render="Results" /> 
-					</h:commandButton>
-				</span>
-			</div>
-		</div>		
-	</h:panelGroup>
+	<h:panelGroup layout="block" id="TipoDeBusca">
+		<h:panelGroup layout="block" id="SearchCnh" styleClass="row mt-15" rendered="#{selectCli.tipoDeBusca == 1}">
+			<div class="col-md-5 col-lg-4">
+				<div class="input-group">
+					<h:inputText id="Habilitacao" maxlength="11" value="#{selectCli.searchParam}" styleClass="form-control soNumeros" pt:placeholder="Informe o nº Registro da CNH:" 
+					 required="true" label="Carteira de Habilitação" >
+						 <f:validateLength minimum="11" />
+					 </h:inputText>
+					<span class="input-group-btn">
+						<h:commandButton value="Buscar" action="#{selectCli.buscarPelaCNH}" styleClass="btn btn-default" >
+							<f:ajax execute="Habilitacao" render="Results" /> 
+						</h:commandButton>
+					</span>
+				</div>
+			</div>		
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" id="SearchName" styleClass="row mt-15" rendered="#{selectCli.tipoDeBusca == 2}">
+			<div class="col-md-5 col-lg-4">
+				<div class="input-group">
+					<h:inputText id="Nome" maxlength="50" value="#{selectCli.searchParam}" styleClass="form-control name" pt:placeholder="Informe o nome do cliente:" 
+					 required="true" label="Nome do cliente" onfocus="setInputName()" >
+						<f:validateLength minimum="3" />
+					 </h:inputText>
+					<span class="input-group-btn">
+						<h:commandButton value="Buscar" action="#{selectCli.buscarPorNome}" styleClass="btn btn-default" >
+							<f:ajax execute="Nome" render="Results" /> 
+						</h:commandButton>
+					</span>
+				</div>
+			</div>		
+		</h:panelGroup>
 	
-	<h:panelGroup layout="block" id="SearchName" styleClass="row mt-15" rendered="#{selectCli.tipoDeBusca == 2}">
-		<div class="col-md-5 col-lg-4">
-			<div class="input-group">
-				<h:inputText id="Nome" maxlength="50" value="#{selectCli.searchParam}" styleClass="form-control name" pt:placeholder="Informe o nome do cliente:" 
-				 required="true" label="Nome do cliente" onfocus="setInputName()" >
-					<f:validateLength minimum="3" />
-				 </h:inputText>
-				<span class="input-group-btn">
-					<h:commandButton value="Buscar" action="#{selectCli.buscarPorNome}" styleClass="btn btn-default" >
-						<f:ajax execute="Nome" render="Results" /> 
-					</h:commandButton>
-				</span>
-			</div>
-		</div>		
 	</h:panelGroup>
 
 	<h:panelGroup layout="block" id="Results" styleClass="row mt-15" >
 		<div class="col-md-12">
-			<h:panelGroup layout="block" id="NoResults" styleClass="row mt-15" rendered="#{selectCli.isResultIsEmpty()}" >
+			<h:panelGroup layout="block" id="NoResults" styleClass="row mt-15" rendered="#{selectCli.resultEmpty and selectCli.cliEncontrados.isEmpty()}" >
 				<div class="text-center">
 					<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" aria-hidden="true"/>
 					<br/>
-					<strong>A busca não encontrou resultados para os parâmetros digitados.</strong>
+					<strong>A busca não encontrou resultados para os parâmetros informados.</strong>
 					<p>Refaça sua pesquisa usando outros termos.</p>		
 				</div>
 			</h:panelGroup>
 	
-			<h:dataTable var="cli" value="#{selectCli.cliEncontrados}" styleClass="table table-striped table-bordered text-center" rendered="#{selectCli.cliEncontrados.size() gt 0 }">
-				<h:column headerClass="text-center">
+			<p:dataTable var="cli" value="#{selectCli.cliEncontrados}" sortBy="#{cli.nome}" tableStyle="table table-condensed" styleClass="text-center" 
+				rendered="#{selectCli.cliEncontrados.size() gt 0 }">
+				<p:column>
 					<f:facet name="header"><h:outputText value="Nome" /></f:facet>
 					<h:outputText value="#{cli.nome}  #{cli.sobrenome}" styleClass="text-capitalize" />
-				</h:column>
-				<h:column headerClass="text-center">
+				</p:column>
+				<p:column>
 					<f:facet name="header"><h:outputText value="Data de nascimento" /></f:facet>
 					<h:outputText value="#{cli.dataNasc}">
 						<f:convertDateTime pattern="dd/MM/yyyy"/>
 					</h:outputText>
-				</h:column>
-				<h:column headerClass="text-center">
+				</p:column>
+				<p:column>
 					<f:facet name="header"><h:outputText value="Nº da Habilitação" /></f:facet>
 					<h:outputText value="#{cli.habilitacao}"/>
-				</h:column>
-				<h:column headerClass="text-center">
+				</p:column>
+				<p:column>
 					<f:facet name="header"><h:outputText value="Ação" /></f:facet>
 					
-					<p:commandLink update="clientDetail" title="Detalhar" oncomplete="PF('dlg').show()"  styleClass="btn btn-info btn-sm" >
+					<p:commandLink update="clientDetail" title="Detalhar" oncomplete="PF('dlg').show()"  styleClass="btn btn-info btn-xs" immediate="true" >
 						 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"/> 
 						 <f:setPropertyActionListener target="#{selectCli.selectedClient}"  value="#{cli}"  for="clientDetail" />
 					</p:commandLink>					
 					
-					<span></span>
-					<h:commandLink title="Selecionar" styleClass="btn btn-success btn-sm" >
-					 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> 
-					</h:commandLink>
-				</h:column>
-			</h:dataTable>
+					<span/>
+
+					<p:link title="Selecionar" styleClass="btn btn-success btn-xs" outcome="/locacao/selecionar-veiculo.xhtml" >
+						 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"/> 
+					</p:link>
+				</p:column>
+			</p:dataTable>
 		</div>		
 	</h:panelGroup>
 
@@ -129,9 +134,6 @@
 	</h:outputText>
 	<br/>
 </p:dialog>
-
-
-
 
  
  </ui:define>
