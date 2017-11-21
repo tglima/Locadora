@@ -5,25 +5,6 @@
  * Date: 2017-09-25
  */
 
-function capitalizeFirstLetters(str){
-	//Padronizamos a string recebida deixando todas as lestras em minúsculas.
-	str = str.toLowerCase();
-	
-	//Separamos as palavras em um array, usando como separador um espaço em branco.
-	var words = str.split(" ");
-	
-	//Com a ajuda de um For percorremos o array mudando o a primeira letra de cada palavra.
-	for (var i = 0; i < words.length; i++) {
-	       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);     
-	   }	
-	
-	//Agora devemos unir todas as palavras novamente com a ajuda do join.
-	str = words.join(" ");
-	
-	return str;
-	
-}
-
 function removeLastSpace(str){
 	var lastChar = str.charAt(str.length -1);
 	
@@ -75,26 +56,6 @@ function setInputName(){
 	
 }
 
-function setInputLastName(){
-	$(".lastName").keyup(function () { 
-	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ. ]/g,"");
-	});
-		
-	$(".lastName").keyup(function () { 
-		this.value = this.value.trimLeft();
-	});
-		
-	$(".lastName").keyup(function (){
-		this.value = this.value.replace(/\s{2,}/g, ' ');
-	});
-	
-	$(".lastName").blur( function(){
-		var str = $(".lastName").val();
-		this.value = removeLastSpace(str);
-	});
-	
-}
-
 function setInputModelo(){
 	$(".modelo").keyup(function () { 
 	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ0-9. ]/g,"");
@@ -115,41 +76,11 @@ function setInputModelo(){
 	
 }
 
-function fmtTextToShow(){
-	$(document).ready(function(){
-		if ($(".modelo")[0]) {
-			var modelo = $(".modelo").val();
-			modelo = modelo.toUpperCase();
-			$(".modelo").val(modelo);
-			
-			var placa = $(".placa").val();
-			placa = placa.toUpperCase();
-			$(".placa").val(placa);
-		}
-		
-		if ($(".name")[0]) {
-			var lastName = $(".lastName").val();
-			lastName = capitalizeFirstLetters(lastName);
-			$(".lastName").val(lastName);
-			
-			var name = $(".name").val();
-			name = capitalizeFirstLetters(name);
-			$(".name").val(name);
-			
-		}
-		
-		
-	});
-	
-}
-
 $(document).ready(function() {
 	setInputMoeda();
 	setInputOnlyNumber();
 	setInputName();
-	setInputLastName();
 	setInputModelo();
-	fmtTextToShow();
 });
 
 
