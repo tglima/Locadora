@@ -18,10 +18,10 @@
 					<h:inputText id="nome" maxlength="20" value="#{cadCliente.novoCliente.nome}" 
 						styleClass="form-control text-capitalize name" pt:placeholder="José" required="true" label="Nome"/>					
 				</div>	
-				<div class="form-group col-sm-6">
+				<div class="form-group col-sm-5">
 					<h:outputLabel value="Sobrenome" for="sobrenome" styleClass="control-label" />
 					<h:inputText id="sobrenome" maxlength="50" value="#{cadCliente.novoCliente.sobrenome}" 
-						styleClass="form-control text-capitalize name" pt:placeholder="Da Silva Filho" 
+						styleClass="form-control text-capitalize lastName" pt:placeholder="Da Silva Filho" 
 						required="true" label="Sobrenome"/>					
 									
 				</div>							
@@ -41,7 +41,7 @@
 				<div class="form-group col-sm-2">
 					<h:outputLabel value="Nascimento" for="DataNascimento" styleClass="control-label" />			
 					<p:calendar id="DataNascimento" value="#{cadCliente.novoCliente.dataNasc}" locale="pt_BR"
-						 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control"
+						 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" maxlength="10"
 						inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Data de Nascimento"/>
 							
 				</div>				
@@ -57,18 +57,18 @@
 			
 
 			<div class="row ">
-				<div class="form-group col-sm-3">
-					<h:outputLabel value="Nº Registro CNH" for="habilitacao" styleClass="control-label" />	
-					<p:inputNumber id="habilitacao" value="#{cadCliente.novoCliente.habilitacao}" maxlength="11" 
-						 inputStyleClass="form-control" decimalSeparator="" placeholder="01010101010" required="true" 
-						 label="Carteira de Habilitação"/>
+				<div class="form-group col-sm-2">
+					<h:outputLabel value="Nº da CNH" for="habilitacao" styleClass="control-label" />	
+					<p:inputMask id="habilitacao" value="#{cadCliente.novoCliente.habilitacao}" maxlength="11" 
+						 styleClass="form-control" mask="99999999999" placeholder="01001001001" required="true" 
+						 label="Carteira de Habilitação" slotChar=""  /> 
 				</div>
 				
 				
 				<div class="form-group col-sm-2">
-					<h:outputLabel value="Validade CNH" for="Validade-Habilitacao" styleClass="control-label" />
-					<p:calendar id="Validade-Habilitacao" value="#{cadCliente.novoCliente.validadeHab}" locale="pt_BR"
-						 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" 
+					<h:outputLabel value="Validade CNH" for="ValidadeHabilita" styleClass="control-label" />
+					<p:calendar id="ValidadeHabilita" value="#{cadCliente.novoCliente.validadeHab}" locale="pt_BR"
+						 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" maxlength="10"
 						 inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Validade da Habilitação"/>
 				</div>			
 			</div>
