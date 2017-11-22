@@ -1,105 +1,95 @@
-<ui:composition template="../resources/layout/base-layout.xhtml"
+<ui:composition template="/resources/layout/b-layout.xhtml"
  xmlns="http://www.w3.org/1999/xhtml"
- xmlns:h="http://xmlns.jcp.org/jsf/html"
  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
  xmlns:f="http://xmlns.jcp.org/jsf/core"
- xmlns:p="http://primefaces.org/ui">
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:h="http://java.sun.com/jsf/html">
  
 <ui:define name="titulo">Cadastro de cliente</ui:define>
-<ui:define name="content-main">
-
-<h:form styleClass="form" id="CadCliente">
-
-	<div class="row">
-		<div class="form-group">
-			<h:outputLabel value="Nome" for="nome" styleClass="col-sm-3 col-lg-2 control-label" />
-			<h:outputLabel value="Sobrenome" for="sobrenome" styleClass="col-sm-6 col-lg-4 control-label" />
-		</div>
-	</div>
+<ui:define name="content-dynamic">
+  <div class="row">
+      <div class="col-sm-12">
+		<h:form styleClass="form" id="CadCliente">
+		
+			<div class="row">
+				<div class="form-group col-sm-3">
+					<h:outputLabel value="Nome" for="nome" styleClass="control-label" />
+					<h:inputText id="nome" maxlength="20" value="#{cadCliente.novoCliente.nome}" 
+						styleClass="form-control text-capitalize name" pt:placeholder="José" required="true" label="Nome"/>					
+				</div>	
+				<div class="form-group col-sm-6">
+					<h:outputLabel value="Sobrenome" for="sobrenome" styleClass="control-label" />
+					<h:inputText id="sobrenome" maxlength="50" value="#{cadCliente.novoCliente.sobrenome}" 
+						styleClass="form-control text-capitalize name" pt:placeholder="Da Silva Filho" 
+						required="true" label="Sobrenome"/>					
+									
+				</div>							
+			</div>
 	
-	<div class="row">
-		<div class="form-group">
-			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="nome" maxlength="20" value="#{cadCliente.novoCliente.nome}" 
-					styleClass="form-control text-capitalize name" pt:placeholder="Luis" required="true" label="Nome">
-				</h:inputText>
+			<div class="row">
+				<div class="form-group col-sm-3">					
+					<h:outputLabel value="Gênero" for="Genero" styleClass="control-label" />	
+					<h:selectOneMenu id="Genero" value="#{cadCliente.novoCliente.genero}" styleClass="form-control" 
+						required="true" label="Gênero" >
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+						<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
+							value="#{cadCliente.generos}" />
+					</h:selectOneMenu>								
+				</div>	
+					
+				<div class="form-group col-sm-2">
+					<h:outputLabel value="Nascimento" for="DataNascimento" styleClass="control-label" />			
+					<p:calendar id="DataNascimento" value="#{cadCliente.novoCliente.dataNasc}" locale="pt_BR"
+						 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control"
+						inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Data de Nascimento"/>
+							
+				</div>				
+				
+				<div class="form-group col-sm-3">
+					<h:outputLabel value="Telefone" for="Telefone" styleClass="control-label" />
+					<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadCliente.novoCliente.telefone}" 
+						styleClass="form-control" pt:placeholder="(11) 9999-99999" required="true"
+						 label="Telefone" >
+					</p:inputMask>					
+				</div>		
 			</div>
 			
-			<div class="col-sm-6 col-lg-4">
-				<h:inputText id="sobrenome" maxlength="50" value="#{cadCliente.novoCliente.sobrenome}" 
-					styleClass="form-control text-capitalize name" pt:placeholder="Alberto da Silva" required="true" label="Sobrenome">
-				</h:inputText>			
+
+			<div class="row ">
+				<div class="form-group col-sm-3">
+					<h:outputLabel value="Nº Registro CNH" for="habilitacao" styleClass="control-label" />	
+					<p:inputNumber id="habilitacao" value="#{cadCliente.novoCliente.habilitacao}" maxlength="11" 
+						 inputStyleClass="form-control" decimalSeparator="" placeholder="01010101010" required="true" 
+						 label="Carteira de Habilitação"/>
+				</div>
+				
+				
+				<div class="form-group col-sm-2">
+					<h:outputLabel value="Validade CNH" for="Validade-Habilitacao" styleClass="control-label" />
+					<p:calendar id="Validade-Habilitacao" value="#{cadCliente.novoCliente.validadeHab}" locale="pt_BR"
+						 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" 
+						 inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Validade da Habilitação"/>
+				</div>			
 			</div>
-		</div> 
-	</div>
+			
+			<div class="row">
+				<div class="col-sm-12">
+					<h:commandButton value="Cadastrar" action="#{cadCliente.cadastrar}"  styleClass="btn btn-primary" />			
+				</div>
+			</div>
+			<br />
+			
+		
+		</h:form>
+		<!-- /#CadCliente -->
+		
+      </div>
+
+  </div>
+  <!-- /.row --> 
 	
-	<div class="row mt-15">
-		<div class="form-group">
-			<h:outputLabel value="Gênero" for="Genero" styleClass="col-sm-3 col-lg-2 control-label" />		
-			<h:outputLabel value="Data de nascimento" for="Data-Nascimento" styleClass="col-sm-3 col-lg-2 control-label" />
-			<h:outputLabel value="Telefone principal" for="Telefone" styleClass="col-sm-5 col-lg-5 control-label" />
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="form-group">
-			
-			<div class="col-sm-3 col-lg-2">
-				<h:selectOneMenu id="Genero" value="#{cadCliente.novoCliente.genero}" styleClass="form-control" 
-					required="true" label="Gênero" >
-					<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
-					<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
-						value="#{cadCliente.generos}" />
-				</h:selectOneMenu>						
-			</div>
-
-			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Data-Nascimento" mask="99/99/9999" value="#{cadCliente.novoCliente.dataNasc}" 
-					styleClass="form-control" pt:placeholder="01/01/1990" required="true" label="Data de Nascimento">
-				<f:convertDateTime pattern="dd/MM/yyyy"/>
-				</p:inputMask>
-			</div>
-			
-			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadCliente.novoCliente.telefone}" 
-					styleClass="form-control" pt:placeholder="(11) 9999-99999" required="true" label="Telefone" >
-				</p:inputMask>
-			</div>		
-			
-		</div> 
-	</div>	
-
-	<div class="row mt-15">
-		<div class="form-group">
-			<h:outputLabel value="Nº Registro CNH" for="Habilitacao" styleClass="col-sm-3 col-lg-2 control-label" />
-			<h:outputLabel value="Data de validade" for="Validade-Habilitacao" styleClass="col-sm-3 col-lg-2 control-label" />		
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="form-group">
-			<div class="col-sm-3 col-lg-2">
-				<h:inputText id="Habilitacao" value="#{cadCliente.novoCliente.habilitacao}"  maxlength="11"
-					styleClass="form-control soNumeros" pt:placeholder="01010101010" required="true" label="Carteira de Habilitação" />
-			</div>
-			
-			<div class="col-sm-3 col-lg-2">
-				<p:inputMask id="Validade-Habilitacao" mask="99/99/9999" value="#{cadCliente.novoCliente.validadeHab}" 
-					styleClass="form-control" placeholder="01/01/2030" required="true" label="Validade da Habilitação">
-				<f:convertDateTime pattern="dd/MM/yyyy" />
-				</p:inputMask>			
-			</div>
-		</div> 
-	</div>
-	
-	<div class="row mt-15">
-		<div class="col-sm-11 col-lg-11">
-			<h:commandButton value="Cadastrar" action="#{cadCliente.cadastrar}"  styleClass="btn btn-primary" />			
-		</div>
-	</div>
-	
-</h:form>
 
 </ui:define>
- </ui:composition>
+</ui:composition>
