@@ -1,0 +1,48 @@
+<ui:composition template="resources/layout/b-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui">
+ 
+<ui:define name="titulo">Página de Teste</ui:define>
+	<ui:define name="content-dynamic">
+       <div class="row">
+           <div class="col-lg-6">
+
+               <form role="form">
+
+                   <div class="form-group">
+                       <label>Text Input with Placeholder</label>
+                       <input class="form-control" placeholder="Enter text"/>
+                   </div>
+
+
+
+                   <div class="form-group">
+                       <label>Selects</label>
+                       <select class="form-control">
+                           <option>1</option>
+                           <option>2</option>
+                           <option>3</option>
+                           <option>4</option>
+                           <option>5</option>
+                       </select>
+                   </div>
+
+
+
+                   <button type="submit" class="btn btn-default">Submit Button</button>
+
+
+
+               </form>
+
+           </div>
+
+       </div>
+       <!-- /.row --> 
+		
+
+
+	</ui:define>
+</ui:composition>
