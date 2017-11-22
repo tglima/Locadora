@@ -56,6 +56,26 @@ function setInputName(){
 	
 }
 
+function setInputLastName(){
+	$(".lastName").keyup(function () { 
+	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ. ]/g,"");
+	});
+		
+	$(".lastName").keyup(function () { 
+		this.value = this.value.trimLeft();
+	});
+		
+	$(".lastName").keyup(function (){
+		this.value = this.value.replace(/\s{2,}/g, " ");
+	});
+	
+	$(".lastName").blur( function(){
+		var str = $(".lastName").val();
+		this.value = removeLastSpace(str);
+	});
+	
+}
+
 function setInputModelo(){
 	$(".modelo").keyup(function () { 
 	    this.value = this.value.replace(/[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ0-9. ]/g,"");
@@ -80,6 +100,7 @@ $(document).ready(function() {
 	setInputMoeda();
 	setInputOnlyNumber();
 	setInputName();
+	setInputLastName();
 	setInputModelo();
 });
 
