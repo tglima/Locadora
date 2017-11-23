@@ -52,7 +52,8 @@
 				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="CPF" for="CPF" styleClass="control-label" />
 					<p:inputMask id="CPF" mask="999.999.999-99" value="#{cadFunc.novoFunc.cpf}" 
-					styleClass="form-control" placeholder="000.000.000-00" required="true" label="CPF"/>
+					styleClass="form-control" placeholder="000.000.000-00" required="true" 
+					style="text-align: center;" label="CPF"/>
 				</div>				
 			</div>
 			
@@ -62,7 +63,7 @@
 					<h:outputLabel value="Telefone" for="Telefone" styleClass="control-label" />
 					<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{cadFunc.novoFunc.telefone}" 
 					styleClass="form-control" maxlength="15" pt:placeholder="(11) 9999-99999" required="true" 
-					label="Telefone" />
+					style="text-align: center;" label="Telefone" />
 				</div>
 				
 				
@@ -79,7 +80,8 @@
 				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Senha" for="Password" styleClass="control-label" />
 					<h:inputSecret  id="Password" maxlength="8" value="#{cadFunc.novoFunc.password}" 
-					styleClass="form-control" pt:placeholder="Informe uma senha" required="true" label="Senha"/>
+					styleClass="form-control" pt:placeholder="Informe uma senha" required="true" 
+					style="text-align: center;" label="Senha"/>
 				</div>			
 			</div>
 			

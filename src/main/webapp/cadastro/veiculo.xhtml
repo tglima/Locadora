@@ -13,13 +13,14 @@
 		<h:form styleClass="form" id="CadVeic">
 		
 			<div class="row">
-				<div class="form-group col-sm-2">
+				<div class="form-group col-sm-2 col-lg-2">
 					<h:outputLabel value="Placa" for="placa" styleClass="control-label" />
 					<p:inputMask id="placa" mask="aaa-9999" value="#{cadVeic.novoVeiculo.placa}"
-				 	styleClass="form-control text-uppercase" placeholder="AAA-0000" required="true" label="Placa" />
+				 	styleClass="form-control text-uppercase" placeholder="AAA-0000" required="true" 
+				 	style="text-align: center;" label="Placa" />
 				
 				</div>	
-				<div class="form-group col-sm-2">
+				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Marca" for="marcaVeic" styleClass="control-label" />				
 					<h:selectOneMenu id="marcaVeic" value="#{cadVeic.novoVeiculo.marca}" styleClass="form-control" 
 					required="true" label="Marca" >
@@ -28,16 +29,17 @@
 						value="#{cadVeic.marcas}" />
 					</h:selectOneMenu>
 				</div>
-				<div class="form-group col-sm-2">
+				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Modelo" for="modelo" styleClass="control-label" />				
-					<h:inputText id="modelo" value="#{cadVeic.novoVeiculo.modelo}" styleClass="form-control modelo 
-							text-uppercase" pt:placeholder="Modelo" required="true" label="Modelo" 
-								title="Informe o modelo do veículo conforme descrito no documento." />		
+					<h:inputText id="modelo" value="#{cadVeic.novoVeiculo.modelo}" 
+					styleClass="form-control modelo text-uppercase" pt:placeholder="Modelo" 
+					required="true" label="Modelo" style="text-align: center;" 
+					title="Informe o modelo do veículo conforme descrito no documento." />		
 				</div>													
 			</div>
 	
 			<div class="row">
-				<div class="form-group col-sm-2">	
+				<div class="form-group col-sm-3 col-lg-2">	
 					<h:outputLabel value="Categoria" for="catVeic" styleClass="control-label" />				
 					<h:selectOneMenu id="catVeic" value="#{cadVeic.novoVeiculo.categoria}" styleClass="form-control" 
 					required="true" label="Categoria">
@@ -46,7 +48,7 @@
 					</h:selectOneMenu>									
 				</div>	
 					
-				<div class="form-group col-sm-2">
+				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Cor" for="cor"  styleClass="control-label"/>
 					<h:selectOneMenu id="cor" value="#{cadVeic.novoVeiculo.cor}" styleClass="form-control" 
 						required="true" label="Cor">
@@ -56,16 +58,17 @@
 				</div>						
 					
 					
-				<div class="form-group col-sm-2">
-					<h:outputLabel value="Ano de fab." for="ano" styleClass="control-label" />
+				<div class="form-group col-sm-2 col-lg-1">
+					<h:outputLabel value="Ano" for="ano" styleClass="control-label" />
 					<p:inputMask id="ano" value="#{cadVeic.novoVeiculo.ano}" mask="9999" styleClass="form-control"
-									slotChar="" placeholder="Ano" required="true" label="Ano" maxlength="4"/>			
+					style="text-align: center;" slotChar="" placeholder="Ano" required="true" label="Ano" maxlength="4"
+					title="Informe o ano de fabricação do veículo" />			
 				</div>				
 			</div>
 			
 
 			<div class="row ">
-				<div class="form-group col-sm-2">
+				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Combustível" for="combustivel" styleClass="control-label" />
 					<h:selectOneMenu id="combustivel" value="#{cadVeic.novoVeiculo.combustivel}" styleClass="form-control" 
 						required="true"  label="Combustível" >
@@ -75,19 +78,19 @@
 				</div>
 				
 				
-				<div class="form-group col-sm-2">
-					<h:outputLabel value="KM do veículo" for="kmInicial" styleClass="control-label" />
+				<div class="form-group col-sm-2 col-lg-2">
+					<h:outputLabel value="KM" for="kmInicial" styleClass="control-label" />
 					<p:inputMask id="kmInicial" mask="9?99999" maxlength="6" value="#{cadVeic.novoVeiculo.kmInicial}" 
-						styleClass="form-control" placeholder="KM inicial" required="true"  label="Km do veículo" 
-						slotChar="" title="Informe a KM do veículo no ato da compra."/>
+						styleClass="form-control" style="text-align: center;" placeholder="KM inicial" required="true"  
+						label="Km do veículo" slotChar="" title="Informe a KM do veículo no ato da compra."/>
 				</div>
 				
-				<div class="form-group col-sm-2">
+				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Valor da Diária" for="valorDiaria" styleClass="control-label" />
 					<div class="input-group">
 						<span class="input-group-addon">R$</span>
-						<h:inputText id="valorDiaria" value="#{cadVeic.novoVeiculo.valorDiaria}" styleClass="form-control moeda"
-							pt:placeholder="40,25" maxlength="8" required="true" label="Valor da Diária">
+						<h:inputText id="valorDiaria" value="#{cadVeic.novoVeiculo.valorDiaria}" required="true" 
+						styleClass="form-control moeda" style="text-align: center;" pt:placeholder="40,25" maxlength="8" label="Valor da Diária">
 						<f:convertNumber pattern="#,##0.00"	minFractionDigits="2" locale="pt_BR" />
 				 	</h:inputText>
 				</div>
