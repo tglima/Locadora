@@ -1,3 +1,11 @@
+## 0.7.0
+- Eliminados alguns códigos JS que se tornaram desnecessários.
+- Adicionado um novo template ao projeto. Esse template irá ser implantado gradativamente em todas as páginas do projeto.
+- Atualizadas várias páginas XHTML para já suportarem o novo template.
+- Páginas que usam o recurso de data, agora usam o elemento Calendar do Primefaces.
+- Foi adicionado um script js que traduz o elemento Calendar do primefaces para o português do Brasil
+- Foi adicionadas páginas para a busca e seleção de veículos e clientes para uma locação.
+
 ## 0.6.2.1 (Adicionado link para página de seleção do cliente)
 - Adicionado o link **selecionar-cliente.xhtml** no sidebar e no navbar.
 
