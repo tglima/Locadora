@@ -4,38 +4,60 @@
  xmlns:f="http://xmlns.jcp.org/jsf/core"
  xmlns:p="http://primefaces.org/ui">
  
-<ui:define name="titulo">Página de Teste</ui:define>
+<ui:define name="titulo">Página Inicial Temporária</ui:define>
 	<ui:define name="content-dynamic">
        <div class="row">
-           <div class="col-lg-6">
+           <div class="col-lg-12">
+                
+                <div class="row">
+	                <div class="col-sm-6 col-lg-6">
+	                	<div class="panel panel-primary">
+	                		<div class="panel-heading">
+	                			<h3 class="panel-title"><i class="fa fa-sticky-note"></i> Páginas a serem criadas</h3>
+	                		</div>
+	                		<div class="panel-body">
+	                			<div class="list-group">
+	                				<a href="/locadora/login.xhtml" class="list-group-item">Login</a>
+	                				<a href="/locadora/gerenciar/funcionario.xhtml" class="list-group-item">Gerenciar Funcionários</a>
+	                				<a href="/locadora/gerenciar/cliente.xhtml" class="list-group-item">Gerenciar Clientes</a>
+	                				<a href="/locadora/gerenciar/veiculo.xhtml" class="list-group-item">Gerenciar Veículos</a>
+	                				<a href="/locadora/gerenciar/locacao.xhtml" class="list-group-item">Gerenciar Locações</a>
+	                			</div>
+	                		</div>
+	                	</div>                
+	                </div>	                
+	                <div class="col-sm-6 col-lg-6">
+	                	<div class="panel panel-red">
+	                		<div class="panel-heading">
+	                			<h3 class="panel-title"><i class="fa fa-sticky-note"></i> Páginas que ainda precisam ser adaptadas</h3>
+	                		</div>
+	                		<div class="panel-body">
+	                			<div class="list-group">
+	                				<a href="/locadora/edicao/veiculo.xhtml" class="list-group-item">Edição Veículo</a>
+	                				<a href="/locadora/edicao/cliente.xhtml" class="list-group-item">Edição Cliente</a>
+	                				<a href="/locadora/edicao/funcionario.xhtml" class="list-group-item">Edição Funcionário</a>
+	                				<a href="/locadora/locacao/selecionar-cliente.xhtml" class="list-group-item">Locação Selecionar Cliente</a>
+	                				<a href="/locadora/locacao/selecionar-veiculo.xhtml" class="list-group-item">Locação Selecionar Veículo</a>
+	                			</div>
+	                		</div>
+	                	</div>                
+	                </div>
+	                <div class="col-sm-6 col-lg-6">
+	                	<div class="panel panel-green">
+	                		<div class="panel-heading">
+	                			<h3 class="panel-title"><i class="fa fa-sticky-note"></i> Páginas prontas</h3>
+	                		</div>
+	                		<div class="panel-body">
+	                			<div class="list-group">
+	                				<a href="/locadora/cadastro/veiculo.xhtml" class="list-group-item">Cadastro Veículo</a>
+	                				<a href="/locadora/cadastro/cliente.xhtml" class="list-group-item">Cadastro Cliente</a>
+	                				<a href="/locadora/cadastro/funcionario.xhtml" class="list-group-item">Cadastro Funcionário</a>
+	                			</div>
+	                		</div>
+	                	</div>                
+	                </div>                
+                </div>
 
-               <form role="form">
-
-                   <div class="form-group">
-                       <label>Text Input with Placeholder</label>
-                       <input class="form-control" placeholder="Enter text"/>
-                   </div>
-
-
-
-                   <div class="form-group">
-                       <label>Selects</label>
-                       <select class="form-control">
-                           <option>1</option>
-                           <option>2</option>
-                           <option>3</option>
-                           <option>4</option>
-                           <option>5</option>
-                       </select>
-                   </div>
-
-
-
-                   <button type="submit" class="btn btn-default">Submit Button</button>
-
-
-
-               </form>
 
            </div>
 
