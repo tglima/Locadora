@@ -16,7 +16,7 @@
 		             <span class="icon-bar"></span>
 		             <span class="icon-bar"></span>
 		         </button>
-		         <p:link styleClass="navbar-brand" href="/index.xhtml" >Locadora</p:link>
+		         <p:link styleClass="navbar-brand" href="/index.xhtml">Locadora</p:link>
 		     </div>
 	    	 <!-- Top Menu Items -->
 	          <ul class="nav navbar-right top-nav">
@@ -24,7 +24,7 @@
 	                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-power-off"></i> <b class="caret"></b></a>
 	                  <ul class="dropdown-menu">
 	                      <li>
-	                        <a href="#">Encerrar sessão</a>
+	                      	<p:link href="/index.xhtml" value="Encerrar sessão" />
 	                     </li>
 	                  </ul>
            		</li>
@@ -55,55 +55,53 @@
 					<!-- /#user-panel -->
 				  </li>
 	              <li>
-	                  <a href="/index.xhtml"><i class="glyphicon glyphicon-home"></i> Home</a>
+	              	  <p:link href="/index.xhtml"><i class="glyphicon glyphicon-home"></i> Home</p:link>
+	        
 	              </li>
 	              <li>
-	                  <a href="javascript:;" data-toggle="collapse" data-target="#veic-collapse"><i class="fa fa-fw fa-car"></i> Veículos <i class="fa fa-fw fa-caret-down"></i></a>
+	                  <a href="#" data-toggle="collapse" data-target="#veic-collapse"><i class="fa fa-fw fa-car"></i> Veículos <i class="fa fa-fw fa-caret-down"></i></a>
 	                  <ul id="veic-collapse" class="collapse">
 	                      <li>
-	                          <a href="#">Cadastrar veículo</a>
+	                          <a href="/locadora/cadastro/veiculo.xhtml">Cadastrar veículo</a>
 	                      </li>
 	                      <li>
-	                          <a href="#">Buscar veículo</a>
+	                          <a href="/locadora/index.xhtml">Buscar veículo</a>
 	                      </li>
 	                      <li>
-	                          <a href="#">Liberar veículo</a>
+	                          <a href="/locadora/index.xhtml">Liberar veículo</a>
 	                      </li>
 	                  </ul>
 	              </li>
 	              <li>
-	                  <a href="javascript:;" data-toggle="collapse" data-target="#rent-collapse"><i class="fa fa-fw fa-money"></i> Locação <i class="fa fa-fw fa-caret-down"></i></a>
+	                  <a href="#" data-toggle="collapse" data-target="#rent-collapse"><i class="fa fa-fw fa-money"></i> Locação <i class="fa fa-fw fa-caret-down"></i></a>
 	                  <ul id="rent-collapse" class="collapse">
 	                      <li>
-	                          <a href="#">Realizar locação</a>
+	                          <a href="#">Nova locação</a>
 	                      </li>
 	                      <li>
-	                          <a href="#">Finalizar locação</a>
-	                      </li>
-	                      <li>
-	                          <a href="#">Cancelar locação</a>
-	                      </li>                            
+	                          <a href="/locadora/index.xhtml">Gerenciar locação</a>
+	                      </li>                           
 	                  </ul>
 	              </li>                    
 	              <li>
-	                  <a href="javascript:;" data-toggle="collapse" data-target="#cli-collapse"><i class="fa fa-fw fa-users"></i> Clientes <i class="fa fa-fw fa-caret-down"></i></a>
+	                  <a href="#" data-toggle="collapse" data-target="#cli-collapse"><i class="fa fa-fw fa-users"></i> Clientes <i class="fa fa-fw fa-caret-down"></i></a>
 	                  <ul id="cli-collapse" class="collapse">
 	                      <li>
-	                          <a href="#">Cadastrar cliente</a>
+	                          <a href="/locadora/cadastro/cliente.xhtml">Cadastrar cliente</a>
 	                      </li>
 	                      <li>
-	                          <a href="#">Buscar cliente</a>
+	                          <a href="/locadora/index.xhtml">Buscar cliente</a>
 	                      </li>
 	                  </ul>
 	              </li>
 	              <li>
-	                  <a href="javascript:;" data-toggle="collapse" data-target="#emp-collapse"><i class="fa fa-fw fa-briefcase"></i> Funcionários <i class="fa fa-fw fa-caret-down"></i></a>
+	                  <a href="#" data-toggle="collapse" data-target="#emp-collapse"><i class="fa fa-fw fa-briefcase"></i> Funcionários <i class="fa fa-fw fa-caret-down"></i></a>
 	                  <ul id="emp-collapse" class="collapse">
 	                      <li>
-	                          <a href="#">Cadastrar funcionário</a>
+	                          <a href="/locadora/cadastro/funcionario.xhtml">Cadastrar funcionário</a>
 	                      </li>
 	                      <li>
-	                          <a href="#">Buscar funcionário</a>
+	                          <a href="/locadora/index.xhtml">Buscar funcionário</a>
 	                      </li>
 	                  </ul>
 	              </li>
