@@ -1,0 +1,268 @@
+<ui:composition template="/resources/layout/b-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+<ui:define name="titulo">Gerenciar funcionários</ui:define>
+<ui:define name="content-dynamic">
+  <div class="row">
+      <div class="col-sm-12">
+		<h:form styleClass="form" id="GeFunc">
+		
+			<div class="row">
+				<div class="form-group">
+					<h:panelGroup layout="block" id="MenuTipoDeBusca">
+						<div class="col-sm-4 col-lg-2">
+							<h:selectOneMenu value="#{geFunc.tipoDeBusca}" styleClass="form-control" label="Tipo de busca" required="true">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+								<f:selectItem itemLabel="Buscar por CPF" itemValue='1' />
+								<f:selectItem itemLabel="Buscar por Nome" itemValue='2' />
+								<f:ajax event="change" execute="@this" listener="#{geFunc.clearInput}" render="TipoDeBusca" /> 
+							</h:selectOneMenu>					
+						</div>
+					</h:panelGroup>
+					<!-- /#MenuTipoDeBusca -->		
+
+					<h:panelGroup layout="block" id="TipoDeBusca">
+						<h:panelGroup layout="block" id="SearchCpf" styleClass="col-sm-4 col-lg-3" rendered="#{geFunc.tipoDeBusca == 1}">
+								<div class="input-group">
+									<p:inputMask id="CPF" mask="999.999.999-99" value="#{geFunc.searchParam}" styleClass="form-control" 
+									placeholder="Informe o nº do CPF" required="true" style="text-align: center;" label="CPF"/>
+									<span class="input-group-btn">
+										<h:commandButton value="Buscar" actionListener="#{geFunc.buscarPeloCPF}" styleClass="btn btn-default">
+											<f:ajax execute="CPF" render="Results"  /> 
+										</h:commandButton>		
+									</span>
+								</div>
+						</h:panelGroup>
+						<!-- /#SearchCpf -->
+						
+						<h:panelGroup layout="block" id="SearchName" styleClass="col-sm-4 col-lg-3" rendered="#{geFunc.tipoDeBusca == 2}">
+								<div class="input-group">
+									<h:inputText id="Nome" maxlength="50" value="#{geFunc.searchParam}" styleClass="form-control name" 
+									pt:placeholder="Informe o nome" required="true" label="Nome do funcionário" 
+									onfocus="setInputName()" >
+										<f:validateLength minimum="3" />
+									 </h:inputText>
+									<span class="input-group-btn">
+										<h:commandButton value="Buscar" action="#{geFunc.buscarPeloNome()}" styleClass="btn btn-default" >
+											<f:ajax execute="Nome" render="Results" /> 
+										</h:commandButton>
+									</span>
+								</div>
+						</h:panelGroup>
+						<!-- /#SearchName  -->
+					
+					</h:panelGroup>	
+					<!-- /#TipoDeBusca -->									
+				
+				</div>
+	
+			</div>
+			<!-- /.row -->
+			
+			<div class="row">
+				<div class="form-group">
+				
+					<h:panelGroup layout="block" id="Results" styleClass="form-group">
+						<div class="col-sm-12">
+							<h:panelGroup layout="block" id="NoResults" rendered="#{geFunc.resultEmpty and  geFunc.funcEncontrados.isEmpty()}" >
+								<div class="text-center">
+									<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" aria-hidden="true"/>
+									<br/>
+									<strong>A busca não encontrou resultados para os parâmetros informados.</strong>
+									<p>Refaça sua pesquisa usando outros termos.</p>		
+								</div>
+							</h:panelGroup>
+											
+							<p:dataTable var="func" value="#{geFunc.funcEncontrados}" sortBy="#{func.nome}"  tableStyle="table table-condensed table-hover"  
+							 styleClass="text-center" rendered="#{geFunc.funcEncontrados.size() gt 0 }" >
+								<p:column width="50%">
+									<f:facet name="header"><h:outputText value="Nome" /></f:facet>
+									<h:outputText value="#{func.nome}  #{func.sobrenome}" styleClass="text-capitalize" />
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Data de nascimento" /></f:facet>
+									<h:outputText value="#{func.dataNasc}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Cargo" /></f:facet>
+									<h:outputText value="#{func.cargo.label}"/>
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Ação" /></f:facet>
+									
+									<p:commandLink update="funcDetail" title="Detalhar" oncomplete="PF('dlg').show()"  styleClass="btn btn-default btn-sm" immediate="true" >
+										 <i class="fa fa-eye"/>
+										 <f:setPropertyActionListener target="#{geFunc.selectedFunc}"  value="#{func}"  for="funcDetail" />
+									</p:commandLink>			
+											
+									<span/>		
+											
+									<p:commandLink update="funcEditing" title="Editar" oncomplete="PF('dlgEditFunc').show()"  styleClass="btn btn-default btn-sm" immediate="true" >
+										 <i class="fa fa-pencil"/>
+										 <f:setPropertyActionListener target="#{geFunc.selectedFunc}"  value="#{func}"  for="EditFunc" />
+									</p:commandLink>					
+									
+									<span/>
+				
+								</p:column>
+							</p:dataTable>
+						</div>		
+						
+					</h:panelGroup>	
+					<!-- /#Results -->			
+								
+				</div>
+				<!-- ./form-group -->
+				
+			</div>
+			<!-- /.row -->
+			
+			<br />
+		
+		</h:form>
+		<!-- /#GeFunc -->
+		
+		<p:dialog header="Editar Funcionário" widgetVar="dlgEditFunc" dynamic="true" id="funcEditing" closeOnEscape="true" position="center">
+			<h:form styleClass="form" id="EditFunc">
+			
+				<div class="row form-group">
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Nome" for="nome" styleClass="control-label" />
+						<h:inputText id="nome" maxlength="20" value="#{geFunc.selectedFunc.nome}" 
+						styleClass="form-control text-capitalize name" pt:placeholder="Luis" 
+						required="true" label="Nome" />
+					</div>	
+					
+					<div class="col-sm-8 col-lg-8">
+						<h:outputLabel value="Sobrenome" for="sobrenome" styleClass="control-label" />				
+						<h:inputText id="sobrenome" maxlength="50" value="#{geFunc.selectedFunc.sobrenome}" 
+						styleClass="form-control text-capitalize lastName" pt:placeholder="Alberto da Silva" 
+						required="true" label="Sobrenome" />
+					</div>
+																									
+				</div>
+				
+				<div class="row form-group">			
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Gênero" for="Genero" styleClass="control-label" />
+						<h:selectOneMenu id="Genero" value="#{geFunc.selectedFunc.genero}" styleClass="form-control" 
+							required="true" label="Gênero" >
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
+								value="#{cadFunc.generos}" />
+						</h:selectOneMenu>				
+					</div>						
+						
+						
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Nascimento" for="DataNascimento" styleClass="control-label" />
+						<p:calendar id="DataNascimento" value="#{geFunc.selectedFunc.dataNasc}" locale="pt_BR"
+							 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" 
+							 maxlength="10" inputStyle="text-align:center;" placeholder="01/01/1990" 
+							 required="true" label="Data de Nascimento"/>
+					</div>	
+					
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="CPF" for="CPF" styleClass="control-label" />
+						<p:inputMask id="CPF" mask="999.999.999-99" value="#{geFunc.selectedFunc.cpf}" 
+						styleClass="form-control" placeholder="000.000.000-00" required="true" 
+						style="text-align: center;" label="CPF"/>
+					</div>							
+						
+					<div class="col-lg-3" />						
+				</div>
+				
+	
+				<div class="row form-group">
+				
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Telefone" for="Telefone" styleClass="control-label" />
+						<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{geFunc.selectedFunc.telefone}" 
+						styleClass="form-control" maxlength="15" pt:placeholder="(11) 9999-99999" required="true" 
+						style="text-align: center;" label="Telefone" />
+					</div>	
+					
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Cargo" for="Cargo" styleClass="control-label" />
+						<h:selectOneMenu id="Cargo" value="#{geFunc.selectedFunc.cargo}" styleClass="form-control" 
+						required="true" label="Cargo" >
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="cargo" itemLabel="#{cargo.label}" itemValue="#{cargo}"
+							value="#{cadFunc.cargos}" />
+						</h:selectOneMenu>				
+					</div>
+					
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Senha" for="Password" styleClass="control-label" />
+						<h:inputSecret  id="Password" maxlength="8" value="#{geFunc.selectedFunc.password}" 
+						styleClass="form-control" pt:placeholder="Informe uma senha" required="true" 
+						redisplay="true" style="text-align: center;" label="Senha"/>
+					</div>	
+					
+					<div class="col-lg-3" />
+				</div>
+				<br/>			
+				
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<h:commandButton value="Salvar Alterações" action="#{geFunc.salvar()}" styleClass="btn btn-primary pull-right" />				
+					</div>
+				</div>
+				<br />		
+			</h:form>
+			<!-- /#EditFunc -->
+				
+		</p:dialog>
+		
+		<p:dialog header="Dados do Funcionário" widgetVar="dlg" dynamic="true" id="funcDetail" closeOnEscape="true" 
+			position="center" >
+					
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Nome: " />
+					<h:outputText styleClass="text-capitalize" value="#{geFunc.selectedFunc.nome} #{geFunc.selectedFunc.sobrenome}" />			
+				</div>
+				
+				<div class="form-group">
+						<h:outputText style="font-weight:bold" value="Gênero: " />
+						<h:outputText value="#{geFunc.selectedFunc.genero.label}" />				
+				</div>
+				
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Data de nascimento: " />
+					
+					<h:outputText value="#{geFunc.selectedFunc.dataNasc}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>							
+				</div>
+				
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Telefone: " />
+					<h:outputText value=" #{geFunc.selectedFunc.telefone} " />
+				</div>
+				
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Nº do CPF: " />
+					<h:outputText value=" #{geFunc.selectedFunc.cpf} " />
+				</div>
+				
+				<div class="form-group"> 
+					<h:outputText value="Cargo: " style="font-weight:bold" />
+					<h:outputText value="#{geFunc.selectedFunc.cargo.label}"/>						
+				</div>
+			
+		</p:dialog>		
+		
+      </div>
+
+  </div>
+  <!-- /.row --> 
+  
+</ui:define>
+</ui:composition>
