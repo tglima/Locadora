@@ -24,4 +24,12 @@
     </param-name>
     <param-value>true</param-value>
   </context-param>
+ 
+  <!-- Tema do Primefaces -->
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>bootstrap</param-value>
+	</context-param>
+
+
 </web-app>
