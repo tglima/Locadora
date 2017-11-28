@@ -1,0 +1,268 @@
+<ui:composition template="/resources/layout/b-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+<ui:define name="titulo">Gerenciar clientes</ui:define>
+<ui:define name="content-dynamic">
+  <div class="row">
+      <div class="col-sm-12">
+		<h:form styleClass="form" id="GeCliente">
+		
+			<div class="row">
+				<div class="form-group">
+					<h:panelGroup layout="block" id="MenuTipoDeBusca">
+						<div class="col-sm-4 col-lg-2">
+							<h:selectOneMenu value="#{geCliente.tipoDeBusca}" styleClass="form-control" label="Tipo de busca" required="true">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+								<f:selectItem itemLabel="Buscar pela CNH" itemValue='1' />
+								<f:selectItem itemLabel="Buscar por Nome" itemValue='2' />
+								<f:ajax event="change" execute="@this" listener="#{geCliente.clearInput}" render="TipoDeBusca" /> 
+							</h:selectOneMenu>					
+						</div>
+					</h:panelGroup>
+					<!-- /#MenuTipoDeBusca -->		
+
+					<h:panelGroup layout="block" id="TipoDeBusca">
+						<h:panelGroup layout="block" id="SearchCnh" styleClass="col-sm-4 col-lg-3" rendered="#{geCliente.tipoDeBusca == 1}">
+								<div class="input-group">
+									<p:inputMask id="CNH" mask="99999999999" value="#{geCliente.searchParam}" styleClass="form-control" 
+									placeholder="Informe o nº da CNH" required="true" style="text-align: center;" label="CNH" slotChar="" />
+									<span class="input-group-btn">
+										<h:commandButton value="Buscar" actionListener="#{geCliente.buscarPelaCNH}" styleClass="btn btn-default">
+											<f:ajax execute="CNH" render="Results"  /> 
+										</h:commandButton>		
+									</span>
+								</div>
+						</h:panelGroup>
+						<!-- /#SearchCpf -->
+						
+						<h:panelGroup layout="block" id="SearchName" styleClass="col-sm-4 col-lg-3" rendered="#{geCliente.tipoDeBusca == 2}">
+								<div class="input-group">
+									<h:inputText id="Nome" maxlength="50" value="#{geCliente.searchParam}" styleClass="form-control name" 
+									pt:placeholder="Informe o nome" required="true" label="Nome do cliente" 
+									onfocus="setInputName()" >
+										<f:validateLength minimum="3" />
+									 </h:inputText>
+									<span class="input-group-btn">
+										<h:commandButton value="Buscar" action="#{geCliente.buscarPeloNome}" styleClass="btn btn-default" >
+											<f:ajax execute="Nome" render="Results" /> 
+										</h:commandButton>
+									</span>
+								</div>
+						</h:panelGroup>
+						<!-- /#SearchName  -->
+					
+					</h:panelGroup>	
+					<!-- /#TipoDeBusca -->									
+				
+				</div>
+	
+			</div>
+			<!-- /.row -->
+			
+			<div class="row">
+				<div class="form-group">
+				
+					<h:panelGroup layout="block" id="Results" styleClass="form-group">
+						<div class="col-sm-12">
+							<h:panelGroup layout="block" id="NoResults" rendered="#{geCliente.resultEmpty and geCliente.cliEncontrados.isEmpty()}" >
+								<div class="text-center">
+									<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" aria-hidden="true"/>
+									<br/>
+									<strong>A busca não encontrou resultados para os parâmetros informados.</strong>
+									<p>Refaça sua pesquisa usando outros termos.</p>		
+								</div>
+							</h:panelGroup>
+											
+							<p:dataTable var="cli" value="#{geCliente.cliEncontrados}" sortBy="#{cli.nome}"  
+							tableStyle="table table-condensed table-hover"  styleClass="text-center" 
+							 rendered="#{geCliente.cliEncontrados.size() gt 0 }" >
+								<p:column width="50%">
+									<f:facet name="header"><h:outputText value="Nome" /></f:facet>
+									<h:outputText value="#{cli.nome}  #{cli.sobrenome}" styleClass="text-capitalize" />
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Data de nascimento" /></f:facet>
+									<h:outputText value="#{cli.dataNasc}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Nº da CNH" /></f:facet>
+									<h:outputText value="#{cli.habilitacao}"/>
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Ação" /></f:facet>
+									
+									<p:commandLink update="cliDetail" title="Detalhar" oncomplete="PF('dlg').show()"  
+										styleClass="btn btn-default btn-sm" immediate="true" >
+										 <i class="fa fa-eye"/>
+										 <f:setPropertyActionListener target="#{geCliente.selectedCli}"  value="#{cli}"  for="cliDetail" />
+									</p:commandLink>			
+											
+									<span/>		
+											
+									<p:commandLink update="cliEditing" title="Editar" oncomplete="PF('dlgEditCli').show()"  
+										styleClass="btn btn-default btn-sm" immediate="true" >
+										 <i class="fa fa-pencil"/>
+										 <f:setPropertyActionListener target="#{geCliente.selectedCli}"  value="#{cli}"  for="EditCli" />
+									</p:commandLink>					
+									
+									<span/>
+				
+								</p:column>
+							</p:dataTable>
+						</div>		
+						
+					</h:panelGroup>	
+					<!-- /#Results -->			
+								
+				</div>
+				<!-- ./form-group -->
+				
+			</div>
+			<!-- /.row -->
+			
+			<br />
+		
+		</h:form>
+		<!-- /#GeCliente -->
+		
+		<p:dialog header="Editar Cliente" widgetVar="dlgEditCli" dynamic="true" id="cliEditing" closeOnEscape="true" position="center">
+			<h:form styleClass="form" id="EditCli">
+			
+				<div class="row form-group">
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Nome" for="nome" styleClass="control-label" />
+						<h:inputText id="nome" maxlength="20" value="#{geCliente.selectedCli.nome}" 
+						styleClass="form-control text-capitalize name" pt:placeholder="Luis" 
+						required="true" label="Nome" />
+					</div>	
+					
+					<div class="col-sm-8 col-lg-8">
+						<h:outputLabel value="Sobrenome" for="sobrenome" styleClass="control-label" />				
+						<h:inputText id="sobrenome" maxlength="50" value="#{geCliente.selectedCli.sobrenome}" 
+						styleClass="form-control text-capitalize lastName" pt:placeholder="Alberto da Silva" 
+						required="true" label="Sobrenome" />
+					</div>
+																									
+				</div>
+				
+				<div class="row form-group">			
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Gênero" for="Genero" styleClass="control-label" />
+						<h:selectOneMenu id="Genero" value="#{geCliente.selectedCli.genero}" styleClass="form-control" 
+							required="true" label="Gênero" >
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="genero" itemLabel="#{genero.label}" itemValue="#{genero}"
+								value="#{cadCliente.generos}" />
+						</h:selectOneMenu>				
+					</div>						
+						
+						
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Nascimento" for="DataNascimento" styleClass="control-label" />
+						<p:calendar id="DataNascimento" value="#{geCliente.selectedCli.dataNasc}" locale="pt_BR"
+							 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" 
+							 maxlength="10" inputStyle="text-align:center;" placeholder="01/01/1990" 
+							 required="true" label="Data de Nascimento"/>
+					</div>	
+					
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Telefone" for="Telefone" styleClass="control-label" />
+						<p:inputMask id="Telefone" mask="(99) 9999-9999?9" value="#{geCliente.selectedCli.telefone}" 
+						styleClass="form-control" maxlength="15" pt:placeholder="(11) 9999-99999" required="true" 
+						style="text-align: center;" label="Telefone" />
+					</div>						
+					
+							
+						
+					<div class="col-lg-3" />						
+				</div>
+				
+	
+				<div class="row form-group">
+
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="CNH" for="CNH" styleClass="control-label" />
+						<p:inputMask id="CNH" mask="99999999999" value="#{geCliente.selectedCli.habilitacao}" 
+						styleClass="form-control" placeholder="00000000000" required="true" 
+						slotChar="" style="text-align: center;" label="CNH"/>
+					</div>				
+
+					
+					<div class="col-sm-4 col-lg-3">
+						<h:outputLabel value="Validade CNH" for="ValidadeHabilita" styleClass="control-label" />
+						<p:calendar id="ValidadeHabilita" value="#{geCliente.selectedCli.validadeHab}" locale="pt_BR"
+							 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" maxlength="10"
+							 inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Validade da Habilitação"/>			
+					</div>
+					
+	
+					
+					<div class="col-sm-4 col-lg-6" />
+				</div>
+				<br/>			
+				
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<h:commandButton value="Salvar Alterações" action="#{geCliente.salvar()}" styleClass="btn btn-primary pull-right" />				
+					</div>
+				</div>
+				<br />		
+			</h:form>
+			<!-- /#EditFunc -->
+				
+		</p:dialog>
+		
+		<p:dialog header="Dados do Cliente" widgetVar="dlg" dynamic="true" id="cliDetail" closeOnEscape="true" 
+			position="center" >
+					
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Nome: " />
+					<h:outputText styleClass="text-capitalize" value="#{geCliente.selectedCli.nome} #{geCliente.selectedCli.sobrenome}" />			
+				</div>
+				
+				<div class="form-group">
+						<h:outputText style="font-weight:bold" value="Gênero: " />
+						<h:outputText value="#{geCliente.selectedCli.genero.label}" />				
+				</div>
+				
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Data de nascimento: " />
+					
+					<h:outputText value="#{geCliente.selectedCli.dataNasc}" >
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>							
+				</div>
+				
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Telefone: " />
+					<h:outputText value="#{geCliente.selectedCli.telefone} " />
+				</div>
+				
+				<div class="form-group">
+					<h:outputText style="font-weight:bold" value="Nº da CNH: " />
+					<h:outputText value=" #{geCliente.selectedCli.habilitacao} " />
+				</div>
+				
+				<div class="form-group"> 
+					<h:outputText value="Data de validade: " style="font-weight:bold" />
+					<h:outputText value="#{geCliente.selectedCli.validadeHab}">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>				
+				</div>
+			
+		</p:dialog>		
+		
+      </div>
+
+  </div>
+  <!-- /.row --> 
+  
+</ui:define>
+</ui:composition>
