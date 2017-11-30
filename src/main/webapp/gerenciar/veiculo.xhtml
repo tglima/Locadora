@@ -1,0 +1,329 @@
+<ui:composition template="/resources/layout/b-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+<ui:define name="titulo">Gerenciar Veículos</ui:define>
+<ui:define name="content-dynamic">
+  <div class="row">
+      <div class="col-sm-12">
+		<h:form styleClass="form" id="GeVeiculos">
+		
+			<div class="row">
+				<div class="form-group">
+					<h:panelGroup layout="block" id="MenuTipoDeBusca">
+						<div class="col-sm-4 col-lg-2">
+							<h:selectOneMenu value="#{geVeic.tipoDeBusca}" styleClass="form-control" label="Tipo de busca" required="true">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+								<f:selectItem itemLabel="Por Status" itemValue='1' />
+								<f:selectItem itemLabel="Por Marca" itemValue='2' />
+								<f:selectItem itemLabel="Por Categoria" itemValue='3' />
+								<f:ajax event="change" execute="@this" listener="#{geVeic.clearOption}" render="TipoDeBusca" /> 
+							</h:selectOneMenu>					
+						</div>
+					</h:panelGroup>
+					<!-- /#MenuTipoDeBusca -->		
+
+					<h:panelGroup layout="block" id="TipoDeBusca">
+						<h:panelGroup layout="block" id="SearchStatus" styleClass="col-sm-4 col-lg-3" rendered="#{geVeic.tipoDeBusca == 1}">
+							<h:selectOneMenu id="Status" value="#{geVeic.status}" styleClass="form-control" required="true">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+								<f:selectItems var="status" itemLabel="#{status.label}" itemValue="#{status}" value="#{geVeic.situacoes}" />
+								<f:ajax event="change" listener="#{geVeic.buscarPorStatus()}" render="Results" />
+							</h:selectOneMenu>
+						</h:panelGroup>
+						<!-- /#SearchStatus -->
+						
+						<h:panelGroup layout="block" id="SearchMarca" styleClass="col-sm-4 col-lg-3" rendered="#{geVeic.tipoDeBusca == 2}">
+							<h:selectOneMenu id="Marca" value="#{geVeic.marca}" styleClass="form-control" required="true">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+								<f:selectItems var="marca" itemLabel="#{marca.label}" itemValue="#{marca}" value="#{geVeic.marcas}" />
+								<f:ajax event="change" listener="#{geVeic.buscarPorMarca()}" render="Results" />
+							</h:selectOneMenu>	
+						</h:panelGroup>
+						<!-- /#SearchMarca  -->
+						
+						<h:panelGroup layout="block" id="SearchCat" styleClass="col-sm-4 col-lg-3" rendered="#{geVeic.tipoDeBusca == 3}">
+							<h:selectOneMenu id="Categoria" value="#{geVeic.categoria}" styleClass="form-control" required="true">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+								<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{categoria}" value="#{geVeic.categorias}" />
+								<f:ajax event="change" listener="#{geVeic.buscarPorCategoria()}" render="Results" />
+							</h:selectOneMenu>	
+						</h:panelGroup>
+						<!-- /#SearchCat  -->
+					
+					</h:panelGroup>	
+					<!-- /#TipoDeBusca -->									
+				
+				</div>
+	
+			</div>
+			<!-- /.row -->
+			
+			<div class="row">
+				<div class="form-group">
+				
+					<h:panelGroup layout="block" id="Results" styleClass="form-group">
+						<div class="col-sm-12">
+							<h:panelGroup layout="block" id="NoResults" rendered="#{geVeic.resultEmpty and geVeic.veicEncontrados.isEmpty()}" >
+								<div class="text-center">
+									<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" aria-hidden="true"/>
+									<br/>
+									<strong>A busca não encontrou resultados para os parâmetros informados.</strong>
+									<p>Refaça sua pesquisa usando outros termos.</p>		
+								</div>
+							</h:panelGroup>
+											
+							<p:dataTable id="tbVeic" var="veic" value="#{geVeic.veicEncontrados}" sortBy="#{veic.placa}"  
+								tableStyle="table table-condensed table-hover"  styleClass="text-center" 
+							 	rendered="#{geVeic.veicEncontrados.size() gt 0 }" rows="5" 
+							 	paginatorPosition="bottom"	paginator="true" paginatorAlwaysVisible="false" >
+							 	
+								<p:column>
+									<f:facet name="header"><h:outputText value="Placa" /></f:facet>
+									<h:outputText value="#{veic.placa}" styleClass="text-uppercase" />
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Marca" /></f:facet>
+									<h:outputText value="#{veic.marca.label}" styleClass="text-capitalize" />
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="Modelo" /></f:facet>
+									<h:outputText value="#{veic.modelo}" styleClass="text-uppercase" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header"><h:outputText value="Status" /></f:facet>
+																		
+									<h:selectOneMenu id="Status" value="#{veic.status}" styleClass="form-control" required="true">
+										<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+										<f:selectItems var="status" itemLabel="#{status.label}" itemValue="#{status}" value="#{geVeic.situacoes}" />
+										<f:ajax event="change" listener="#{geVeic.salvarStatus(veic.id, veic.status)}" render="Results, @form" />
+									</h:selectOneMenu>	
+
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header"><h:outputText value="Ação" /></f:facet>
+									
+									<p:commandLink update="veicDetail" title="Detalhar" oncomplete="PF('dlg').show()"  
+										styleClass="btn btn-default btn-sm" immediate="true" >
+										 <i class="fa fa-eye"/>
+										 <f:setPropertyActionListener target="#{geVeic.selectedVeic}"  value="#{veic}"  for="veicDetail" />
+									</p:commandLink>			
+											
+									<span/>		
+											
+									<p:commandLink update="veicEditing" title="Editar" oncomplete="PF('dlgEditVeic').show()"  
+										styleClass="btn btn-default btn-sm" immediate="true" >
+										 <i class="fa fa-pencil"/>
+										 <f:setPropertyActionListener target="#{geVeic.selectedVeic}"  value="#{veic}"  for="EditVeic" />
+									</p:commandLink>					
+									
+									<span/>
+				
+								</p:column>
+					 	        <f:facet name="footer">
+						 	        <i class="fa fa-info-circle"></i> Atenção, veículos em locação não aparecem nos resultados.
+					 	        </f:facet>		
+							</p:dataTable>
+						</div>		
+						
+					</h:panelGroup>	
+					<!-- /#Results -->			
+								
+				</div>
+				<!-- ./form-group -->
+				
+			</div>
+			<!-- /.row -->
+			
+			<br />
+		
+		</h:form>
+		<!-- /#GeVeic -->
+		
+		<p:dialog header="Editar Veículo" widgetVar="dlgEditVeic" modal="true" id="veicEditing" closeOnEscape="true" position="center">
+			<f:ajax event="open" listener="#{geVeic.atualizaKmInicial()}" />
+			<h:form styleClass="form" id="EditVeic">
+				<div class="row form-group">
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Placa" for="placa" styleClass="control-label" />						
+						<p:inputMask id="placa" mask="aaa-9999" value="#{geVeic.selectedVeic.placa}"
+					 	styleClass="form-control text-uppercase" placeholder="AAA-0000" required="true" 
+					 	style="text-align: center;" label="Placa" />
+					</div>	
+										
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Marca" for="marcaVeic" styleClass="control-label" />				
+						<h:selectOneMenu id="marcaVeic" value="#{geVeic.selectedVeic.marca}" styleClass="form-control" 
+						required="true" label="Marca" >
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+						<f:selectItems var="marca" itemLabel="#{marca.label}" itemValue="#{marca}"
+							value="#{geVeic.marcas}" />
+						</h:selectOneMenu>
+					</div>
+					
+					
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Modelo" for="modelo" styleClass="control-label" />				
+						<h:inputText id="modelo" value="#{geVeic.selectedVeic.modelo}" 
+						styleClass="form-control modelo text-uppercase" pt:placeholder="Modelo" 
+						required="true" label="Modelo" style="text-align: center;" 
+						title="Informe o modelo do veículo conforme descrito no documento." />		
+					</div>		
+																														
+				</div>
+				
+				<div class="row form-group">			
+					<div class="col-sm-4 col-lg-4">	
+						<h:outputLabel value="Categoria" for="catVeic" styleClass="control-label" />				
+						<h:selectOneMenu id="catVeic" value="#{geVeic.selectedVeic.categoria}" styleClass="form-control" 
+						required="true" label="Categoria">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{categoria}" value="#{geVeic.categorias}" />
+						</h:selectOneMenu>									
+					</div>							
+						
+						
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Cor" for="cor"  styleClass="control-label"/>
+						<h:selectOneMenu id="cor" value="#{geVeic.selectedVeic.cor}" styleClass="form-control" 
+							required="true" label="Cor">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="cor" itemLabel="#{cor.label}" itemValue="#{cor}" value="#{geVeic.cores}" />
+						</h:selectOneMenu>					
+					</div>	
+					
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Ano" for="ano" styleClass="control-label" />
+						<p:inputMask id="ano" value="#{geVeic.selectedVeic.ano}" mask="9999" styleClass="form-control"
+						style="text-align: center;" slotChar="" placeholder="Ano" required="true" label="Ano" maxlength="4"
+						title="Informe o ano de fabricação do veículo" />			
+					</div>						
+												
+				</div>
+				
+	
+				<div class="row form-group">
+
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Combustível" for="combustivel" styleClass="control-label" />
+						<h:selectOneMenu id="combustivel" value="#{geVeic.selectedVeic.combustivel}" styleClass="form-control" 
+							required="true"  label="Combustível" >
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{combustivel}" value="#{geVeic.combustiveis}" />
+						</h:selectOneMenu>
+					</div>
+					
+					<div class="col-sm-4 col-lg-4">				
+						<h:outputLabel value="Status" for="status" styleClass="control-label" />
+						<h:selectOneMenu id="status" value="#{geVeic.selectedVeic.status}" styleClass="form-control" 
+							required="true"  label="Status do veículo" >
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+							<f:selectItems var="cat" itemLabel="#{cat.label}" itemValue="#{situacao}" value="#{geVeic.situacoes}" />
+						</h:selectOneMenu>
+					</div>					
+				
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="Valor da Diária" for="valorDiaria" styleClass="control-label" />
+					 	<p:inputNumber id="valorDiaria" value="#{geVeic.selectedVeic.valorDiaria}" required="true"
+					 	 inputStyle="text-align: center;" maxValue="9999.99" label="Valor da diária" inputStyleClass="form-control"
+					 	symbol="R$ " decimalSeparator="," thousandSeparator="." minValue="0" />
+					</div>	
+
+				
+				</div>
+				
+				<div class="row form-group">
+				
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="KM Inicial" for="kmInicial" styleClass="control-label" />
+						<p:inputMask id="kmInicial" mask="9?99999" maxlength="6" value="#{geVeic.selectedVeic.kmInicial}" 
+							styleClass="form-control" style="text-align: center;" placeholder="KM inicial" required="true"  
+							label="Km do veículo" slotChar="" title="Informe a KM do veículo no ato da compra." >
+							<f:ajax event="change" listener="#{geVeic.atualizaKmInicial()}" />						
+						</p:inputMask>
+					</div>
+					
+					<div class="col-sm-4 col-lg-4">
+						<h:outputLabel value="KM Atual" for="kmInicial" styleClass="control-label" />
+						<p:inputMask id="kmAtual" mask="9?99999" maxlength="6" value="#{geVeic.selectedVeic.kmAtual}" 
+							styleClass="form-control" style="text-align: center;" placeholder="KM inicial" required="true"  
+							label="Km atual do veículo" slotChar="" title="Informe a KM atual veículo." >
+							<f:validateLongRange minimum="#{geVeic.kmInicial}" /> 	
+						</p:inputMask>
+					</div>				
+				
+
+					
+					<div class="col-sm-4 col-lg-4"></div>					
+									
+				</div>
+				
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<h:commandButton value="Salvar Alterações" action="#{geVeic.salvar()}" styleClass="btn btn-primary pull-right"  />
+					</div>
+				</div>
+			</h:form>
+			<!-- /#EditVeic -->
+				
+		</p:dialog>
+		
+		<p:dialog header="Dados do Veículo" widgetVar="dlg" dynamic="true" id="veicDetail" closeOnEscape="true">
+
+			<p:outputPanel>
+				<p:panelGrid columns="2" styleClass="table table-striped">	
+								
+						<h:outputText style="font-weight:bold" value="Placa: " />
+						<h:outputText styleClass="text-uppercase" value="#{geVeic.selectedVeic.placa}"/>			
+				
+						<h:outputText style="font-weight:bold" value="Marca: " />
+						<h:outputText value="#{geVeic.selectedVeic.marca.label}" />				
+				
+						<h:outputText style="font-weight:bold" value="Modelo: " />
+						<h:outputText styleClass="text-uppercase" value="#{geVeic.selectedVeic.modelo}" />				
+				
+						<h:outputText style="font-weight:bold" value="Categoria: " />
+						<h:outputText value="#{geVeic.selectedVeic.categoria.label}" />				
+
+						<h:outputText style="font-weight:bold" value="Cor: " />
+						<h:outputText value="#{geVeic.selectedVeic.cor.label}" />				
+				
+						<h:outputText style="font-weight:bold" value="Ano: " />
+						<h:outputText value="#{geVeic.selectedVeic.ano}" />				
+
+						<h:outputText style="font-weight:bold" value="Combustível: " />
+						<h:outputText value="#{geVeic.selectedVeic.combustivel.label}" />				
+				
+						<h:outputText style="font-weight:bold" value="Status: " />
+						<h:outputText value="#{geVeic.selectedVeic.status.label}" />				
+				
+						<h:outputText style="font-weight:bold" value="Km Inicial: " />
+						<h:outputText value="#{geVeic.selectedVeic.kmInicial}" />				
+				
+						<h:outputText style="font-weight:bold" value="Km Atual: " />
+						<h:outputText value="#{geVeic.selectedVeic.kmAtual}" />				
+				
+						<h:outputText style="font-weight:bold" value="Valor da diária: " />
+						<h:outputText value="#{geVeic.selectedVeic.valorDiaria}">	
+							<f:convertNumber type="currency" currencySymbol="R$" />
+						</h:outputText>									
+				
+				</p:panelGrid>
+			</p:outputPanel>
+				
+			
+		</p:dialog>		
+		
+      </div>
+
+  </div>
+  <!-- /.row --> 
+  
+</ui:define>
+</ui:composition>
