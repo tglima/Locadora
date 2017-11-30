@@ -35,6 +35,7 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 
 	@Override
 	public T buscarPorId(Long id) throws Exception {
+		this.entityManager = JpaUtil.getEntityManager();
 		return this.entityManager.find(type, id);
 	}
 
