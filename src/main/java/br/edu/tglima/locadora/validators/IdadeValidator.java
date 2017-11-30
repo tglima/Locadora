@@ -19,7 +19,7 @@ public class IdadeValidator implements Validator {
 		Date today = new Date();
 		Long dif = calcDifAnos(dataNasc, today);
 
-		if (dif < 23 || dif > 71) {
+		if (dif <= 22 || dif > 71) {
 			String errorDescription = "Idade inválida! Só serão aceitas idades entre 23 e 70 anos.";
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, null, errorDescription);
 			throw new ValidatorException(message);
