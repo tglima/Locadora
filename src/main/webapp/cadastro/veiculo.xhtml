@@ -87,19 +87,15 @@
 				
 				<div class="form-group col-sm-3 col-lg-2">
 					<h:outputLabel value="Valor da Diária" for="valorDiaria" styleClass="control-label" />
-					<div class="input-group">
-						<span class="input-group-addon">R$</span>
-						<h:inputText id="valorDiaria" value="#{cadVeic.novoVeiculo.valorDiaria}" required="true" 
-						styleClass="form-control moeda" style="text-align: center;" pt:placeholder="40,25" maxlength="8" label="Valor da Diária">
-						<f:convertNumber pattern="#,##0.00"	minFractionDigits="2" locale="pt_BR" />
-				 	</h:inputText>
-				</div>
-				</div>			
+		 			<p:inputNumber id="valorDiaria" value="#{cadVeic.novoVeiculo.valorDiaria}" required="true"
+			 			 inputStyle="text-align: center;" maxValue="9999.99" label="Valor da diária" inputStyleClass="form-control" 
+			 			 symbol="R$ " decimalSeparator="," thousandSeparator="." minValue="0" />
+				</div>	
 			</div>
 			
 			<div class="row">
-				<div class="col-sm-12">
-					<h:commandButton value="Cadastrar" action="#{cadVeic.cadastrar()}" styleClass="btn btn-primary" />				
+				<div class="col-sm-8 col-lg-6">
+					<h:commandButton value="Cadastrar" action="#{cadVeic.cadastrar()}" styleClass="btn btn-primary pull-right" />				
 				</div>
 			</div>
 			<br />
