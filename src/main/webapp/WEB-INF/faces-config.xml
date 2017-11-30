@@ -5,10 +5,6 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 <validator>
-	<validator-id>kmAtual</validator-id>
-	<validator-class>br.edu.tglima.locadora.validators.KmAtualValidator</validator-class>
-</validator>
-<validator>
 	<validator-id>idadeValidator</validator-id>
 	<validator-class>br.edu.tglima.locadora.validators.IdadeValidator</validator-class>
 </validator>
