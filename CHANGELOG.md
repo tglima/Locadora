@@ -1,3 +1,20 @@
+## 0.8.0
+
+### Adicionado:
+- **Classes Java:** GeFunc - GeCliente - GeVeic - ValidadeCnhValidator
+- **Páginas XHTML:** Gerenciar Funcionários - Gerenciar Clientes - Gerenciar Veículos
+- **Outros:** Adicionado o tema Bootstrap do PrimeFaces
+
+### Melhorado:
+- **Classes Java:** CadFunc - CadCliente - CadVeic - AbstractRepository - FuncionarioRepository - VeiculoRepository - IdadeValidator - TempoUtil
+- **Páginas XHTML:** Pg Inicial - Cadastro Funcionários - Cadastro de Clientes - Cadastro de Veículos
+- **Outros:** Trocado o tema do PrimeFaces - Apontamento da pg index.xhtml como raiz da aplicação - Melhorias no template e no Código CSS
+
+### Removido:
+- **Classes Java:** StringUtil - EditFunc - EditClient -EditVeic - ClienteValidator - KmAtualValidator
+- **Páginas XHTML:** Edição Funcionário - Edição Cliente - Edição Veículo
+
+
 ## 0.7.0
 - Eliminados alguns códigos JS que se tornaram desnecessários.
 - Adicionado um novo template ao projeto. Esse template irá ser implantado gradativamente em todas as páginas do projeto.
