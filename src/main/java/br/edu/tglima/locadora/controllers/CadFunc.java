@@ -27,11 +27,11 @@ public class CadFunc implements Serializable {
 	private FuncionarioRepository repository;
 
 	public void cadastrar() {
-		this.novoFunc = fmtToSave(this.novoFunc);
+		novoFunc = fmtToSave(novoFunc);
 		try {
-			repository.salvarNovo(this.novoFunc);
+			repository.salvarNovo(novoFunc);
 			enviarMsgSucesso("Funcionário cadastrado com sucesso!");
-			this.novoFunc = null;
+			novoFunc = null;
 		} catch (Exception e) {
 			enviarMsgErro("Erro, funcionário não cadastrado!");
 			if (e.getMessage().contains("ConstraintViolationException")) {

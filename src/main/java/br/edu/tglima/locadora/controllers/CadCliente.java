@@ -28,7 +28,7 @@ public class CadCliente implements Serializable {
 	public void cadastrar() {
 		novoCliente = fmtToSave(novoCliente);
 		try {
-			repository.salvarNovo(this.novoCliente);
+			repository.salvarNovo(novoCliente);
 			enviarMsgSucesso("Cliente cadastrado com sucesso!");
 			novoCliente = null;
 		} catch (Exception e) {
