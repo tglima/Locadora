@@ -30,9 +30,9 @@ public class CadVeic implements Serializable {
 
 	public void cadastrar() {
 		try {
-			repository.salvarNovo(fmtToSave(this.novoVeiculo));
+			repository.salvarNovo(fmtToSave(novoVeiculo));
 			enviarMsgSucesso("Veículo cadastrado com sucesso!");
-			this.novoVeiculo = null;
+			novoVeiculo = null;
 		} catch (Exception e) {
 			enviarMsgErro("Erro, veículo não cadastrado!");
 			if (e.getMessage().contains("ConstraintViolationException")) {
