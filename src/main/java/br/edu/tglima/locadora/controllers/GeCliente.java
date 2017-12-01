@@ -2,6 +2,7 @@ package br.edu.tglima.locadora.controllers;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +19,11 @@ import br.edu.tglima.locadora.repository.ClienteRepository;
 @ApplicationScoped
 public class GeCliente implements Serializable {
 
-	private static final long serialVersionUID = -3642616028842979731L;
+	private static final long serialVersionUID = 1L;
+
+	/*
+	 * TODO Trocar escopo da aplicação por outro mais adequado
+	 */
 
 	@Inject
 	private ClienteRepository repository;
@@ -62,7 +67,7 @@ public class GeCliente implements Serializable {
 
 	public void salvar() {
 		try {
-			repository.salvarEdicao(selectedCli);
+			repository.salvarEdicao(fmtToSave(selectedCli));
 			enviarMsgSucesso("Alterações salvas com sucesso!");
 		} catch (Exception e) {
 			enviarMsgErro("Erro, as alterações não foram salvas!");

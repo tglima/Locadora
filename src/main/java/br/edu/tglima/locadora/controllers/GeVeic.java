@@ -2,6 +2,7 @@ package br.edu.tglima.locadora.controllers;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import br.edu.tglima.locadora.repository.VeiculoRepository;
 @ApplicationScoped
 public class GeVeic implements Serializable {
 
-	private static final long serialVersionUID = 7468745842374434002L;
+	private static final long serialVersionUID = 1L;
 
 	/*
 	 * TODO Trocar escopo da aplicação por outro mais adequado
@@ -85,7 +86,7 @@ public class GeVeic implements Serializable {
 		try {
 			Veiculo veic = repository.buscarPorId(id);
 			veic.setStatus(novoStatus);
-			repository.salvarEdicao(veic);
+			repository.salvarEdicao(fmtToSave(veic));
 			enviarMsgSucesso(
 					"O Status do veículo " + veic.getPlaca().toUpperCase() + ", foi alterado com sucesso");
 		} catch (Exception e) {
@@ -97,7 +98,7 @@ public class GeVeic implements Serializable {
 
 	public void salvar() {
 		try {
-			repository.salvarEdicao(selectedVeic);
+			repository.salvarEdicao(fmtToSave(selectedVeic));
 			enviarMsgSucesso("As alterações do veículo " + selectedVeic.getPlaca().toUpperCase()
 					+ " foram salvas com sucesso!");
 			refazerPesquisa();
