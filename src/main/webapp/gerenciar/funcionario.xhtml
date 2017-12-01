@@ -166,7 +166,9 @@
 						<p:calendar id="DataNascimento" value="#{geFunc.selectedFunc.dataNasc}" locale="pt_BR"
 							 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" 
 							 maxlength="10" inputStyle="text-align:center;" placeholder="01/01/1990" 
-							 required="true" label="Data de Nascimento"/>
+							 required="true" label="Data de Nascimento">
+ 						 	<f:validator validatorId="IdadeValidator"/>
+ 						</p:calendar>
 					</div>	
 					
 					<div class="col-sm-4 col-lg-3">
