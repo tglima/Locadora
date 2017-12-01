@@ -169,7 +169,9 @@
 						<p:calendar id="DataNascimento" value="#{geCliente.selectedCli.dataNasc}" locale="pt_BR"
 							 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" 
 							 maxlength="10" inputStyle="text-align:center;" placeholder="01/01/1990" 
-							 required="true" label="Data de Nascimento"/>
+							 required="true" label="Data de Nascimento">
+							 <f:validator validatorId="IdadeValidator"/>	
+						 </p:calendar>
 					</div>	
 					
 					<div class="col-sm-4 col-lg-3">
@@ -199,7 +201,9 @@
 						<h:outputLabel value="Validade CNH" for="ValidadeHabilita" styleClass="control-label" />
 						<p:calendar id="ValidadeHabilita" value="#{geCliente.selectedCli.validadeHab}" locale="pt_BR"
 							 navigator="false" mask="true" pattern="dd/MM/yyyy" inputStyleClass="form-control" maxlength="10"
-							 inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Validade da Habilitação"/>			
+							 inputStyle="text-align:center;" placeholder="01/01/1990" required="true" label="Validade da Habilitação">
+							<f:validator  validatorId="ValidadeCnh" />
+						 </p:calendar>			
 					</div>
 					
 	
