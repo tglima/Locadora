@@ -110,7 +110,7 @@
 									<f:facet name="header"><h:outputText value="Ação" /></f:facet>
 									
 									<p:commandLink update="veicDetail" title="Detalhar" oncomplete="PF('dlg').show()"  
-										styleClass="btn btn-default btn-sm" immediate="true" >
+										styleClass="btn btn-info btn-xs" immediate="true" >
 										 <i class="fa fa-eye"/>
 										 <f:setPropertyActionListener target="#{geVeic.selectedVeic}"  value="#{veic}"  for="veicDetail" />
 									</p:commandLink>			
@@ -118,7 +118,7 @@
 									<span/>		
 											
 									<p:commandLink update="veicEditing" title="Editar" oncomplete="PF('dlgEditVeic').show()"  
-										styleClass="btn btn-default btn-sm" immediate="true" >
+										styleClass="btn btn-warning btn-xs" immediate="true" >
 										 <i class="fa fa-pencil"/>
 										 <f:setPropertyActionListener target="#{geVeic.selectedVeic}"  value="#{veic}"  for="EditVeic" />
 									</p:commandLink>					
@@ -274,7 +274,7 @@
 				
 		</p:dialog>
 		
-		<p:dialog header="Dados do Veículo" widgetVar="dlg" dynamic="true" id="veicDetail" closeOnEscape="true">
+		<p:dialog header="Dados do Veículo" widgetVar="dlg" modal="true" id="veicDetail" closeOnEscape="true">
 
 			<p:outputPanel>
 				<p:panelGrid columns="2" styleClass="table table-striped">	
@@ -316,7 +316,6 @@
 				
 				</p:panelGrid>
 			</p:outputPanel>
-				
 			
 		</p:dialog>		
 		
