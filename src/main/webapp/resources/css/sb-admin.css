@@ -269,3 +269,12 @@ ul.alert-dropdown {
     display: block;
     text-align: center !important;
 }
+
+.ui-datatable thead th, .ui-widget-header{
+	background: none !important;
+    background-color: none !important;
+}
+
+.ui-widget-header{
+    border: 1px hidden; 
+}
