@@ -1,9 +1,5 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
-
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,7 +9,7 @@ import javax.inject.Named;
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.pessoa.OpGeneros;
 import br.edu.tglima.locadora.models.pessoa.TiposCargo;
-import br.edu.tglima.locadora.repository.FuncionarioRepository;
+import br.edu.tglima.locadora.service.FuncionarioService;
 
 @Named
 @RequestScoped
@@ -24,24 +20,10 @@ public class CadFunc implements Serializable {
 	private Funcionario novoFunc;
 
 	@Inject
-	private FuncionarioRepository repository;
+	private FuncionarioService service;
 
 	public void cadastrar() {
-		novoFunc = fmtToSave(novoFunc);
-		try {
-			repository.salvarNovo(novoFunc);
-			enviarMsgSucesso("Funcionário cadastrado com sucesso!");
-			novoFunc = null;
-		} catch (Exception e) {
-			enviarMsgErro("Erro, funcionário não cadastrado!");
-			if (e.getMessage().contains("ConstraintViolationException")) {
-				enviarMsgErro("O Nº do CPF informado já pertence a outra pessoa.");
-			} else {
-				enviarMsgErro(e.getMessage());
-			}
-
-		}
-
+		novoFunc = service.cadastrar(novoFunc);
 	}
 
 	// Getters de acesso aos Enums
