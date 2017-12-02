@@ -1,33 +1,24 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
-import br.edu.tglima.locadora.repository.FuncionarioRepository;
-import br.edu.tglima.locadora.util.FacesUtil;
+import br.edu.tglima.locadora.service.FuncionarioService;
 
 @Named
-@ApplicationScoped
+@ViewScoped
 public class GeFunc implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/*
-	 * TODO Trocar escopo da aplicação por outro mais adequado
-	 */
-
 	@Inject
-	private FuncionarioRepository repository;
+	private FuncionarioService service;
 
 	private List<Funcionario> funcEncontrados = new ArrayList<Funcionario>();
 	private Funcionario selectedFunc;
@@ -41,44 +32,25 @@ public class GeFunc implements Serializable {
 	}
 
 	public void buscarPeloCPF() {
-		System.out.println("CPF Informado: " + searchParam);
-		funcEncontrados.clear();
-		try {
-			funcEncontrados.add(repository.buscarPorCPF(searchParam));
-		} catch (Exception e) {
-			if (e.getMessage().contains("No entity found for query")) {
-				resultEmpty = true;
-			} else {
-				FacesUtil.enviarMsgErro("Erro ao realizar a pesquisa! \n" + e.getMessage());
-			}
+		funcEncontrados = service.buscarPorCpf(searchParam);
+
+		if (funcEncontrados.isEmpty()) {
+			resultEmpty = true;
 		}
+
 	}
 
 	public void buscarPeloNome() {
-		funcEncontrados.clear();
-		try {
-			funcEncontrados = repository.buscaPorNome(searchParam.toLowerCase(), searchParam.toLowerCase());
-			if (funcEncontrados.isEmpty()) {
-				resultEmpty = true;
-			}
-		} catch (Exception e) {
-			enviarMsgErro("Erro ao realizar a pesquisa! " + e.getMessage());
+
+		funcEncontrados = service.buscarPorNome(searchParam);
+
+		if (funcEncontrados.isEmpty()) {
+			resultEmpty = true;
 		}
 	}
 
 	public void salvar() {
-		try {
-			repository.salvarEdicao(fmtToSave(selectedFunc));
-			enviarMsgSucesso("Alterações salvas com sucesso!");
-
-		} catch (Exception e) {
-			enviarMsgErro("Erro, as alterações não foram salvas!");
-			if (e.getMessage().contains("ConstraintViolationException")) {
-				enviarMsgErro("O Nº do CPF informado já pertence a outra pessoa.");
-			} else {
-				enviarMsgErro(e.getMessage());
-			}
-		}
+		selectedFunc = service.salvarEdicao(selectedFunc);
 	}
 
 	public byte getTipoDeBusca() {
