@@ -2,13 +2,13 @@ package br.edu.tglima.locadora.repository;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.edu.tglima.locadora.util.JpaUtil;
-
 public abstract class AbstractRepository<T> implements IRepository<T> {
 
+	@Inject
 	protected EntityManager entityManager;
 	private Class<T> type;
 
@@ -17,7 +17,6 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 
 	protected AbstractRepository(Class<T> type) {
 		this.type = type;
-		this.entityManager = JpaUtil.getEntityManager();
 	}
 
 	@Override
@@ -28,14 +27,12 @@ public abstract class AbstractRepository<T> implements IRepository<T> {
 
 	@Override
 	public void salvarEdicao(T entity) throws Exception {
-		this.entityManager = JpaUtil.getEntityManager();
 		this.entityManager.merge(entity);
 		this.entityManager.flush();
 	}
 
 	@Override
 	public T buscarPorId(Long id) throws Exception {
-		this.entityManager = JpaUtil.getEntityManager();
 		return this.entityManager.find(type, id);
 	}
 
