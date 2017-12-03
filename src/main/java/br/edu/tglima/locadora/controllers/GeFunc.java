@@ -1,7 +1,6 @@
 package br.edu.tglima.locadora.controllers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.view.ViewScoped;
@@ -20,7 +19,7 @@ public class GeFunc implements Serializable {
 	@Inject
 	private FuncionarioService service;
 
-	private List<Funcionario> funcEncontrados = new ArrayList<Funcionario>();
+	private List<Funcionario> funcEncontrados;
 	private Funcionario selectedFunc;
 	private String searchParam;
 	private boolean resultEmpty;
