@@ -1,9 +1,5 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
-
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,7 +11,7 @@ import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
-import br.edu.tglima.locadora.repository.VeiculoRepository;
+import br.edu.tglima.locadora.service.VeicService;
 
 @Named
 @RequestScoped
@@ -26,23 +22,10 @@ public class CadVeic implements Serializable {
 	private Veiculo novoVeiculo;
 
 	@Inject
-	private VeiculoRepository repository;
+	private VeicService service;
 
 	public void cadastrar() {
-		try {
-			repository.salvarNovo(fmtToSave(novoVeiculo));
-			enviarMsgSucesso("Veículo cadastrado com sucesso!");
-			novoVeiculo = null;
-		} catch (Exception e) {
-			enviarMsgErro("Erro, veículo não cadastrado!");
-			if (e.getMessage().contains("ConstraintViolationException")) {
-				enviarMsgErro("A placa informada já pertence a outro veículo.");
-			} else {
-				enviarMsgErro(e.getMessage());
-			}
-
-		}
-
+		novoVeiculo = service.cadastrar(novoVeiculo);
 	}
 
 	// Getters de acesso aos Enums
