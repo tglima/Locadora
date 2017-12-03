@@ -2,10 +2,10 @@ package br.edu.tglima.locadora.service;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -89,6 +89,16 @@ public class FuncionarioService implements Serializable {
 
 		return resultado;
 
+	}
+
+	private Funcionario fmtToSave(Funcionario f) {
+		f.setNome(f.getNome().toLowerCase());
+		f.setSobrenome(f.getSobrenome().toLowerCase());
+
+		if (f.getDataCadastro() == null) {
+			f.setDataCadastro(new Date());
+		}
+		return f;
 	}
 
 }
