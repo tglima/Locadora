@@ -1,4 +1,21 @@
-## 0.8.0
+## v0.9.0
+
+### Objetivos alcançados:
+- Com a criação do EntityManagerProducer, agora o EntityManager pode ser injetado.
+- Os controllers foram simplificados, deixando algumas responsabilidades para as classes de serviço.
+- Com a simplificação, alguns controllers mudaram seus escopos CDI para escopos mais simples.
+
+### Adicionado:
+- **Classes Java:** EntityManagerProducer - FuncionarioService - ClienteService - VeicService 
+
+### Melhorado:
+- **Classes Java:** AbstractRepository - FuncionarioRepository - ClienteRepository - VeiculoRepository - CadFunc - CadCliente - CadVeic - GeFunc - GeCliente - GeVeic
+- **Páginas XHTML:** Gerenciar Veículos
+
+### Removido:
+- **Classes Java:** JpaUtil - Util
+
+## v0.8.0
 
 ### Adicionado:
 - **Classes Java:** GeFunc - GeCliente - GeVeic - ValidadeCnhValidator
