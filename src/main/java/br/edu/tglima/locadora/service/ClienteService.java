@@ -2,10 +2,10 @@ package br.edu.tglima.locadora.service;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -85,6 +85,16 @@ public class ClienteService implements Serializable {
 		}
 
 		return result;
+	}
+
+	private Cliente fmtToSave(Cliente c) {
+		c.setNome(c.getNome().toLowerCase());
+		c.setSobrenome(c.getSobrenome().toLowerCase());
+
+		if (c.getDataCadastro() == null) {
+			c.setDataCadastro(new Date());
+		}
+		return c;
 	}
 
 }
