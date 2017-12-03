@@ -1,33 +1,24 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.edu.tglima.locadora.models.pessoa.Cliente;
-import br.edu.tglima.locadora.repository.ClienteRepository;
+import br.edu.tglima.locadora.service.ClienteService;
 
 @Named
-@ApplicationScoped
+@ViewScoped
 public class GeCliente implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
-	/*
-	 * TODO Trocar escopo da aplicação por outro mais adequado
-	 */
-
 	@Inject
-	private ClienteRepository repository;
-	private List<Cliente> cliEncontrados = new ArrayList<Cliente>();
+	private ClienteService service;
+
+	private List<Cliente> cliEncontrados;
 	private Cliente selectedCli;
 	private String searchParam;
 	private boolean resultEmpty;
@@ -39,45 +30,24 @@ public class GeCliente implements Serializable {
 	}
 
 	public void buscarPelaCNH() {
-		cliEncontrados.clear();
-		try {
-			cliEncontrados.add(repository.buscarPorHabilitacao(searchParam));
-		} catch (Exception e) {
-			if (e.getMessage().contains("No entity found for query")) {
-				resultEmpty = true;
-			} else {
-				enviarMsgErro("Erro ao realizar a pesquisa! \n" + e.getMessage());
-			}
-		}
+		cliEncontrados = service.buscarPelaCNH(searchParam);
 
+		if (cliEncontrados.isEmpty()) {
+			resultEmpty = true;
+		}
 	}
 
 	public void buscarPeloNome() {
-		cliEncontrados.clear();
-		try {
-			cliEncontrados = repository.buscaPorNome(searchParam.toLowerCase(), searchParam.toLowerCase());
-			if (cliEncontrados.isEmpty()) {
-				resultEmpty = true;
-			}
-		} catch (Exception e) {
-			enviarMsgErro("Erro ao realizar a pesquisa! " + e.getMessage());
+		cliEncontrados = service.buscarPeloNome(searchParam);
+
+		if (cliEncontrados.isEmpty()) {
+			resultEmpty = true;
 		}
 
 	}
 
 	public void salvar() {
-		try {
-			repository.salvarEdicao(fmtToSave(selectedCli));
-			enviarMsgSucesso("Alterações salvas com sucesso!");
-		} catch (Exception e) {
-			enviarMsgErro("Erro, as alterações não foram salvas!");
-			if (e.getMessage().contains("ConstraintViolationException")) {
-				enviarMsgErro("O Nº da CNH informada já pertence a outra pessoa.");
-			} else {
-				enviarMsgErro(e.getMessage());
-			}
-		}
-
+		selectedCli = service.salvarEdicao(selectedCli);
 	}
 
 	public byte getTipoDeBusca() {
