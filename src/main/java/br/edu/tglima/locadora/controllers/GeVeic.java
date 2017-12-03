@@ -1,14 +1,9 @@
 package br.edu.tglima.locadora.controllers;
 
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
-import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,21 +13,17 @@ import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
 import br.edu.tglima.locadora.models.veiculo.OpStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
-import br.edu.tglima.locadora.repository.VeiculoRepository;
+import br.edu.tglima.locadora.service.VeicService;
 
 @Named
-@ApplicationScoped
+@ViewScoped
 public class GeVeic implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
-	/*
-	 * TODO Trocar escopo da aplicação por outro mais adequado
-	 */
-
 	@Inject
-	private VeiculoRepository repository;
-	private List<Veiculo> veicEncontrados = new ArrayList<Veiculo>();
+	private VeicService service;
+
+	private List<Veiculo> veicEncontrados;
 	private Veiculo selectedVeic;
 	private boolean resultEmpty;
 	private OpStatus status;
@@ -42,39 +33,24 @@ public class GeVeic implements Serializable {
 	private Integer kmInicial;
 
 	public void buscarPorMarca() {
-		try {
-			veicEncontrados = repository.buscarPorMarca(marca, OpStatus.ALUGADO, false);
-			if (veicEncontrados.isEmpty()) {
-				resultEmpty = true;
-			}
-		} catch (Exception e) {
-			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
+		veicEncontrados = service.buscarPorMarcaENaoAlugado(marca);
+		if (veicEncontrados.isEmpty()) {
+			resultEmpty = true;
 		}
-
 	}
 
 	public void buscarPorCategoria() {
-		try {
-			veicEncontrados = repository.buscaPorCategoria(categoria, OpStatus.ALUGADO, false);
-			if (veicEncontrados.isEmpty()) {
-				resultEmpty = true;
-			}
-		} catch (Exception e) {
-			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
+		veicEncontrados = service.buscarPorCategoriaENaoAlugado(categoria);
+		if (veicEncontrados.isEmpty()) {
+			resultEmpty = true;
 		}
-
 	}
 
 	public void buscarPorStatus() {
-		try {
-			veicEncontrados = repository.buscaPorStatus(status);
-			if (veicEncontrados.isEmpty()) {
-				resultEmpty = true;
-			}
-		} catch (Exception e) {
-			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
+		veicEncontrados = service.buscarPorStatus(status);
+		if (veicEncontrados.isEmpty()) {
+			resultEmpty = true;
 		}
-
 	}
 
 	public void atualizaKmInicial() {
@@ -82,35 +58,13 @@ public class GeVeic implements Serializable {
 	}
 
 	public void salvarStatus(Long id, OpStatus novoStatus) {
-
-		try {
-			Veiculo veic = repository.buscarPorId(id);
-			veic.setStatus(novoStatus);
-			repository.salvarEdicao(fmtToSave(veic));
-			enviarMsgSucesso(
-					"O Status do veículo " + veic.getPlaca().toUpperCase() + ", foi alterado com sucesso");
-		} catch (Exception e) {
-			enviarMsgErro("Erro, não foi possível salvar o status do veículo");
-			enviarMsgErro(e.getMessage());
-		}
+		service.alterarStatus(id, novoStatus);
 		refazerPesquisa();
 	}
 
 	public void salvar() {
-		try {
-			repository.salvarEdicao(fmtToSave(selectedVeic));
-			enviarMsgSucesso("As alterações do veículo " + selectedVeic.getPlaca().toUpperCase()
-					+ " foram salvas com sucesso!");
-			refazerPesquisa();
-		} catch (Exception e) {
-			enviarMsgErro("Erro, as alterações não foram salvas!");
-			if (e.getMessage().contains("ConstraintViolationException")) {
-				enviarMsgErro("A placa informada já pertence a outro veículo.");
-			} else {
-				enviarMsgErro(e.getMessage());
-			}
-		}
-
+		selectedVeic = service.salvarEdicao(selectedVeic);
+		refazerPesquisa();
 	}
 
 	private void refazerPesquisa() {
