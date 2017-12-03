@@ -2,10 +2,10 @@ package br.edu.tglima.locadora.service;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
-import static br.edu.tglima.locadora.util.Util.fmtToSave;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,10 +47,10 @@ public class VeicService implements Serializable {
 	public Veiculo salvarEdicao(Veiculo veic) {
 		try {
 			repository.salvarEdicao(fmtToSave(veic));
+
 			enviarMsgSucesso("As alterações do veículo " + veic.getPlaca().toUpperCase()
 					+ " foram salvas com sucesso!");
 
-			// TODO refazerPesquisa();
 		} catch (Exception e) {
 			enviarMsgErro("Erro, as alterações não foram salvas!");
 			if (e.getMessage().contains("ConstraintViolationException")) {
@@ -115,6 +115,20 @@ public class VeicService implements Serializable {
 
 		return result;
 
+	}
+
+	private Veiculo fmtToSave(Veiculo v) {
+		v.setPlaca(v.getPlaca().toLowerCase());
+		v.setModelo(v.getModelo().trim());
+		v.setModelo(v.getModelo().toLowerCase());
+
+		if (v.getDataCadastro() == null && v.getKmAtual() == null) {
+			v.setDataCadastro(new Date());
+			v.setKmAtual(v.getKmInicial());
+			v.setStatus(OpStatus.INOPERANTE);
+		}
+
+		return v;
 	}
 
 }
