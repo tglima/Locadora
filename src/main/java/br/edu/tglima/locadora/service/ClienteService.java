@@ -2,8 +2,11 @@ package br.edu.tglima.locadora.service;
 
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgSucesso;
+import static br.edu.tglima.locadora.util.TempoUtil.calcDifDias;
+import static br.edu.tglima.locadora.util.TempoUtil.convParaLocalDate;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,6 +90,19 @@ public class ClienteService implements Serializable {
 		return result;
 	}
 
+	public Cliente buscarPeloId(Long id) {
+		Cliente c = null;
+
+		try {
+			c = repository.buscarPorId(id);
+		} catch (Exception e) {
+			System.err.println("Erro ao realizar a pesquisa");
+			c = null;
+		}
+
+		return c;
+	}
+
 	private Cliente fmtToSave(Cliente c) {
 		c.setNome(c.getNome().toLowerCase());
 		c.setSobrenome(c.getSobrenome().toLowerCase());
@@ -97,4 +113,17 @@ public class ClienteService implements Serializable {
 		return c;
 	}
 
+	public boolean cnhVencida(Long idCLi) {
+		Cliente cli = buscarPeloId(idCLi);
+
+		LocalDate validadeCnh = convParaLocalDate(cli.getValidadeHab()).plusDays(15);
+		LocalDate today = LocalDate.now();
+		Long dif = calcDifDias(today, validadeCnh);
+
+		if (dif < 1) {
+			return true;
+		}
+
+		return false;
+	}
 }
