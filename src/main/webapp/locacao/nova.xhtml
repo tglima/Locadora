@@ -1,0 +1,694 @@
+<ui:composition template="/resources/layout/b-layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:define name="titulo">Nova locação</ui:define>
+	<ui:define name="content-dynamic">
+		<div class="row">
+			<div class="col-sm-12">
+			
+				<h:form styleClass="form" id="formLocacao">
+
+					<h:panelGroup layout="block" id="mainDiv">
+					
+						<div class="row">
+							<div class="col-xs-1" /> 
+							<div class="col-xs-10">
+								<p:steps activeIndex="#{novaLoc.step}" styleClass="custom">
+								    <p:menuitem value="Cliente"  />
+								    <p:menuitem value="Veículo" />
+								    <p:menuitem value="Confirmação" />
+								    <p:menuitem value="Conclusão" />
+								</p:steps>
+								
+							</div>
+							<div class="col-xs-1" /> 
+						</div>
+						<!-- /.row -->
+						
+						<hr/>
+						
+						<h:panelGroup layout="block" id="DivCli" rendered="#{novaLoc.showDivCli}">
+							<div class="row">
+								<div class="form-group">
+									<div class="col-sm-12">
+										<h3>Selecionar Cliente</h3>
+									</div>
+								
+									<h:panelGroup layout="block" id="MenuTipoDeBuscaCli">
+										<div class="col-sm-4 col-lg-3">
+											<h:selectOneMenu value="#{novaLoc.tipoDeBusca}" styleClass="form-control" 
+												label="Tipo de busca" >
+												<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+												<f:selectItem itemLabel="Buscar por CNH" itemValue='1' />
+												<f:selectItem itemLabel="Buscar por Nome" itemValue='2' />
+												<f:ajax event="change" execute="@this" listener="#{novaLoc.clearInputCli()}" 
+													render="CliTipoDeBusca" />
+											</h:selectOneMenu>
+										</div>
+									</h:panelGroup>
+									<!-- MenuTipoDeBuscaCli -->
+					
+									<h:panelGroup layout="block" id="CliTipoDeBusca">
+										<h:panelGroup layout="block" id="SearchCnh" styleClass="col-sm-4 col-lg-3" 
+											rendered="#{novaLoc.tipoDeBusca == 1}">
+												<div class="input-group">
+													<p:inputMask id="CNH" mask="99999999999" value="#{novaLoc.inputSearchCli}" 
+														styleClass="form-control" placeholder="Informar o nº da CNH" required="true" 
+														style="text-align: center;" label="CNH"  slotChar="" />
+													<span class="input-group-btn">
+														<h:commandButton value="Buscar" actionListener="#{novaLoc.buscarPelaCNH}" 
+															styleClass="btn btn-default">
+															<f:ajax execute="CNH" render="ResultCli" /> 
+														</h:commandButton>		
+													</span>														
+												</div>
+										</h:panelGroup>
+										<!-- /#SearchCnh -->
+								
+										<h:panelGroup layout="block" id="SearchName" styleClass="col-sm-4 col-lg-3" 
+											rendered="#{novaLoc.tipoDeBusca == 2}">
+											<div class="input-group">
+												<p:inputText id="Nome" maxlength="50" value="#{novaLoc.inputSearchCli}" required="true"
+													styleClass="form-control name" style="text-align: center;" 
+													placeholder="Informar o nome"  label="Nome do cliente" onfocus="setInputName()" >
+														<f:validateLength minimum="3" />
+												</p:inputText>
+												<span class="input-group-btn">
+									 				<h:commandButton value="Buscar" action="#{novaLoc.buscarPeloNome}" styleClass="btn btn-default">
+														<f:ajax execute="Nome" render="ResultCli" /> 
+									 				</h:commandButton>
+												</span>
+											</div>
+										</h:panelGroup>
+										<!-- /#SearchName -->
+
+									</h:panelGroup>
+									<!-- /#CliTipoDeBusca -->
+						
+								</div>
+								<!-- /.form-group -->
+							</div>
+							<!-- /.row -->
+
+							<div class="row">
+								<div class="form-group">
+									<h:panelGroup layout="block" id="ResultCli" styleClass="form-group">
+									
+										<div class="col-sm-12">
+											<h:panelGroup layout="block" id="NoClientsFound" 
+												rendered="#{novaLoc.resultEmpty and novaLoc.clients.isEmpty()}" >
+												<div class="text-center">
+													<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" />
+													<br/>
+													<strong>A busca não encontrou resultados para os parâmetros informados.</strong>
+													<p>Refaça sua pesquisa usando outros termos.</p>		
+												</div>
+											</h:panelGroup>														
+											<!-- NoClientsFound -->								
+										
+											<p:dataTable id="tbClients" var="cli" value="#{novaLoc.clients}" sortBy="#{cli.nome}"  
+												tableStyle="table table-condensed table-hover"  styleClass="text-center" 
+											 	rendered="#{novaLoc.clients.size() gt 0 }" >
+												<p:column width="50%">
+													<f:facet name="header"><h:outputText value="Nome" /></f:facet>
+													<h:outputText value="#{cli.nome}  #{cli.sobrenome}" styleClass="text-capitalize" />
+												</p:column>
+												<p:column>
+													<f:facet name="header"><h:outputText value="Data de nascimento" /></f:facet>
+													<h:outputText value="#{cli.dataNasc}">
+														<f:convertDateTime pattern="dd/MM/yyyy"/>
+													</h:outputText>
+												</p:column>
+												<p:column>
+													<f:facet name="header"><h:outputText value="Nº da CNH" /></f:facet>
+													<h:outputText value="#{cli.habilitacao}"/>
+												</p:column>
+												<p:column>
+													<f:facet name="header"><h:outputText value="Ação" /></f:facet>												
+													<p:commandLink update="cliDetail" title="Detalhar" oncomplete="PF('dlgCli').show()"  
+														styleClass="btn btn-info btn-xs" immediate="true">
+														 <i class="fa fa-eye"/>
+														 <f:setPropertyActionListener target="#{novaLoc.cliSelected}" value="#{cli}" for="cliDetail" />
+													</p:commandLink>												
+													<span class="space" />										
+													<p:commandLink update=":formLocacao:ConfirmClient" title="Confirmar escolha" 
+														oncomplete="PF('dgCheckCli').show()" styleClass="btn btn-success btn-xs" immediate="true"
+														 rendered="#{novaLoc.cliIsValid(cli.id)}" >
+														 <i class="fa fa-check"/>
+														 <f:setPropertyActionListener target="#{novaLoc.cliSelected}"  value="#{cli}"  
+														 	for="ConfirmClient" />
+													</p:commandLink>
+													<p:commandLink rendered="#{!novaLoc.cliIsValid(cli.id)}" styleClass="btn btn-danger btn-xs" 
+													immediate="true" id="btnRestricao">
+														 <i class="glyphicon glyphicon-remove"/>
+														 <p:tooltip for="btnRestricao" position="top"  >
+															<h:outputText value="Restrição: " style="font-weight:bold;" />
+															<br />
+															<h:outputText value=" #{novaLoc.restricaoCli} " />
+														 </p:tooltip>
+													</p:commandLink>	
+
+												</p:column>
+												
+											</p:dataTable>
+											<!-- /#tbClients -->
+															
+										</div>
+										<!-- /.col-sm-12 -->
+										
+									</h:panelGroup>	
+									<!-- /#ResultCli -->	
+								
+								</div>
+								<!-- /.form-group -->
+								
+							</div>
+							<!-- /.row -->
+
+						</h:panelGroup>
+						<!-- /#DivCli -->
+						
+						<h:panelGroup id="DivVeic" layout="block" rendered="#{novaLoc.showDivVeic}" >
+							<div class="row">
+								<div class="form-group">
+									<div class="col-sm-12">
+										<h3>Selecionar Veículo</h3>
+									</div>	
+									<h:panelGroup layout="block" id="MenuTipoDeBuscaVeic">
+										<div class="col-sm-4 col-lg-2">
+											<h:selectOneMenu value="#{novaLoc.tipoDeBusca}" styleClass="form-control" label="Tipo de busca">
+												<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+												<f:selectItem itemLabel="Por Marca" itemValue='1' />
+												<f:selectItem itemLabel="Por Categoria" itemValue='2' />
+												<f:selectItem itemLabel="Todos Disponíveis" itemValue='3' />
+												<f:ajax event="change" execute="@this" listener="#{novaLoc.clearMenuVeic()}" 
+													render="VeicTipoDeBusca ResultVeic" /> 
+											</h:selectOneMenu>					
+										</div>
+									</h:panelGroup>
+									<!-- /#MenuTipoDeBusca -->	
+																			
+									<h:panelGroup layout="block" id="VeicTipoDeBusca">
+										
+										<h:panelGroup layout="block" id="SearchMarca" styleClass="col-sm-4 col-lg-3" 
+											rendered="#{novaLoc.tipoDeBusca == 1}">
+											<h:selectOneMenu id="Marca" value="#{novaLoc.marcaSelected}" styleClass="form-control" required="true">
+												<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+												<f:selectItems var="m" itemLabel="#{m.label}" itemValue="#{marca}" value="#{novaLoc.marcas}"/>
+												<f:ajax event="change" listener="#{novaLoc.buscarPorMarca()}" render="ResultVeic" />
+											</h:selectOneMenu>	
+										</h:panelGroup>
+										<!-- /#SearchMarca  -->
+										
+										<h:panelGroup layout="block" id="SearchCat" styleClass="col-sm-4 col-lg-3" 
+											rendered="#{novaLoc.tipoDeBusca == 2}">
+											<h:selectOneMenu id="Categoria" value="#{novaLoc.catSelected}" styleClass="form-control" required="true">
+												<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true" />
+												<f:selectItems var="c" itemLabel="#{c.label}" itemValue="#{categoria}" 
+													value="#{novaLoc.categorias}" />
+												<f:ajax event="change" listener="#{novaLoc.buscarPorCategoria()}" render="ResultVeic" />
+											</h:selectOneMenu>	
+										</h:panelGroup>
+										<!-- /#SearchCat  -->
+										
+									</h:panelGroup>	
+									<!-- /#VeicTipoDeBusca -->	
+
+									
+								</div>
+								<!-- /.form-group -->	
+												
+							</div>
+							<!-- /.row -->
+							
+							<div class="row">
+								<div class="form-group">
+								
+									<h:panelGroup layout="block" id="ResultVeic" styleClass="form-group">
+										<div class="col-sm-12">
+											<h:panelGroup layout="block" id="NoResults" 
+												rendered="#{novaLoc.resultEmpty and novaLoc.veics.isEmpty()}" >
+												<div class="text-center">
+													<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" />
+													<p><strong>A busca não encontrou resultados para os parâmetros informados.</strong></p>
+													<p>Refaça sua pesquisa usando outros termos.</p>		
+												</div>
+											</h:panelGroup>
+											<!-- /#NoResults -->
+															
+											<p:dataTable id="tbVeic" var="veic" value="#{novaLoc.veics}" sortBy="#{veic.valorDiaria}"  
+												tableStyle="table table-condensed table-hover"  styleClass="text-center" 
+											 	rendered="#{novaLoc.veics.size() gt 0 }" rows="5" 
+											 	paginatorPosition="bottom"	paginator="true" paginatorAlwaysVisible="false" >
+											 	
+												<p:column>
+													<f:facet name="header"><h:outputText value="Placa" /></f:facet>
+													<h:outputText value="#{veic.placa}" styleClass="text-uppercase" />
+												</p:column>
+												<p:column>
+													<f:facet name="header"><h:outputText value="Marca" /></f:facet>
+													<h:outputText value="#{veic.marca.label}" styleClass="text-capitalize" />
+												</p:column>
+												<p:column>
+													<f:facet name="header"><h:outputText value="Modelo" /></f:facet>
+													<h:outputText value="#{veic.modelo}" styleClass="text-uppercase" />
+												</p:column>
+												<p:column sortBy="#{veic.valorDiaria}" >
+													<f:facet name="header"><h:outputText value="Valor da Diária" /></f:facet>
+													<h:outputText value="#{veic.valorDiaria}" >
+													<f:convertNumber type="currency" currencySymbol="R$" />
+													</h:outputText>
+												</p:column>
+												
+												<p:column>
+													<f:facet name="header"><h:outputText value="Ação" /></f:facet>
+													
+													<p:commandLink update="veicDetail" title="Detalhar" oncomplete="PF('dlgVeic').show()"  
+														styleClass="btn btn-info btn-xs" immediate="true" >
+														 <i class="fa fa-eye"/>
+														 <f:setPropertyActionListener target="#{novaLoc.veicSelected}" value="#{veic}" 
+														 	for="veicDetail" />
+													</p:commandLink>			
+															
+													<span class="space"/>		
+																					
+													<p:commandLink update=":formLocacao:ConfirmVeic" title="Confirmar escolha" 
+														oncomplete="PF('dgCheckVeic').show()" styleClass="btn btn-success btn-xs" immediate="true" >
+														 <i class="fa fa-check"/>
+														 <f:setPropertyActionListener target="#{novaLoc.veicSelected}" value="#{veic}" 
+														 	for="ConfirmVeic" />
+													</p:commandLink>	
+				
+												</p:column>
+
+											</p:dataTable>
+											<!-- /#tbVeic -->
+										
+										</div>	
+										<!-- /.col-sm-12 -->	
+										
+									</h:panelGroup>	
+									<!-- /#ResultVeic -->											
+								
+								</div>
+								<!-- /.form-group -->
+																
+							<div class="form-group" id="FooterDivVeic">
+								<div class="col-sm-12" style="margin-top: 1em">
+									<p:commandButton update=":formLocacao:mainDiv" value="Voltar" styleClass="btn btn-default btn-lg" 
+										icon="fa fa-arrow-circle-left">
+										<f:ajax  event="click" listener="#{novaLoc.enableDivCli()}" />
+									</p:commandButton>
+								</div>
+							</div>
+							<!-- /#FooterDivVeic -->
+							
+														
+							</div>
+							<!-- /.row -->
+							
+							
+							
+						</h:panelGroup>
+						<!-- /#DivVeic -->
+						
+
+						<h:panelGroup id="DivConfirmation" layout="block" rendered="#{novaLoc.showDivConfirmation}"  style="margin-bottom: 1em;">
+							<div class="row">
+								<div class="form-group">
+									<div class="col-sm-12"> 
+										<div class="col-sm-12">
+											<h3>Confirmar locação</h3>
+										</div>
+										
+										<div class="col-md-8">
+											<p:panelGrid columns="1" layout="grid">
+												<h:outputText value="CLIENTE SELECIONADO" />
+											</p:panelGrid>
+											<p:panelGrid columns="2" styleClass="table table-striped">
+											
+												<h:outputText style="font-weight:bold" value="Nome: " />
+												<h:outputText styleClass="text-capitalize" 
+													value="#{novaLoc.cliSelected.nome} #{novaLoc.cliSelected.sobrenome}" />						
+						
+												<h:outputText style="font-weight:bold" value="Gênero: " />
+												<h:outputText value="#{novaLoc.cliSelected.genero.label}" />		
+						
+						
+												<h:outputText style="font-weight:bold" value="Data de nascimento: " />						
+												<h:outputText value="#{novaLoc.cliSelected.dataNasc}" >
+													<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</h:outputText>							
+												
+												
+												<h:outputText style="font-weight:bold" value="Telefone: " />
+												<h:outputText value="#{novaLoc.cliSelected.telefone} " />
+												
+												
+												<h:outputText style="font-weight:bold" value="Nº da CNH: " />
+												<h:outputText value=" #{novaLoc.cliSelected.habilitacao} " />
+						
+						
+												<h:outputText value="Data de validade: " style="font-weight:bold" />
+												<h:outputText value="#{novaLoc.cliSelected.validadeHab}">
+													<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</h:outputText>				
+											
+											</p:panelGrid>
+										</div>
+										<div class="col-md-4">
+											<p:panelGrid columns="1" layout="grid">
+													<h:outputText value="VEÍCULO SELECIONADO" />
+											</p:panelGrid>										
+											<p:panelGrid columns="2" styleClass="table table-striped table-condensed">	
+													
+													<h:outputText style="font-weight:bold" value="Placa: " />
+													<h:outputText styleClass="text-uppercase" value="#{novaLoc.veicSelected.placa}"/>			
+											
+													<h:outputText style="font-weight:bold" value="Marca: " />
+													<h:outputText value="#{novaLoc.veicSelected.marca.label}" />				
+											
+													<h:outputText style="font-weight:bold" value="Modelo: " />
+													<h:outputText styleClass="text-uppercase" value="#{novaLoc.veicSelected.modelo}" />				
+											
+													<h:outputText style="font-weight:bold" value="Categoria: " />
+													<h:outputText value="#{novaLoc.veicSelected.categoria.label}" />				
+							
+													<h:outputText style="font-weight:bold" value="Cor: " />
+													<h:outputText value="#{novaLoc.veicSelected.cor.label}" />				
+											
+													<h:outputText style="font-weight:bold" value="Km atual: " />
+													<h:outputText value="#{novaLoc.veicSelected.kmAtual}" />				
+																														
+											</p:panelGrid>
+										</div>
+										
+										<div class="col-md-6">
+											<p:panelGrid columns="1" layout="grid">
+													<h:outputText value="DADOS DA LOCAÇÃO" />
+											</p:panelGrid>										
+											<p:panelGrid columns="2" styleClass="table table-striped table-condensed">	
+															
+													<h:outputText style="font-weight:bold" value="Início da Locação" />		
+													<h:outputText value="#{novaLoc.locacao.dataInicial}" >
+														<f:convertDateTime pattern="dd/MM/yyyy"/>
+													</h:outputText>		
+															
+		
+											
+													<h:outputText style="font-weight:bold" value="Valor da diária: " />
+													<h:outputText value="#{novaLoc.veicSelected.valorDiaria}">	
+														<f:convertNumber type="currency" currencySymbol="R$" />
+													</h:outputText>		
+																														
+																														
+											</p:panelGrid>
+										</div>										
+										
+									</div>
+										
+								</div>
+										
+								<div class="form-group" id="FooterDivConfirmation">
+								
+									<div style="margin-top: 1em" class="col-sm-12">
+										<div class="col-sm-6">
+											<p:commandButton update=":formLocacao:mainDiv" value="Voltar" 
+												styleClass="btn btn-default btn-lg pull-left" icon="fa fa-arrow-circle-left">
+												<f:ajax  event="click" listener="#{novaLoc.enableDivVeic()}" />
+											</p:commandButton>
+										</div>
+										<div class="col-sm-6">
+											<p:commandButton value="Confirmar" type="button" styleClass="btn btn-success btn-lg pull-right" 
+												style="text-shadow: none;"	icon="fa fa-check" onclick="PF('dgCheckLoc').show()" >
+											</p:commandButton>									
+										</div>
+									</div>
+								</div>								
+
+							</div>
+								
+						</h:panelGroup>
+						<!-- /#DivConfirmation -->	
+						
+						<h:panelGroup id="Resume" layout="block"  style="margin-bottom: 1em;" rendered="#{novaLoc.showDivResume}">
+							<div class="row">
+								<div class="form-group">
+									<h:panelGroup id="PrintingArea" layout="block"  styleClass="col-xs-12">
+										<div class="text-center">
+											<p style="color: #228B22;">
+												<span class="fa fa-check-circle" style="font-size: 3.0em;" />
+												<span style="font-size: 2.3em;">Locação realizada com sucesso!</span>
+											</p>
+										</div>
+										<div class="col-sm-2 col-lg-3"/>		
+
+										<div class="col-sm-8 col-lg-6">
+										
+											<p:panelGrid columns="1" layout="grid" >
+													<h:outputText style="font-weight:bold" value="DADOS DA LOCAÇÃO" />
+											</p:panelGrid>			
+																		
+											<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4,  ui-grid-col-8" >
+											
+												<h:outputText style="font-weight:bold"  value="O nº da locação:" />		
+												<h:outputText value="#{novaLoc.locacao.id}" />		
+														
+												<h:outputText style="font-weight:bold"  value="Cliente:" />		
+												<h:outputText styleClass="text-capitalize" 
+													value="#{novaLoc.locacao.cli.nome} #{novaLoc.locacao.cli.sobrenome}" />
+												
+												<h:outputText  style="font-weight:bold" value="Veículo:" />		
+												<h:outputText value="Marca: #{novaLoc.locacao.veicLocado.marca.label.toUpperCase()} - 
+												Placa: #{novaLoc.veicSelected.placa.toUpperCase()}" />
+														
+												<h:outputText style="font-weight:bold" value="Início da Locação:" />		
+												<h:outputText value="#{novaLoc.locacao.dataInicial}" >
+													<f:convertDateTime pattern="dd/MM/yyyy"/>
+												</h:outputText>		
+										
+												<h:outputText style="font-weight:bold" value="Valor da diária:" />
+												<h:outputText value="#{novaLoc.locacao.valorDiaria}">	
+													<f:convertNumber type="currency" currencySymbol="R$" />
+												</h:outputText>		
+																																										
+												<h:outputText style="font-weight:bold" value="Atendente: " />
+												<h:outputText styleClass="text-capitalize" value="#{novaLoc.locacao.func.nome}" />
+												
+											</p:panelGrid>
+										</div>	
+
+										<div class="col-sm-2 col-lg-3"/>													
+											
+									</h:panelGroup>
+									<!-- /#PrintingArea -->	
+
+									<div class="col-sm-3"/>													
+									<div class="col-sm-6">
+										<br />
+										<div class="pull-left">										
+											<p:button value="Nova locação" type="button" icon="fa fa-money" 
+												styleClass="btn btn-primary btn-lg" href="nova.xhtml" style="text-shadow: none;" />
+										</div>
+										
+										<div class="pull-right">
+											<p:commandButton value="Imprimir Ticket" type="button" icon="fa fa-print" 
+												styleClass="btn btn-primary btn-lg" style="text-shadow: none;">
+											    <p:printer target="PrintingArea" />
+										    </p:commandButton>										
+										</div>
+									</div>
+									<!-- /.col-sm-6 -->	
+									<div class="col-sm-3"/>													
+									
+								</div>
+								<!-- /.form-group -->
+								
+							</div>
+							<!-- /.row -->
+						</h:panelGroup>	
+						<!-- /#Resume  -->										
+
+
+					</h:panelGroup>
+					<!--  /#mainDiv -->
+					
+					
+					
+				    <p:dialog header="Confimação" widgetVar="dgCheckCli" modal="true" id="ConfirmClient" closeOnEscape="true"  
+				    	position="center" showEffect="fade" hideEffect="fade"  >
+				    	
+				    	<p><strong>Deseja selecionar este cliente?</strong></p>
+				    	<p>
+						    <h:outputText styleClass="text-capitalize" value="#{novaLoc.cliSelected.nome} #{novaLoc.cliSelected.sobrenome}" />
+				    	</p>
+
+					    
+					    
+					    <f:facet name="footer">
+				    		<div class="text-center">
+							    <p:commandLink value="Sim" styleClass="btn btn-success" style="color: #fff;" 
+							    	onclick="PF('dgCheckCli').hide()" update="mainDiv" immediate="true" >
+							    	<f:ajax event="click" execute="@this" listener="#{novaLoc.enableDivVeic()}" />
+							     </p:commandLink>
+						    	<span class="space"/>
+							    <p:commandLink value="Não" styleClass="btn btn-default" onclick="PF('dgCheckCli').hide()" immediate="true" />					    		
+				    		</div>
+					    	
+					    
+					    </f:facet>
+				    </p:dialog>
+				    <!-- /dgCheckCli -->				
+
+				    <p:dialog header="Confimação" widgetVar="dgCheckVeic" modal="true" id="ConfirmVeic" closeOnEscape="true"  
+				    	position="center" showEffect="fade" hideEffect="fade"  >
+							
+				    	<p><strong>Deseja selecionar este veículo?</strong></p> 
+				    	<p>
+						    <h:outputText styleClass="text-capitalize" value="#{novaLoc.veicSelected.marca.label} " /> 
+						    <h:outputText value="#{novaLoc.veicSelected.modelo.toUpperCase()} " /> com placa: 
+						    <h:outputText value=" #{novaLoc.veicSelected.placa.toUpperCase()} " /> 
+				    	</p>							
+					    
+					    <f:facet name="footer">
+				    		<div class="text-center">
+							    <p:commandLink value="Sim" styleClass="btn btn-success" style="color: #fff;" 
+							    	onclick="PF('dgCheckVeic').hide()" update="mainDiv" >
+							    	<f:ajax event="click" execute="@this" listener="#{novaLoc.enableDivConfirmation()}" />
+							     </p:commandLink>
+						    	<span class="space"/>
+							    <p:commandLink value="Não" styleClass="btn btn-default" onclick="PF('dgCheckVeic').hide()" immediate="true" />					    		
+				    		</div>
+					    </f:facet>
+					    
+				    </p:dialog>	
+				    <!-- /dgCheckVeic -->
+
+				    <p:dialog header="Confirmar locação" widgetVar="dgCheckLoc" modal="true" id="ConfirmLocacao" closeOnEscape="true"  
+				    	position="center" showEffect="fade" hideEffect="fade"  >
+							
+						<div class="text-center">
+							<span class="fa fa-info-circle" style="font-size: 4.8em;" aria-hidden="true"/>
+						</div>
+
+				    	<p><strong><span style="color: red;">ATENÇÃO:</span></strong> Esta ação não poderá ser desfeita.</p>
+				    	<p><strong>Deseja realmente prosseguir?</strong></p>
+					    
+					    <f:facet name="footer">
+				    		<div class="text-center">
+							    <p:commandLink value="Sim, confirmar" type="button" styleClass="btn btn-danger" style="color: #fff;" 
+							    	onclick="PF('dgCheckLoc').hide()" update="mainDiv" >
+							    	<f:ajax event="click" execute="@this" render="mainDiv" listener="#{novaLoc.efetivarLocacao()}" />
+							     </p:commandLink>
+						    	<span class="space"/>
+							    <p:commandLink value="Não" styleClass="btn btn-default" onclick="PF('dgCheckLoc').hide()" />					    		
+				    		</div>
+					    </f:facet>
+					    
+				    </p:dialog>	
+				    <!-- /dgCheckLoc -->
+					
+				</h:form>
+				<!-- /#formLocacao -->
+
+				<p:dialog header="Dados do Cliente" widgetVar="dlgCli" modal="true"  closeOnEscape="true" 
+					showEffect="fade" hideEffect="fade"	position="center"  >
+						<p:outputPanel id="cliDetail">
+							<p:panelGrid columns="2" styleClass="table table-striped">
+							
+								<h:outputText style="font-weight:bold" value="Nome: " />
+								<h:outputText styleClass="text-capitalize" 
+									value="#{novaLoc.cliSelected.nome} #{novaLoc.cliSelected.sobrenome}" />						
+		
+								<h:outputText style="font-weight:bold" value="Gênero: " />
+								<h:outputText value="#{novaLoc.cliSelected.genero.label}" />		
+		
+		
+								<h:outputText style="font-weight:bold" value="Data de nascimento: " />						
+								<h:outputText value="#{novaLoc.cliSelected.dataNasc}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>							
+								
+								
+								<h:outputText style="font-weight:bold" value="Telefone: " />
+								<h:outputText value="#{novaLoc.cliSelected.telefone} " />
+								
+								
+								<h:outputText style="font-weight:bold" value="Nº da CNH: " />
+								<h:outputText value=" #{novaLoc.cliSelected.habilitacao} " />
+		
+		
+								<h:outputText value="Data de validade: " style="font-weight:bold" />
+								<h:outputText value="#{novaLoc.cliSelected.validadeHab}">
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>				
+							
+							</p:panelGrid>
+
+						</p:outputPanel>					
+					
+				</p:dialog>
+				<!-- /dlgCli -->
+				
+				
+				<p:dialog header="Dados do Veículo" widgetVar="dlgVeic" modal="true" closeOnEscape="true" 
+					showEffect="fade" hideEffect="fade">
+		
+					<p:outputPanel id="veicDetail">
+						<p:panelGrid columns="2" styleClass="table table-striped">	
+										
+								<h:outputText style="font-weight:bold" value="Placa: " />
+								<h:outputText styleClass="text-uppercase" value="#{novaLoc.veicSelected.placa}"/>			
+						
+								<h:outputText style="font-weight:bold" value="Marca: " />
+								<h:outputText value="#{novaLoc.veicSelected.marca.label}" />				
+						
+								<h:outputText style="font-weight:bold" value="Modelo: " />
+								<h:outputText styleClass="text-uppercase" value="#{novaLoc.veicSelected.modelo}" />				
+						
+								<h:outputText style="font-weight:bold" value="Categoria: " />
+								<h:outputText value="#{novaLoc.veicSelected.categoria.label}" />				
+		
+								<h:outputText style="font-weight:bold" value="Cor: " />
+								<h:outputText value="#{novaLoc.veicSelected.cor.label}" />				
+						
+								<h:outputText style="font-weight:bold" value="Ano: " />
+								<h:outputText value="#{novaLoc.veicSelected.ano}" />				
+		
+								<h:outputText style="font-weight:bold" value="Combustível: " />
+								<h:outputText value="#{novaLoc.veicSelected.combustivel.label}" />				
+						
+								<h:outputText style="font-weight:bold" value="Status: " />
+								<h:outputText value="#{novaLoc.veicSelected.status.label}" />				
+						
+								<h:outputText style="font-weight:bold" value="Km Inicial: " />
+								<h:outputText value="#{novaLoc.veicSelected.kmInicial}" />				
+						
+								<h:outputText style="font-weight:bold" value="Km Atual: " />
+								<h:outputText value="#{novaLoc.veicSelected.kmAtual}" />				
+						
+								<h:outputText style="font-weight:bold" value="Valor da diária: " />
+								<h:outputText value="#{novaLoc.veicSelected.valorDiaria}">	
+									<f:convertNumber type="currency" currencySymbol="R$" />
+								</h:outputText>									
+						
+						</p:panelGrid>
+					</p:outputPanel>
+					
+				</p:dialog>	
+				<!-- /dlgVeic -->	
+
+
+			</div>
+			<!-- /.col-sm-12 -->
+
+		</div>
+		<!-- /.row -->
+
+	</ui:define>
+</ui:composition>
