@@ -77,6 +77,19 @@ public class VeicService implements Serializable {
 
 	}
 
+	public Veiculo alterarStatus(Veiculo veic, OpStatus status) {
+		try {
+			veic.setStatus(status);
+			repository.salvarEdicao(fmtToSave(veic));
+
+		} catch (Exception e) {
+			System.err.println(
+					"Erro ao alterar o status do veículo " + veic.getPlaca() + " \n\n" + e.getMessage());
+		}
+
+		return veic;
+	}
+
 	public List<Veiculo> buscarPorStatus(OpStatus status) {
 		List<Veiculo> result = new ArrayList<Veiculo>();
 
@@ -114,7 +127,32 @@ public class VeicService implements Serializable {
 		}
 
 		return result;
+	}
 
+	public List<Veiculo> buscarPorMarcaEDisponivel(OpMarcas marca) {
+		List<Veiculo> result = new ArrayList<Veiculo>();
+
+		try {
+			result = repository.buscarPorMarca(marca, OpStatus.DISPONIVEL, true);
+		} catch (Exception e) {
+			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
+			result = null;
+		}
+
+		return result;
+	}
+
+	public List<Veiculo> buscarPorCatEDisponivel(OpCategorias categoria) {
+		List<Veiculo> result = new ArrayList<Veiculo>();
+
+		try {
+			result = repository.buscaPorCategoria(categoria, OpStatus.DISPONIVEL, true);
+		} catch (Exception e) {
+			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
+			result = null;
+		}
+
+		return result;
 	}
 
 	private Veiculo fmtToSave(Veiculo v) {
