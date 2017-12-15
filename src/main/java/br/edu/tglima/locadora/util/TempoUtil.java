@@ -1,5 +1,6 @@
 package br.edu.tglima.locadora.util;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -21,6 +22,10 @@ public final class TempoUtil {
 		return ldInicial.until(ldFinal, ChronoUnit.DAYS);
 	}
 
+	public final static Long calcDifDias(LocalDate ldInicial, LocalDate ldFinal) {
+		return ldInicial.until(ldFinal, ChronoUnit.DAYS);
+	}
+
 	public final static Date plusDays(Date date, long qtdDays) {
 		return convParaDate(convParaLocalDate(date).plusDays(qtdDays));
 	}
@@ -31,7 +36,7 @@ public final class TempoUtil {
 	}
 
 	public final static LocalDate convParaLocalDate(Date date) {
-		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date));
 	}
 
 }
