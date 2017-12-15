@@ -278,3 +278,49 @@ ul.alert-dropdown {
 .ui-widget-header{
     border: 1px hidden; 
 }
+
+/******************************************************************************
+*
+* Formatação customizada do elemento ui-steps
+*
+******************************************************************************/
+.ui-steps .ui-steps-item {
+    width: 24%;
+}
+  
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+ 
+.ui-steps.custom {
+    margin-bottom: 30px;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 10px;
+    padding: 0 1em;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+    background-color: #367fa9;
+    color: #FFFFFF;
+    font-size: 150%;
+    display: inline-block;
+    width: 30px;
+    border-radius: 20px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+}
+ 
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+    color: #555;
+}
+
+/******************************************************************************
+*
+* Formatação customizada do elemento span
+*
+******************************************************************************/
+span.space {
+    margin: 0 4px 0 4px; /*top right bottom left */
+}
