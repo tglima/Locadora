@@ -44,7 +44,7 @@ public class VeiculoRepository extends AbstractRepository<Veiculo> {
 		}
 		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
 		query.setParameter("marca", marca);
-		query.setParameter("status", OpStatus.ALUGADO);
+		query.setParameter("status", status);
 		return query.getResultList();
 	}
 
