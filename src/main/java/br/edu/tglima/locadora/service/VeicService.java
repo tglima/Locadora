@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpStatus;
+import br.edu.tglima.locadora.models.veiculo.VeicStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.repository.VeiculoRepository;
 
@@ -63,7 +63,7 @@ public class VeicService implements Serializable {
 		return veic;
 	}
 
-	public void alterarStatus(Long id, OpStatus status) {
+	public void alterarStatus(Long id, VeicStatus status) {
 		try {
 			Veiculo veic = repository.buscarPorId(id);
 			veic.setStatus(status);
@@ -77,7 +77,7 @@ public class VeicService implements Serializable {
 
 	}
 
-	public Veiculo alterarStatus(Veiculo veic, OpStatus status) {
+	public Veiculo alterarStatus(Veiculo veic, VeicStatus status) {
 		try {
 			veic.setStatus(status);
 			repository.salvarEdicao(fmtToSave(veic));
@@ -90,7 +90,7 @@ public class VeicService implements Serializable {
 		return veic;
 	}
 
-	public List<Veiculo> buscarPorStatus(OpStatus status) {
+	public List<Veiculo> buscarPorStatus(VeicStatus status) {
 		List<Veiculo> result = new ArrayList<Veiculo>();
 
 		try {
@@ -107,7 +107,7 @@ public class VeicService implements Serializable {
 		List<Veiculo> result = new ArrayList<Veiculo>();
 
 		try {
-			result = repository.buscarPorMarca(marca, OpStatus.ALUGADO, false);
+			result = repository.buscarPorMarca(marca, VeicStatus.ALUGADO, false);
 		} catch (Exception e) {
 			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
 			result = null;
@@ -120,7 +120,7 @@ public class VeicService implements Serializable {
 		List<Veiculo> result = new ArrayList<Veiculo>();
 
 		try {
-			result = repository.buscaPorCategoria(categoria, OpStatus.ALUGADO, false);
+			result = repository.buscaPorCategoria(categoria, VeicStatus.ALUGADO, false);
 		} catch (Exception e) {
 			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
 			result = null;
@@ -133,7 +133,7 @@ public class VeicService implements Serializable {
 		List<Veiculo> result = new ArrayList<Veiculo>();
 
 		try {
-			result = repository.buscarPorMarca(marca, OpStatus.DISPONIVEL, true);
+			result = repository.buscarPorMarca(marca, VeicStatus.DISPONIVEL, true);
 		} catch (Exception e) {
 			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
 			result = null;
@@ -146,7 +146,7 @@ public class VeicService implements Serializable {
 		List<Veiculo> result = new ArrayList<Veiculo>();
 
 		try {
-			result = repository.buscaPorCategoria(categoria, OpStatus.DISPONIVEL, true);
+			result = repository.buscaPorCategoria(categoria, VeicStatus.DISPONIVEL, true);
 		} catch (Exception e) {
 			enviarMsgErro("Erro ao realizar a pesquista! " + e.getMessage());
 			result = null;
@@ -163,7 +163,7 @@ public class VeicService implements Serializable {
 		if (v.getDataCadastro() == null && v.getKmAtual() == null) {
 			v.setDataCadastro(new Date());
 			v.setKmAtual(v.getKmInicial());
-			v.setStatus(OpStatus.INOPERANTE);
+			v.setStatus(VeicStatus.INOPERANTE);
 		}
 
 		return v;

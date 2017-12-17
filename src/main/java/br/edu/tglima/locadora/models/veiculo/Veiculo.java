@@ -40,7 +40,7 @@ public class Veiculo implements Serializable {
 	private OpCombustiveis combustivel;
 	private Integer kmInicial;
 	private Integer kmAtual;
-	private OpStatus status;
+	private VeicStatus status;
 	private Double valorDiaria;
 
 	@Id
@@ -161,11 +161,11 @@ public class Veiculo implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 20)
-	public OpStatus getStatus() {
+	public VeicStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(OpStatus status) {
+	public void setStatus(VeicStatus status) {
 		this.status = status;
 	}
 

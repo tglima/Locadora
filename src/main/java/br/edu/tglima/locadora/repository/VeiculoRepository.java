@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 
 import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpStatus;
+import br.edu.tglima.locadora.models.veiculo.VeicStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 
 public class VeiculoRepository extends AbstractRepository<Veiculo> {
@@ -27,14 +27,14 @@ public class VeiculoRepository extends AbstractRepository<Veiculo> {
 		return query.getSingleResult();
 	}
 
-	public List<Veiculo> buscaPorStatus(OpStatus status) throws Exception {
+	public List<Veiculo> buscaPorStatus(VeicStatus status) throws Exception {
 		String sql = "SELECT v FROM Veiculo v WHERE v.status = :status";
 		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
 		query.setParameter("status", status);
 		return query.getResultList();
 	}
 
-	public List<Veiculo> buscarPorMarca(OpMarcas marca, OpStatus status, boolean statusEqual)
+	public List<Veiculo> buscarPorMarca(OpMarcas marca, VeicStatus status, boolean statusEqual)
 			throws Exception {
 		String sql;
 		if (statusEqual) {
@@ -48,7 +48,7 @@ public class VeiculoRepository extends AbstractRepository<Veiculo> {
 		return query.getResultList();
 	}
 
-	public List<Veiculo> buscaPorCategoria(OpCategorias cat, OpStatus status, boolean statusEqual)
+	public List<Veiculo> buscaPorCategoria(OpCategorias cat, VeicStatus status, boolean statusEqual)
 			throws Exception {
 		String sql;
 		if (statusEqual) {
@@ -63,7 +63,7 @@ public class VeiculoRepository extends AbstractRepository<Veiculo> {
 		return query.getResultList();
 	}
 
-	public List<Veiculo> buscaPorParametros(OpStatus status, OpMarcas marca) throws Exception {
+	public List<Veiculo> buscaPorParametros(VeicStatus status, OpMarcas marca) throws Exception {
 		String sql = "SELECT v FROM Veiculo	v WHERE v.status = :status AND v.marca = :marca";
 		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
 		query.setParameter("status", status);
@@ -71,7 +71,7 @@ public class VeiculoRepository extends AbstractRepository<Veiculo> {
 		return query.getResultList();
 	}
 
-	public List<Veiculo> buscaPorParametros(OpStatus status, OpCategorias cat) throws Exception {
+	public List<Veiculo> buscaPorParametros(VeicStatus status, OpCategorias cat) throws Exception {
 		String sql = "SELECT v FROM Veiculo v WHERE v.status = :status AND v.categoria = :categoria";
 		TypedQuery<Veiculo> query = entityManager.createQuery(sql, Veiculo.class);
 		query.setParameter("status", status);

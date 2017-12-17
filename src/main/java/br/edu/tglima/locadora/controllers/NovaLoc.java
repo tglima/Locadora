@@ -14,7 +14,7 @@ import br.edu.tglima.locadora.models.pessoa.Cliente;
 import br.edu.tglima.locadora.models.pessoa.Funcionario;
 import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpStatus;
+import br.edu.tglima.locadora.models.veiculo.VeicStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.service.ClienteService;
 import br.edu.tglima.locadora.service.FuncionarioService;
@@ -152,7 +152,7 @@ public class NovaLoc implements Serializable {
 	}
 
 	public void buscarVeicDispo() {
-		veics = serviceVeic.buscarPorStatus(OpStatus.DISPONIVEL);
+		veics = serviceVeic.buscarPorStatus(VeicStatus.DISPONIVEL);
 		if (veics.isEmpty()) {
 			resultEmpty = true;
 		}
@@ -160,7 +160,7 @@ public class NovaLoc implements Serializable {
 
 	public void efetivarLocacao() {
 
-		serviceVeic.alterarStatus(veicSelected, OpStatus.ALUGADO);
+		serviceVeic.alterarStatus(veicSelected, VeicStatus.ALUGADO);
 		locacao.setCli(cliSelected);
 		locacao.setVeicLocado(veicSelected);
 		locacao.setFunc(funcSelected);
@@ -170,7 +170,7 @@ public class NovaLoc implements Serializable {
 			System.out.println("Id da locação: " + locacao.getId());
 			enableDivResume();
 		} else {
-			serviceVeic.alterarStatus(veicSelected, OpStatus.DISPONIVEL);
+			serviceVeic.alterarStatus(veicSelected, VeicStatus.DISPONIVEL);
 		}
 
 	}

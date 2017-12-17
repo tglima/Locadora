@@ -1,12 +1,12 @@
 package br.edu.tglima.locadora.models.veiculo;
 
-public enum OpStatus {
+public enum VeicStatus {
 
 	ALUGADO("Alugado"), DISPONIVEL("Disponível"), INOPERANTE("Inoperante"), MANUTENCAO("Manutenção");
 
 	private String label;
 
-	private OpStatus(String label) {
+	private VeicStatus(String label) {
 		this.label = label;
 	}
 

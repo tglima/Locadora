@@ -11,7 +11,7 @@ import br.edu.tglima.locadora.models.veiculo.OpCategorias;
 import br.edu.tglima.locadora.models.veiculo.OpCombustiveis;
 import br.edu.tglima.locadora.models.veiculo.OpCores;
 import br.edu.tglima.locadora.models.veiculo.OpMarcas;
-import br.edu.tglima.locadora.models.veiculo.OpStatus;
+import br.edu.tglima.locadora.models.veiculo.VeicStatus;
 import br.edu.tglima.locadora.models.veiculo.Veiculo;
 import br.edu.tglima.locadora.service.VeicService;
 
@@ -26,7 +26,7 @@ public class GeVeic implements Serializable {
 	private List<Veiculo> veicEncontrados;
 	private Veiculo selectedVeic;
 	private boolean resultEmpty;
-	private OpStatus status;
+	private VeicStatus status;
 	private OpMarcas marca;
 	private OpCategorias categoria;
 	private byte tipoDeBusca = 0;
@@ -57,7 +57,7 @@ public class GeVeic implements Serializable {
 		this.kmInicial = selectedVeic.getKmInicial();
 	}
 
-	public void salvarStatus(Long id, OpStatus novoStatus) {
+	public void salvarStatus(Long id, VeicStatus novoStatus) {
 		service.alterarStatus(id, novoStatus);
 		refazerPesquisa();
 	}
@@ -105,8 +105,8 @@ public class GeVeic implements Serializable {
 		return OpMarcas.values();
 	}
 
-	public OpStatus[] getSituacoes() {
-		OpStatus[] status = { OpStatus.DISPONIVEL, OpStatus.INOPERANTE, OpStatus.MANUTENCAO };
+	public VeicStatus[] getSituacoes() {
+		VeicStatus[] status = { VeicStatus.DISPONIVEL, VeicStatus.INOPERANTE, VeicStatus.MANUTENCAO };
 		return status;
 	}
 
@@ -146,11 +146,11 @@ public class GeVeic implements Serializable {
 		this.marca = marca;
 	}
 
-	public OpStatus getStatus() {
+	public VeicStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(OpStatus status) {
+	public void setStatus(VeicStatus status) {
 		this.status = status;
 	}
 
