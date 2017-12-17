@@ -1,3 +1,22 @@
+## v0.10.0
+
+### Objetivos alcançados:
+- Foi implementada a possibilidade de efetuar a locação de veículos.
+- Referências ao template antigo foram totalmente removidas, agora o projeto se encontra padronizado e com apenas um template.
+
+### Adicionado:
+-	**Classes Java:** Locacao - LocacaoStatus - LocacaoRepository - LocacaoService - NovaLoc
+-	**Página XHTML:** Nova Locação
+
+### Melhorado:
+-	**Classes Java:** TempoUtil - VeicService - ClienteService - VeicStatus (Antigo OpStatus)
+-	**Outros:** myStyles.css (Antigo arquivo sb-admin.css)
+
+### Removido:
+- 	**Classes Java:** SelectCli - SelectVeic
+-	**Páginas XHTML:** Selecionar Cliente - Selecionar Veículo - Elementos do template antigo ( navbar-top - content-top - sidebar - base-layout )
+- 	**Outros:** Style.css - photo-woman.jpg
+
 ## v0.9.0
 
 ### Objetivos alcançados:
