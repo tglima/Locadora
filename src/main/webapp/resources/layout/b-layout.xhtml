@@ -3,6 +3,7 @@
 	xmlns="http://www.w3.org/1999/xhtml"
  	xmlns:h="http://xmlns.jcp.org/jsf/html"
  	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
  	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -34,6 +35,12 @@
 			
 			<!-- Responsável por carregar a seção de mensagens de alerta e o cabeçalho da página-->
 			<ui:include src="page-heading.xhtml" />
+
+			<!-- Dialog responsável por exibir a imagem animada de loading quando
+			     um processo longo estiver em execução -->
+			<p:dialog id="statusDialog" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		    	<p:graphicImage name="/img/loading.gif" />
+			</p:dialog>	
 			
 			<!-- Responsável por carregar a área de conteúdo dinâmico da página -->
 			<ui:insert name="content-dynamic" />			
