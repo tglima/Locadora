@@ -1,5 +1,7 @@
 package br.edu.tglima.locadora.repository;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -21,6 +23,20 @@ public class LocacaoRepository extends AbstractRepository<Locacao> {
 		query.setParameter("id", idCli);
 		query.setParameter("status", status);
 		return query.getSingleResult();
+	}
+
+	public List<Locacao> buscarPorStatus(LocacaoStatus status) throws Exception {
+		String sql = "SELECT l FROM Locacao l WHERE l.status = :status";
+		TypedQuery<Locacao> query = entityManager.createQuery(sql, Locacao.class);
+		query.setParameter("status", status);
+		return query.getResultList();
+	}
+
+	public List<Locacao> buscarPelaCNH(String cnhCliente) throws Exception {
+		String sql = "SELECT l FROM Locacao l WHERE l.cli.habilitacao = :cnhCliente";
+		TypedQuery<Locacao> query = entityManager.createQuery(sql, Locacao.class);
+		query.setParameter("cnhCliente", cnhCliente);
+		return query.getResultList();
 	}
 
 }
