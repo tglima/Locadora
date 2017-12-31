@@ -250,9 +250,9 @@
 					</div>
 					
 					<div class="col-sm-4 col-lg-4">
-						<h:outputLabel value="KM Atual" for="kmInicial" styleClass="control-label" />
+						<h:outputLabel value="KM Atual" for="kmAtual" styleClass="control-label" />
 						<p:inputMask id="kmAtual" mask="9?99999" maxlength="6" value="#{geVeic.selectedVeic.kmAtual}" 
-							styleClass="form-control" style="text-align: center;" placeholder="KM inicial" required="true"  
+							styleClass="form-control ui-sm-4" style="text-align: center;" placeholder="KM inicial" required="true"  
 							label="Km atual do veículo" slotChar="" title="Informe a KM atual veículo." >
 							<f:validateLongRange minimum="#{geVeic.kmInicial}" /> 	
 						</p:inputMask>
