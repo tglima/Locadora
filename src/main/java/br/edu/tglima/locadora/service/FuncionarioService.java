@@ -58,6 +58,22 @@ public class FuncionarioService implements Serializable {
 		return func;
 	}
 
+	public Funcionario buscarPorId(Long id) {
+		Funcionario result = null;
+
+		try {
+			result = repository.buscarPorId(id);
+		} catch (Exception e) {
+
+			if (!e.getMessage().contains("No entity found for query")) {
+				enviarMsgErro("Erro ao realizar a pesquisa! \n " + e.getMessage());
+			}
+
+		}
+
+		return result;
+	}
+
 	public List<Funcionario> buscarPorCpf(String cpf) {
 		List<Funcionario> result = new ArrayList<Funcionario>();
 
