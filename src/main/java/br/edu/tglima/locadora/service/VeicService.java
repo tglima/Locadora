@@ -19,8 +19,7 @@ import br.edu.tglima.locadora.repository.VeiculoRepository;
 public class VeicService implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Inject
-	private VeiculoRepository repository;
+	private @Inject VeiculoRepository repository;
 
 	public Veiculo cadastrar(Veiculo veic) {
 		try {
@@ -61,6 +60,14 @@ public class VeicService implements Serializable {
 		}
 
 		return veic;
+	}
+
+	public void salvarEdicaoSemMsg(Veiculo veic) {
+		try {
+			repository.salvarEdicao(fmtToSave(veic));
+		} catch (Exception e) {
+			enviarMsgErro("Erro, ao salvar as alterações do veículo: " + veic.getPlaca().toUpperCase());
+		}
 	}
 
 	public void alterarStatus(Long id, VeicStatus status) {
