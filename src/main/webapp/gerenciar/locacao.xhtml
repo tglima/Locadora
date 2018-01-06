@@ -1,0 +1,483 @@
+<ui:composition template="/resources/layout/b-layout.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+ <ui:define name="titulo">Gerenciar locações</ui:define>
+ <ui:define name="content-dynamic">
+
+<div class="row">
+
+	<!-- Responsável por chamar o #statusDialog -->
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />	
+	
+	<div class="col-sm-12">
+		<h:form styleClass="form" id="GeLoc">
+			<h:panelGroup layout="block" id="Init" rendered="#{geLoc.showInit}"> 
+				<div class="row form-group">
+					<h:panelGroup layout="block" id="MenuTipoDeBusca">
+						<div class="col-sm-4 col-lg-3">
+							<h:selectOneMenu value="#{geLoc.tipoDeBusca}" styleClass="form-control" label="Tipo de busca" >
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" itemValue="0" itemDisabled="true" />
+								<f:selectItem itemLabel="Buscar pela CNH do Cliente" itemValue='1' />
+								<f:selectItem itemLabel="Buscar pelo ID da Locação" itemValue='2' />	
+								<f:selectItem itemLabel="Listar todas ativas" itemValue="3" />
+								<f:selectItem itemLabel="Listar todas finalizadas" itemValue="4" />
+								<f:selectItem itemLabel="Listar todas canceladas" itemValue="5" />	
+								<p:ajax event="change" listener="#{geLoc.clearMenuTipoDeBusca}" update="TipoDeBusca Results" />
+							</h:selectOneMenu>
+						</div>
+					</h:panelGroup>
+					<!--/#MenuTipoDeBusca  -->			
+					
+					<h:panelGroup layout="block" id="TipoDeBusca">
+						<h:panelGroup layout="block" id="SearchCNH" styleClass="col-sm-5 col-lg-3" rendered="#{geLoc.tipoDeBusca == 1}">
+							<div class="input-group">
+								<p:inputMask id="CNH" mask="99999999999" value="#{geLoc.searchParam}" styleClass="form-control"
+								placeholder="Informe o nº da CNH" required="true" style="text-align: center;" label="CNH" slotChar="" />
+								<span class="input-group-btn">
+									<h:commandButton actionListener="#{geLoc.buscarPelaCNH}" value="Buscar" styleClass="btn btn-default" >
+										<f:ajax execute="CNH" render="Results" />
+									</h:commandButton>
+								</span>
+							</div>
+						</h:panelGroup>
+						<!-- /#SearchCNH -->
+						
+						<h:panelGroup layout="block" id="SearchID" styleClass="col-sm-5 col-lg-3" rendered="#{geLoc.tipoDeBusca == 2}">
+							<div class="input-group">
+								<p:inputMask id="ID" mask="9?9999999999999" value="#{geLoc.searchParam}" styleClass="form-control"
+								 placeholder="Nº identificador da Locação" required="true" style="text-align: center;"
+								 label="Identificador da Locação" slotChar="" />
+								<span class="input-group-btn">
+									<h:commandButton actionListener="#{geLoc.buscarPeloID}" value="Buscar" styleClass="btn btn-default" >
+										<f:ajax execute="ID" render="Results" />
+									</h:commandButton>
+								</span>
+							</div>
+						</h:panelGroup>
+						<!-- /#SearchID -->
+					
+					</h:panelGroup>
+					<!-- /#TipoDeBusca -->
+
+				
+				</div>
+				<!-- /.row .form-group -->
+							
+											
+				<div class="row form-group">
+					<h:panelGroup layout="block" id="Results" styleClass="form-group">
+						<div class="col-sm-12">
+										
+							<h:panelGroup layout="block" id="NoResults" rendered="#{geLoc.resultEmpty and geLoc.locacoes.size() == 0}" >
+								<div class="text-center">
+									<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 3.8em; color: gold;" />
+									<br/>
+									<strong>A busca não encontrou resultados para os parâmetros informados.</strong>
+									<p>Refaça sua pesquisa usando outros termos.</p>		
+								</div>						
+							</h:panelGroup>
+							<!-- /#NoResults -->
+
+							
+							<p:dataTable id="tbLocacoes" var="loc" value="#{geLoc.locacoes}" selectionMode="single" sortBy="#{loc.dataInicial}" 
+								selection="#{geLoc.locSelected}" rowKey="#{loc.id}" tableStyle="table table-condensed table-hover" 
+								styleClass="text-center" rendered="#{geLoc.locacoes.size() gt 0 }"  rows="5" 
+								paginatorPosition="bottom"	paginator="true" paginatorAlwaysVisible="false" >
+								
+								<p:ajax event="rowSelect" update="@this :GeLoc:Results" global="false"/>
+
+								<p:column width="10%">
+									<f:facet name="header"><h:outputText value="ID" /></f:facet>
+									<h:outputText value="#{loc.id}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header"><h:outputText value="CNH do Cliente" /></f:facet>
+									<h:outputText value="#{loc.cli.habilitacao}" />
+								</p:column>
+								
+								<p:column>
+									<f:facet name="header"><h:outputText value="Placa do veículo" /></f:facet>
+									<h:outputText value="#{loc.veicLocado.placa}" styleClass="text-uppercase" />
+								</p:column>
+															
+								<p:column>
+									<f:facet name="header"><h:outputText value="Início" /></f:facet>
+									<h:outputText value="#{loc.dataInicial}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>								
+									</h:outputText>
+								</p:column>							
+								
+								<p:column>
+									<f:facet name="header"><h:outputText value="Término" /></f:facet>
+									<h:outputText value="#{loc.dataFinal}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>								
+									</h:outputText>
+									<h:outputText value=" - " rendered="#{loc.dataFinal == null}" />
+								</p:column>		
+								
+								<p:column>
+									<f:facet name="header"><h:outputText value="Status" /></f:facet>
+									<h:outputText value="#{loc.status.label}" styleClass="text-capitalize" />							
+								</p:column>					
+							
+							</p:dataTable>
+							<!-- /#tbLocacoes -->
+							
+							<div class="pull-right" style="margin-top: 12px;">
+								<p:commandButton value="Selecionar" process="@this" update=":GeLoc"
+												styleClass="fixBtn btn btn-default" 
+												rendered="#{geLoc.locSelected != null and geLoc.locacoes.size() gt 0}"
+												global="false" action="#{geLoc.enableDivData()}"  />
+							</div>
+							
+						</div>
+						<!-- /.col-sm-12 -->
+						
+					</h:panelGroup>
+					<!-- /#Results -->
+				
+				</div>
+				<!-- /.row ./form-group -->
+			
+			</h:panelGroup>
+			<!-- /#Init-->			
+			
+			
+			<h:panelGroup layout="block" id="DataArea" styleClass="row form-group">
+			
+				<h:panelGroup layout="block" id="DivData" styleClass="col-sm-12" rendered="#{geLoc.showDivData}">
+				
+					<h:panelGroup layout="block" id="PrintArea">
+					
+						<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Locação</h3></div>
+							
+							<p:panelGrid style="width: 100%;" columns="2"> 
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Nº Identificador: " />
+									<h:outputText value="#{geLoc.locSelected.id}"/>								
+								</p:columnGroup>
+								<p:columnGroup>
+										<h:outputText style="font-weight:bold" value="Status: " />
+										<h:outputText value="#{geLoc.locSelected.status.label}" />								
+								</p:columnGroup>
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Colaborador: " />								
+									<h:outputText value="#{geLoc.locSelected.func.nome}"
+										styleClass="text-capitalize" />								
+								</p:columnGroup>
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Matricula: " />								
+									<h:outputText value="#{geLoc.locSelected.func.id}" />														
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Data início: "  />
+									
+									<h:outputText value="#{geLoc.locSelected.dataInicial}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"/>			
+									</h:outputText>										
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Data final: " />
+									<h:outputText value="Locação em andamento" rendered="#{geLoc.locSelected.dataFinal == null}" />						
+									<h:outputText value="#{geLoc.locSelected.dataFinal}" rendered="#{geLoc.locSelected.dataFinal != null}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"/>											
+									</h:outputText>											
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Total de dias: " />
+									<h:outputText value="#{geLoc.totDias}" rendered="#{!geLoc.locSelected.status.label.equals('Ativo') }" />
+									<h:outputText value="Locação em andamento" rendered="#{geLoc.locSelected.status.label.equals('Ativo') }" />								
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Valor total: " />
+									<h:outputText value="Locação em andamento" rendered="#{geLoc.locSelected.valorTotal == null}" />
+									<h:outputText value="#{geLoc.locSelected.valorTotal}" rendered="#{geLoc.locSelected.valorTotal != null}">	
+										<f:convertNumber type="currency" currencySymbol="R$" />
+									</h:outputText>									
+								</p:columnGroup>
+							
+								<p:columnGroup rendered="#{geLoc.locSelected.status.label.equals('Cancelado')}">
+										<h:outputText  style="font-weight:bold" value="Responsável pelo cancelamento: "  />
+										<h:outputText value="#{geLoc.cancLoc.gerente.cargo.label}  #{geLoc.cancLoc.gerente.nome} " 
+											styleClass="text-capitalize" />											
+								</p:columnGroup>							
+								<p:columnGroup rendered="#{geLoc.locSelected.status.label.equals('Cancelado')}">
+										<h:outputText  style="font-weight:bold" value="Matricula: "  />
+										<h:outputText value="#{geLoc.cancLoc.gerente.id} "  />											
+								</p:columnGroup>		
+													
+							</p:panelGrid>
+							
+							<p:panelGrid rendered="#{geLoc.locSelected.status.label.equals('Cancelado')}" style="width: 100%;" columns="1" >
+							
+								<p:columnGroup>
+											<h:outputText rendered="#{geLoc.locSelected.status.label.equals('Cancelado')}" style="font-weight:bold" 
+												value="Motivo do cancelamento: " />
+											<h:outputText rendered="#{geLoc.locSelected.status.label.equals('Cancelado')}"  
+												value="#{geLoc.cancLoc.descricao} " />									
+								</p:columnGroup>
+							</p:panelGrid>
+						</div>
+		
+						<div class="panel panel-default">
+							<div class="panel-heading"><h3 class="panel-title">Cliente</h3></div>
+							<p:panelGrid style="width: 100%;" columns="1">
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Nome: " />	
+									<h:outputText value="#{geLoc.locSelected.cli.nome} #{geLoc.locSelected.cli.sobrenome}"
+										styleClass="text-capitalize" />
+								</p:columnGroup>
+							</p:panelGrid>
+						</div>			
+		
+						<div class="panel panel-default">
+							<div class="panel-heading"><h3 class="panel-title">Veículo</h3></div>			            						
+							
+							<p:panelGrid style="width: 100%;" columns="3">
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Placa: " />				
+									<h:outputText styleClass="text-uppercase" value="#{geLoc.locSelected.veicLocado.placa}" />		
+								</p:columnGroup>
+
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Marca: " />	
+									<h:outputText styleClass="text-capitalize" value="#{geLoc.locSelected.veicLocado.marca.label}" />									
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Modelo: " />	
+									<h:outputText styleClass="text-uppercase" value="#{geLoc.locSelected.veicLocado.modelo}" />	
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Categoria: " />											
+									<h:outputText styleClass="text-capitalize" value="#{geLoc.locSelected.veicLocado.categoria.label}" />								
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Valor diária: " />											
+									<h:outputText value="#{geLoc.locSelected.valorDiaria}">	
+										<f:convertNumber type="currency" currencySymbol="R$" />
+									</h:outputText>									
+								</p:columnGroup>
+								
+								<p:columnGroup>
+									<h:outputText style="font-weight:bold" value="Km percorridos: " />					
+									<h:outputText value="#{geLoc.locSelected.kmPercorrida}"
+									rendered="#{!geLoc.locSelected.status.label.equals('Ativo') }" />									
+															
+									<h:outputText value="Locação em andamento"
+									rendered="#{geLoc.locSelected.status.label.equals('Ativo') }"  />				
+								</p:columnGroup>
+							</p:panelGrid>	
+						</div>	
+					
+					</h:panelGroup>
+					<!-- /#PrintArea -->
+
+					<div style="text-align: center;">
+
+					    <p:commandButton value="Voltar" icon="fa fa-reply" action="#{geLoc.enableInit()}"  
+					    	styleClass="fixBtnIcon btn" process="GeLoc" update=":GeLoc" immediate="true" global="false" />			    				
+
+				    	<span class="space" />		
+				    						    	
+						<p:commandButton value="Imprimir" type="button" 
+							styleClass="fixBtnIcon btn btn-default" icon="fa fa-print" immediate="true">
+						    <p:printer target="PrintArea" />
+					    </p:commandButton>	
+
+				    	<span class="space"/>							    
+
+					    <p:commandButton value="Cancelar" icon="fa fa-times" action="#{geLoc.enableDivFinal(2)}"  
+					    	styleClass="fixBtnIcon btn btn-danger" process="GeLoc" update=":GeLoc" immediate="true" global="false"
+				    		rendered="#{geLoc.locSelected.status.label.equals('Ativo') }" />			    				
+
+				    	<span class="space"/>							    
+					    
+					    <p:commandButton value="Finalizar" icon="fa fa-check" actionListener="#{geLoc.enableDivFinal(1)}"
+					    	styleClass="fixBtnIcon btn btn-success" update=":GeLoc" immediate="true" global="false"
+					    	rendered="#{geLoc.locSelected.status.label.equals('Ativo') }" >
+					    	<f:ajax event="click" execute="@this" listener="#{geLoc.calcValorLocacao()}" render="GeLoc:DivFinish" />
+				    	</p:commandButton>											
+				    								
+					</div>								
+					
+				
+				</h:panelGroup>
+				<!-- /#DivData -->
+				
+			</h:panelGroup>
+			<!-- /#DataArea -->		
+			
+			
+			<h:panelGroup layout="block" id="FinalArea" styleClass="row form-group" > 
+
+				<h:panelGroup layout="block" id="DivFinal" styleClass="col-sm-12" rendered="#{geLoc.showDivFinal}"> 
+				
+					<div class="form-group col-lg-2 col-sm-3" >
+						<h:outputText value="KM Inicial" styleClass="control-label" />
+						<p:inputMask mask="9?99999" maxlength="6" value="#{geLoc.locSelected.veicLocado.kmAtual}" 
+							styleClass="form-control input-xs" style="text-align: center;" disabled="true" />
+					</div>
+	
+					<div class="form-group col-lg-2 col-sm-3">
+						<h:outputText value="KM Atual" styleClass="control-label" />
+						<p:inputMask mask="9?99999" maxlength="6" value="#{geLoc.kmFinal}" 
+							styleClass="form-control" style="text-align: center;" placeholder="KM Final" required="true"  
+							label="Km atual do veículo" slotChar="" title="Informe a KM atual veículo."  >
+							<f:validateLongRange minimum="#{geLoc.locSelected.veicLocado.kmAtual}" /> 	
+						</p:inputMask>
+					</div>	
+					
+					<div class="form-group col-sm-12" />
+
+									
+					<h:panelGroup layout="block" id="DivCancel" styleClass="col-sm-12" rendered="#{geLoc.typeOfEnd == 2}" > 
+					
+						<h:outputText value="Descreva o motivo do cancelamento: " styleClass="control-label" />
+					
+						<p:inputTextarea value="#{geLoc.descCanc}" autoResize="false" counter="counter" maxlength="260" 
+							counterTemplate="Restam {0} caracteres." required="true" label="Motivo do cancelamento"	
+							styleClass="form-control" style="width: 50%;"  />
+						
+						<h:outputText id="counter" styleClass="control-label" />
+						
+					</h:panelGroup>
+					<!-- /#DivCancel -->										
+						
+	
+					<h:panelGroup layout="block" id="DivFinish" rendered="#{geLoc.typeOfEnd == 1}" > 	
+			    		
+			    		<div class="col-lg-5 col-sm-8">
+							<p:panelGrid style="width: 100%;" columns="2"> 
+								<p:columnGroup>	
+									<h:outputText style="font-weight:bold" value="Data início: "  />
+									<h:outputText value="#{geLoc.locSelected.dataInicial}" >
+										<f:convertDateTime pattern="dd/MM/yyyy"/>			
+									</h:outputText>										
+								</p:columnGroup>
+								
+								<p:columnGroup>	
+									<h:outputText style="font-weight:bold" value="Data final: " />	
+									<h:outputText value="#{geLoc.dataFinal}">
+										<f:convertDateTime pattern="dd/MM/yyyy"/>
+									</h:outputText>								
+								</p:columnGroup>
+								
+								<p:columnGroup>	
+									<h:outputText style="font-weight:bold" value="Total dias: " />	
+									<h:outputText value="#{geLoc.totDias}" />	
+								</p:columnGroup>		
+											
+								<p:columnGroup>	
+									<h:outputText style="font-weight:bold;" value="Valor diária: "  />	
+									<h:outputText value="#{geLoc.locSelected.valorDiaria}" >
+										<f:convertNumber type="currency" currencySymbol="R$" />
+									</h:outputText>						
+								</p:columnGroup>	
+												
+							</p:panelGrid>
+							
+							<p:panelGrid style="width: 100%;" columns="1"  columnClasses="ui-state-error" >
+								<p:columnGroup>	
+									<div style="text-align: center;">
+										<h:outputText style="font-weight:bold" value="Valor total: " />		
+										<h:outputText value="#{geLoc.valorTotal}" style="font-weight:bold">
+											<f:convertNumber type="currency" currencySymbol="R$" />
+										</h:outputText>						
+									</div>
+								</p:columnGroup>
+							</p:panelGrid>
+							
+							<br/>
+			    		</div>
+			    		
+			    		<div class="col-lg-7 col-sm-4"/>
+														
+					</h:panelGroup>
+					<!-- /#DivFinish -->
+							
+					<div class="col-sm-12 text-center" style="margin-top: 1em;">
+					    <p:commandButton value="Voltar" icon="fa fa-reply" action="#{geLoc.enableDivData()}" 
+					    	styleClass="btn fixBtnIcon" update=":GeLoc" immediate="true" global="false" />	
+					    					    				
+				    	<span class="space"/>
+	
+					    <p:commandButton value="Cancelar locação" process="DivFinal" update=":GeLoc" 
+					    		rendered="#{geLoc.typeOfEnd == 2}" icon="fa fa-times"
+						    	styleClass="btn btn-danger fixBtnIcon" actionListener="#{geLoc.cancelarLocacao()}" />		
+						    	
+					    <p:commandButton value="Finalizar locação" process="DivFinal" update=":GeLoc" 
+					    	rendered="#{geLoc.typeOfEnd == 1}" icon="fa fa-check"
+					    	styleClass="btn btn-success fixBtnIcon" actionListener="#{geLoc.finalizarLocacao()}" />						    						    	 
+					    	 
+					</div>				
+
+				
+				</h:panelGroup>	
+				<!-- /#DivFinal -->
+			
+			
+			</h:panelGroup>
+			<!-- /#FinalArea -->
+			
+					
+		</h:form>
+		<!-- /#GeLoc -->
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+		
+
+
+
+
+
+
+
+
+
+		
+		
+		
+	
+	</div>
+	<!-- /.col-sm-12 -->
+
+</div> 
+<!-- /.row --> 
+ 
+</ui:define>
+</ui:composition>
