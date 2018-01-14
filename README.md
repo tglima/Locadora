@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/051243f71b9048e393f52b53b7105fdf)](https://www.codacy.com/app/tglima/Locadora?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tglima/Locadora&amp;utm_campaign=Badge_Grade)
 
-Projeto de uma aplicação web para locação de veículos. Projeto sem fins comercias, focado na prática, estudo e compreensão de recursos e frameworks do ecossistema Java.
+Projeto de uma aplicação web para locação de veículos. Projeto sem fins comerciais, focado na prática, estudo e compreensão de recursos e frameworks do ecossistema Java.
 
 ## Screenshots da aplicação
 
@@ -50,7 +50,7 @@ Ou [baixe aqui](https://github.com/tglima/Locadora/archive/master.zip) o arquivo
 O projeto foi desenvolvido na IDE Eclipse, mas acredito que ele consiga rodar nas principais IDE's (NetBeans e Intelij IDEA), pois sua estrutura foi estabelecida pelo Maven.
 
 
-## Como gerar o Build o projeto
+## Como gerar o Build do projeto
 
 Acesse a raiz do projeto (onde se encontra o arquivo pom.xml) e execute o comando:
 
@@ -73,6 +73,6 @@ O arquivo "[persistence.xml](https://github.com/tglima/Locadora/blob/master/src/
 >**This application is licensed under the [GPLv3](http://www.gnu.org/licenses/gpl-3.0.html).** <p>
 This application is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-Este programa é software livre: você pode redistribuí-lo e / ou modificá-lo sob os termos da Licença Pública Geral GNU publicada pela Free Software Foundation ([GPLv3](http://www.gnu.org/licenses/gpl-3.0.html)).
+Este programa é software livre: você pode redistribuí-lo e/ou modificá-lo sob os termos da Licença Pública Geral GNU publicada pela Free Software Foundation ([GPLv3](http://www.gnu.org/licenses/gpl-3.0.html)).
 
 -----
