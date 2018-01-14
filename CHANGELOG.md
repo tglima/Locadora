@@ -1,3 +1,24 @@
+## v0.11.0
+
+### Objetivos alcançados:
+- Corrigido problema ao gerar o build devido a falta do **javax.servlet**
+- Implementada a possibilidade de finalizar ou cancelar uma locação
+- Refatorado o arquivo **README**, agora o mesmo contêm imagens e melhores informações do projeto
+- Implementado um **Dialog de "Loading"** que poderá ser usado durante um processamento mais demorado
+
+### Adicionado:
+- **Imagens do formato PNG** usadas no arquivo README.md
+- **Imagem do formato GIF** usada no "Dialog de Loading"
+- **Arquivo SQL** contendo o backup do BD (Arquivo Dump)
+-	**Classes Java:** Cancelamento - CancLocacaoRepository - GeLoc
+-	**Página XHTML:** Gerenciar Locação
+
+### Melhorado:
+-	**Classes Java:** LocacaoService - VeicService - LocacaoRepository - FuncionarioService
+-	**Página XHTML:** Gerenciar Veículos
+-	**Outros:** myStyles.css - pom.xml
+
+
 ## v0.10.0
 
 ### Objetivos alcançados:
@@ -25,7 +46,7 @@
 - Com a simplificação, alguns controllers mudaram seus escopos CDI para escopos mais simples.
 
 ### Adicionado:
-- **Classes Java:** EntityManagerProducer - FuncionarioService - ClienteService - VeicService 
+- **Classes Java:** EntityManagerProducer - FuncionarioService - ClienteService - VeicService
 
 ### Melhorado:
 - **Classes Java:** AbstractRepository - FuncionarioRepository - ClienteRepository - VeiculoRepository - CadFunc - CadCliente - CadVeic - GeFunc - GeCliente - GeVeic
