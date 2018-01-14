@@ -1,6 +1,8 @@
 package br.edu.tglima.locadora.service;
 
 import static br.edu.tglima.locadora.models.locacao.LocacaoStatus.ATIVO;
+import static br.edu.tglima.locadora.models.locacao.LocacaoStatus.CANCELADO;
+import static br.edu.tglima.locadora.models.locacao.LocacaoStatus.FINALIZADO;
 import static br.edu.tglima.locadora.util.FacesUtil.enviarMsgErro;
 import static br.edu.tglima.locadora.util.TempoUtil.calcDifDias;
 
@@ -12,7 +14,6 @@ import javax.inject.Inject;
 
 import br.edu.tglima.locadora.models.locacao.Cancelamento;
 import br.edu.tglima.locadora.models.locacao.Locacao;
-import br.edu.tglima.locadora.models.locacao.LocacaoStatus;
 import br.edu.tglima.locadora.repository.CancLocacaoRepository;
 import br.edu.tglima.locadora.repository.LocacaoRepository;
 
@@ -37,7 +38,7 @@ public class LocacaoService implements Serializable {
 	private Locacao setInitValues(Locacao loc) {
 		loc.setDataInicial(new Date());
 		loc.setKmPercorrida(0);
-		loc.setStatus(LocacaoStatus.ATIVO);
+		loc.setStatus(ATIVO);
 		loc.setValorDiaria(loc.getVeicLocado().getValorDiaria());
 		return loc;
 	}
@@ -45,7 +46,7 @@ public class LocacaoService implements Serializable {
 	public boolean cliComLocacaoAtiva(Long idCli) {
 		Locacao cliEmLocacao = null;
 		try {
-			cliEmLocacao = repository.buscarCliente(idCli, LocacaoStatus.ATIVO);
+			cliEmLocacao = repository.buscarCliente(idCli, ATIVO);
 		} catch (Exception e) {
 			if (e.getMessage().contains("No entity found for query")) {
 			} else {
@@ -80,7 +81,7 @@ public class LocacaoService implements Serializable {
 		List<Locacao> results = null;
 
 		try {
-			results = repository.buscarPorStatus(LocacaoStatus.ATIVO);
+			results = repository.buscarPorStatus(ATIVO);
 		} catch (Exception e) {
 			System.err.println("Causa do erro: " + e.getCause());
 		}
@@ -91,7 +92,7 @@ public class LocacaoService implements Serializable {
 	public List<Locacao> buscarLocFinalizadas() {
 		List<Locacao> results = null;
 		try {
-			results = repository.buscarPorStatus(LocacaoStatus.FINALIZADO);
+			results = repository.buscarPorStatus(FINALIZADO);
 		} catch (Exception e) {
 			System.err.println("Causa do erro: " + e.getCause());
 		}
@@ -102,7 +103,7 @@ public class LocacaoService implements Serializable {
 	public List<Locacao> buscarLocCanceladas() {
 		List<Locacao> results = null;
 		try {
-			results = repository.buscarPorStatus(LocacaoStatus.CANCELADO);
+			results = repository.buscarPorStatus(CANCELADO);
 		} catch (Exception e) {
 			System.err.println("Causa do erro: " + e.getCause());
 		}
